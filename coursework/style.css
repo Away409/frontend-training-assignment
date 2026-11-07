@@ -1,0 +1,183 @@
+/* =========================================
+   第1步：基础样式与全局设置
+   ========================================= */
+body {
+    /* 字体为 Arial, sans-serif */
+    font-family: Arial, sans-serif;
+    /* 背景颜色为浅灰色 */
+    background-color: #f5f5f5;
+    /* 去掉默认的外边距 */
+    margin: 0;
+    /* 文字颜色为深灰色 */
+    color: #333;
+}
+
+/* =========================================
+   第2步：标题区域（header）样式
+   ========================================= */
+header {
+    /* 背景颜色（推荐深蓝色或自己喜欢的颜色） */
+    background-color: #2c3e50; 
+    /* 文字颜色为白色 */
+    color: #ffffff;
+    /* 内边距（padding）上下 40px，左右 20px */
+    padding: 40px 20px;
+    /* 文字居中对齐 */
+    text-align: center;
+}
+
+header h1 {
+    /* 设置较大的字号（例如 36px） */
+    font-size: 36px;
+    /* 适当的下边距 */
+    margin-bottom: 10px;
+    /* 去掉默认的上边距，让标题更紧凑 */
+    margin-top: 0;
+}
+
+.subtitle {
+    /* 设置较小的字号 */
+    font-size: 18px;
+    /* 半透明白色（使用 rgba 或 opacity） */
+    color: rgba(255, 255, 255, 0.8);
+    /* 去掉默认的边距 */
+    margin: 0;
+}
+
+/* =========================================
+   第3步：主要内容区域
+   ========================================= */
+main {
+    /* 设置最大宽度（例如 800px） */
+    max-width: 800px;
+    /* 使用 margin: 0 auto 让它水平居中 */
+    margin: 0 auto;
+    /* 给整体内容加一点上下的间距，防止紧贴 header */
+    padding: 20px 0;
+}
+
+section {
+    /* 白色背景 */
+    background-color: #ffffff;
+    /* 圆角 */
+    border-radius: 8px;
+    /* 内边距 */
+    padding: 20px;
+    /* 下边距 */
+    margin-bottom: 20px;
+    /* 轻微阴影 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   第4步：标题和段落样式
+   ========================================= */
+h2 {
+    /* 颜色（例如主题色，这里用深蓝色呼应 header） */
+    color: #2c3e50;
+    /* 下边框 */
+    border-bottom: 2px solid #2c3e50;
+    /* 适当的下边距和内边距 */
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+p {
+    /* 设置合适的行高，让文字更好读 */
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   第5步：爱好列表样式
+   ========================================= */
+#hobbies ul {
+    /* 去掉默认的列表圆点 */
+    list-style: none;
+    /* 去掉默认的 padding */
+    padding: 0;
+    /* 使用 Flexbox 让它们变成横向排列 */
+    display: flex;
+    flex-wrap: wrap; /* 如果屏幕小，允许换行 */
+    gap: 10px; /* 列表项之间的间距 */
+}
+
+.hobby {
+    /* 背景颜色 */
+    background-color: #e9ecef;
+    /* 内边距 */
+    padding: 8px 16px;
+    /* 圆角 */
+    border-radius: 20px;
+    /* 下边距（因为用了 flex 和 gap，这里可以设为 0 或保留小值） */
+    margin-bottom: 0;
+    /* 字体稍微调小一点 */
+    font-size: 14px;
+}
+
+/* =========================================
+   第6步：按钮样式
+   ========================================= */
+.btn {
+    /* 背景颜色 */
+    background-color: #2c3e50;
+    /* 文字颜色为白色 */
+    color: #ffffff;
+    /* 去掉下划线 */
+    text-decoration: none;
+    /* 内边距 */
+    padding: 10px 20px;
+    /* 圆角 */
+    border-radius: 5px;
+    /* 设置为行内块，方便设置 padding 和 margin */
+    display: inline-block;
+    /* 添加过渡效果，让悬停更平滑 */
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    /* 鼠标悬停时改变背景颜色 */
+    background-color: #1a252f;
+}
+
+/* =========================================
+   第7步：页脚样式
+   ========================================= */
+footer {
+    /* 背景颜色 */
+    background-color: #e9ecef;
+    /* 文字居中 */
+    text-align: center;
+    /* 较小的字号 */
+    font-size: 14px;
+    /* 适当的上下内边距 */
+    padding: 20px 0;
+    /* 文字颜色为浅色/深灰色 */
+    color: #6c757d;
+    /* 去掉默认的边距 */
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* =========================================
+   第8步：进阶挑战（选做）
+   ========================================= */
+/* 
+   说明：因为 HTML 结构里 header 中只有 h1 和 p，
+   如果想让它们垂直居中，需要给 header 设置 flex 布局。
+   如果只是想让它们水平居中，text-align: center 已经做到了。
+   这里提供一个 flex 垂直居中的示例（需要给 header 设置一个高度）：
+
+   header {
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       height: 200px; 
+   }
+*/

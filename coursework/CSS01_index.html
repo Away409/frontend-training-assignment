@@ -1,0 +1,2313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS 基础 · 前端开发实训 · 互动学习课件</title>
+<style>
+/* ============================================================
+   全局变量与基础样式
+   ============================================================ */
+:root{
+  --ink:#0B1324;          /* 第一次方案：深墨色文字 */
+  --ink-2:#5B6880;        /* 次级文字 */
+  --ink-3:#7B8CA0;        /* 弱文字 */
+  --navy:#0B1324;         /* 顶栏/侧栏：深墨蓝 */
+  --navy-2:#17233A;
+  --teal:#10B981;         /* 辅助强调：薄荷绿 */
+  --teal-deep:#059669;
+  --teal-bg:#ECFDF5;
+  --amber:#F97316;        /* 点缀色：橙色 */
+  --bg:#F4F7FB;           /* 第一次方案：浅蓝灰底 */
+  --card:#FFFFFF;
+  --line:#DCE5F1;
+  --code-bg:#101827;
+  --ok:#059669;
+  --bad:#DC2626;
+  --blue:#2563EB;         /* 第一次方案：主强调蓝 */
+  --blue-soft:#EAF2FF;
+  --shadow:0 12px 34px rgba(25,52,92,.08);
+}
+html{scroll-behavior:auto;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC",sans-serif;
+  font-size:17px;
+  line-height:1.75;
+}
+button{font-family:inherit;}
+::selection{background:#BFDBFE;}
+
+/* ============================================================
+   顶部栏与进度
+   ============================================================ */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  height:58px;display:flex;align-items:center;gap:18px;
+  padding:0 22px 0 16px;
+  background:var(--navy);color:#EAF2FF;
+}
+.brand{display:flex;align-items:baseline;gap:10px;white-space:nowrap;}
+.brand-course{font-size:15px;color:#A8B8D0;}
+.brand-sep{color:#4B5D78;}
+.brand-topic{font-size:17px;font-weight:600;letter-spacing:1px;}
+.progress-info{
+  flex:1;display:flex;align-items:baseline;gap:12px;
+  min-width:0;justify-content:flex-end;
+  font-size:13.5px;color:#A8B8D0;white-space:nowrap;overflow:hidden;
+}
+#progress-text{color:#EAF2FF;font-weight:600;}
+#progress-topic{color:#60A5FA;}
+.menu-btn{
+  display:none;width:38px;height:38px;border:1px solid #2B4257;border-radius:8px;
+  background:transparent;color:#CBD5E1;font-size:16px;cursor:pointer;
+}
+/* 顶栏普通按钮（编辑模式等） */
+.bar-btn{
+  border:1px solid #2B4257;background:#17233A;border-radius:20px;
+  color:#CBD5E1;font-size:13.5px;padding:6px 14px;cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.bar-btn:hover{border-color:var(--blue);color:#93C5FD;}
+.bar-btn.on{background:var(--amber);border-color:var(--amber);color:#fff;}
+
+
+.progress-track{position:fixed;top:58px;left:0;right:0;z-index:49;height:3px;background:#17233A;}
+#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width .3s;}
+
+/* ============================================================
+   侧栏导航
+   ============================================================ */
+.sidebar{
+  position:fixed;top:61px;bottom:0;left:0;width:236px;z-index:40;
+  background:#0B1324;border-right:1px solid #17233A;
+  overflow-y:auto;padding:14px 0 90px;
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{background:#263A5A;border-radius:3px;}
+.nav-group{
+  padding:14px 20px 6px;font-size:11.5px;letter-spacing:2px;
+  color:#7285A2;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:7px 18px;border:0;background:transparent;cursor:pointer;
+  color:#9BAECC;font-size:13.5px;text-align:left;line-height:1.4;
+  border-left:3px solid transparent;
+}
+.nav-item .nav-num{font-size:11px;color:#526887;font-family:ui-monospace,Menlo,Consolas,monospace;flex:none;}
+.nav-item:hover{background:#172744;color:#E3EDFF;}
+.nav-item.active{
+  background:#172F58;color:#93C5FD;border-left-color:var(--blue);
+}
+.nav-item.active .nav-num{color:#60A5FA;}
+.sidebar-mask{display:none;}
+
+/* ============================================================
+   主内容区与章节
+   ============================================================ */
+main{margin:61px 0 0 236px;padding:34px 44px 110px;}
+.cs{display:none;max-width:1120px;margin:0 auto;}
+.cs.active{display:block;animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){.cs.active{animation:none;}}
+
+.sec-head{margin-bottom:26px;padding-bottom:16px;border-bottom:1px solid var(--line);}
+.sec-kicker{
+  display:flex;align-items:center;gap:12px;
+  font-size:13px;letter-spacing:2px;color:var(--teal-deep);font-weight:600;
+}
+.sec-kicker .tbadge{
+  display:none;align-items:center;gap:6px;
+  background:#FFF7ED;color:#C2410C;border:1px solid #F1DCAE;border-radius:20px;
+  padding:2px 12px;font-size:12px;letter-spacing:.5px;font-weight:600;
+}
+.sec-head h2{
+  margin:8px 0 0;font-size:31px;line-height:1.3;letter-spacing:1px;color:var(--ink);
+}
+.sec-body>p,.teach-body>p{color:var(--ink-2);max-width:900px;text-align:justify;}
+.sec-body h3,.teach-body h3{
+  display:flex;align-items:center;gap:10px;
+  margin:38px 0 14px;font-size:20px;color:var(--ink);
+}
+.sec-body h3::before,.teach-body h3::before{content:"";width:5px;height:20px;background:var(--teal);border-radius:3px;flex:none;}
+.lead{font-size:18px;color:var(--ink-2);}
+strong{color:var(--ink);}
+em{font-style:normal;color:var(--teal-deep);font-weight:600;}
+
+/* ============================================================
+   通用组件：卡片 / 表格 / 提示框 / 折叠
+   ============================================================ */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:22px 24px;box-shadow:var(--shadow);
+}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media (max-width:1100px){.grid3{grid-template-columns:1fr 1fr;}}
+@media (max-width:860px){.grid2,.grid3{grid-template-columns:1fr;}}
+
+.note{
+  background:var(--teal-bg);border:1px solid #BFDBFE;border-left:4px solid var(--teal);
+  border-radius:10px;padding:14px 18px;margin:16px 0;color:#24446F;font-size:15.5px;
+}
+.note b{color:var(--teal-deep);}
+.warn{
+  background:#FDF6EC;border:1px solid #F0DDBB;border-left:4px solid var(--amber);
+  border-radius:10px;padding:14px 18px;margin:16px 0;color:#6B4A12;font-size:15.5px;
+}
+.warn b{color:#C2410C;}
+.idea{
+  background:#F0F4FB;border:1px solid #CFDCEE;border-left:4px solid #2563EB;
+  border-radius:10px;padding:14px 18px;margin:16px 0;color:#294B78;font-size:15.5px;
+}
+.idea b{color:#1D4ED8;}
+
+/* 表格 */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;background:#fff;}
+.tbl th{
+  background:var(--navy);color:#DCE9F5;text-align:left;padding:10px 14px;
+  font-weight:600;letter-spacing:1px;
+}
+.tbl td{border:1px solid var(--line);padding:10px 14px;color:var(--ink-2);vertical-align:top;}
+.tbl tr:nth-child(even) td{background:#F7FAFC;}
+
+/* 折叠面板 */
+details.fold{
+  background:#fff;border:1px solid var(--line);border-radius:10px;
+  margin:12px 0;box-shadow:var(--shadow);
+}
+details.fold summary{
+  cursor:pointer;padding:13px 18px;font-weight:600;color:var(--ink);
+  list-style:none;display:flex;align-items:center;gap:10px;user-select:none;
+}
+details.fold summary::-webkit-details-marker{display:none;}
+details.fold summary::before{
+  content:"▸";color:var(--teal-deep);font-size:14px;transition:transform .2s;flex:none;
+}
+details.fold[open] summary::before{transform:rotate(90deg);}
+details.fold .fold-body{padding:2px 20px 18px;border-top:1px dashed var(--line);}
+details.fold .fold-body p{color:var(--ink-2);font-size:15.5px;}
+
+/* 行内代码 */
+.code-inline{
+  font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","Courier New",monospace;
+  background:#EAF2FF;color:#1D4ED8;border-radius:6px;padding:1px 7px;font-size:.88em;
+}
+
+/* ============================================================
+   代码块（含复制按钮与语法高亮）
+   ============================================================ */
+.codebox{
+  margin:16px 0;border-radius:12px;overflow:hidden;
+  border:1px solid #16314E;box-shadow:var(--shadow);background:var(--code-bg);
+}
+.code-head{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#0B1A2B;border-bottom:1px solid #16314E;padding:8px 16px;
+}
+.code-label{
+  font-size:12.5px;color:#6C87A3;letter-spacing:1px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+}
+.code-label::before{content:"● ";color:#60A5FA;font-size:10px;}
+.copy-btn{
+  border:1px solid #2B4257;background:#132B42;color:#9FC0D9;
+  border-radius:6px;padding:4px 12px;font-size:12.5px;cursor:pointer;transition:all .2s;
+}
+.copy-btn:hover{border-color:var(--teal);color:#93C5FD;}
+.copy-btn.ok{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff;}
+.codebox pre{
+  margin:0;padding:18px 20px;overflow-x:auto;
+  font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","Courier New",monospace;
+  font-size:14.5px;line-height:1.72;color:#D9E6F2;tab-size:2;
+}
+.codebox pre::-webkit-scrollbar{height:8px;}
+.codebox pre::-webkit-scrollbar-thumb{background:#24405E;border-radius:4px;}
+/* 语法高亮配色 */
+.c-sel{color:#93C5FD;font-weight:600;}
+.c-prop{color:#82B4F8;}
+.c-val{color:#FCD34D;}
+.c-com{color:#5F7893;font-style:italic;}
+.c-pun{color:#7189A5;}
+.c-tag{color:#93C5FD;font-weight:600;}
+.c-attr{color:#93C5FD;}
+.c-str{color:#9EE8B4;}
+.c-doct{color:#5F7893;}
+
+/* 综合案例：iframe 实时效果预览（srcdoc 离线可用，与课件样式完全隔离） */
+.preview-frame-wrap{
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  background:#FFFFFF;box-shadow:var(--shadow);margin:16px 0 18px;
+}
+.preview-frame-bar{
+  background:#F8FAFC;border-bottom:1px solid var(--line);
+  padding:7px 16px;font-size:12.5px;color:var(--ink-2);display:flex;align-items:center;gap:8px;
+}
+.preview-frame-bar::before{content:"▶";font-size:9px;color:var(--teal-deep);flex:none;}
+.preview-frame{display:block;width:100%;height:470px;border:0;background:#F8FAFC;}
+
+/* 选择器扩展讲解：现场演示样式 */
+/* 交集选择器演示：p.intro 同时满足才命中 */
+.sd-jj p.intro{color:var(--teal-deep);font-weight:600;}
+.sd-jj p{margin:6px 0;font-size:14.5px;color:var(--ink-2);}
+.sd-jj div.intro{background:#F7FAFC;border-radius:6px;padding:4px 12px;font-size:14.5px;color:var(--ink-3);}
+/* 后代/子代选择器演示 */
+.sd-tree p{background:#EAF2FF;border-radius:6px;padding:4px 12px;font-size:13.5px;color:#24446F;margin:6px 0;}
+.sd-tree > p{border-left:4px solid var(--teal);font-weight:600;}
+.sd-tree .sd-nest{border:1px dashed var(--line);border-radius:8px;padding:4px 12px;margin:8px 0;}
+.sd-tree .sd-nest p{background:#EAF2FF;color:#294B78;}
+/* 分组选择器演示 */
+.sd-grp h4,.sd-grp p{color:#1D4ED8;margin:6px 0;}
+/* 伪类 :hover 演示（鼠标移入变色） */
+.sd-hover{
+  background:#EAF2FF;color:#294B78;border:2px dashed #2563EB;border-radius:10px;
+  padding:14px 20px;text-align:center;cursor:pointer;transition:all .2s;font-size:15px;font-weight:600;
+}
+.sd-hover:hover{background:var(--teal-deep);color:#fff;border-style:solid;border-color:var(--teal-deep);}
+/* 伪类 :first-child / :last-child 演示 */
+.sd-fc{list-style:none;padding:0;margin:8px 0;}
+.sd-fc li{background:#F7FAFC;border:1px solid var(--line);border-radius:6px;padding:5px 14px;margin:6px 0;font-size:14px;color:var(--ink-2);}
+.sd-fc li:first-child{color:#DC2626;font-weight:600;border-color:#E5B8B8;background:#FBEFEF;}
+.sd-fc li:last-child{color:#1D4ED8;font-weight:600;border-color:#C7D9EF;background:#F0F4FB;}
+/* 伪元素 ::before / ::after 演示（引号由 CSS 生成，不在 HTML 中） */
+.sd-pe{background:#F7FAFC;border:1px solid var(--line);border-radius:8px;padding:10px 16px;font-size:14.5px;color:var(--ink-2);}
+.sd-pe::before{content:"「 ";color:var(--teal-deep);font-weight:700;font-size:16px;}
+.sd-pe::after{content:" 」";color:var(--teal-deep);font-weight:700;font-size:16px;}
+/* 伪元素 ::first-line 演示 */
+.sd-fl{background:#F7FAFC;border:1px solid var(--line);border-radius:8px;padding:10px 16px;font-size:14.5px;color:var(--ink-2);line-height:1.8;}
+.sd-fl::first-line{color:var(--teal-deep);font-weight:600;}
+
+/* ============================================================
+   情境导入：前后对比演示
+   ============================================================ */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0;}
+@media (max-width:900px){.compare{grid-template-columns:1fr;}}
+.cmp-panel{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
+.cmp-title{
+  padding:10px 18px;font-size:14px;font-weight:600;letter-spacing:1px;
+  display:flex;align-items:center;gap:10px;
+}
+.cmp-title .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+.cmp-title.before{background:#EEF2F7;color:#7285A2;border-bottom:1px solid var(--line);}
+.cmp-title.before .dot{background:#9BAECC;}
+.cmp-title.after{background:#EAF2FF;color:var(--teal-deep);border-bottom:1px solid #BFDBFE;}
+.cmp-title.after .dot{background:var(--teal);}
+.cmp-stage{padding:22px;background:#FBFCFE;min-height:250px;}
+/* 左：模拟浏览器默认样式（只有 HTML） */
+.cs .ua-scope{font-family:"Times New Roman","SimSun",serif;color:#000;}
+.cs .ua-scope h1{font-size:26px;font-weight:bold;margin:9px 0 9px;}
+.cs .ua-scope p{font-size:16px;margin:9px 0;}
+.cs .ua-scope ul{list-style:disc;padding-left:36px;margin:9px 0;}
+.cs .ua-scope li{font-size:16px;margin:4px 0;}
+.cs .ua-scope a{color:#0000EE;text-decoration:underline;}
+/* 右：同一份 HTML + CSS 之后 */
+.cs .demo-styled{font-family:inherit;}
+.cs .demo-styled h1{
+  font-size:21px;color:#0B1324;margin:0 0 10px;padding-bottom:10px;
+  border-bottom:2px solid var(--teal);
+}
+.cs .demo-styled p{font-size:14.5px;color:#5B6880;margin:0 0 12px;}
+.cs .demo-styled ul{list-style:none;padding:0;margin:0 0 14px;}
+.cs .demo-styled li{
+  font-size:14.5px;color:#5B6880;background:#F3F8F6;border:1px solid #D5EBE6;
+  border-radius:8px;padding:6px 12px;margin-bottom:6px;
+}
+.cs .demo-styled a{
+  display:inline-block;background:var(--teal-deep);color:#fff;text-decoration:none;
+  font-size:14px;padding:8px 20px;border-radius:8px;
+}
+.obs-chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;}
+.obs-chips span{
+  background:#fff;border:1px solid var(--line);border-radius:20px;
+  padding:5px 16px;font-size:14px;color:var(--ink-2);
+}
+.q-big{
+  background:var(--navy);color:#EAF3FA;border-radius:14px;
+  padding:22px 28px;font-size:20px;font-weight:600;letter-spacing:1px;
+  margin:20px 0;position:relative;
+}
+.q-big::before{content:"?";position:absolute;right:26px;top:50%;transform:translateY(-50%);
+  width:38px;height:38px;border-radius:50%;background:var(--teal-deep);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:22px;}
+.layer3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0;}
+@media (max-width:860px){.layer3{grid-template-columns:1fr;}}
+.layer3 .card{text-align:center;padding:20px 16px;}
+.layer3 .lg{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.layer3 .ls{font-size:13.5px;color:var(--ink-2);}
+.layer3 .lt{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--teal-deep);margin-bottom:8px;}
+
+/* ============================================================
+   语法图示
+   ============================================================ */
+.syntax-fig{
+  background:var(--code-bg);border-radius:14px;border:1px solid #16314E;
+  padding:30px 34px;margin:18px 0;font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:20px;line-height:2.1;color:#D9E6F2;box-shadow:var(--shadow);
+}
+.syn-indent{padding-left:2.4em;}
+.syn-sel{color:#93C5FD;font-weight:700;border-bottom:3px solid #60A5FA;padding-bottom:1px;}
+.syn-prop{color:#82B4F8;border-bottom:3px solid #3B82F6;padding-bottom:1px;}
+.syn-val{color:#FCD34D;border-bottom:3px solid #F97316;padding-bottom:1px;}
+.syn-semi{color:#7189A5;border-bottom:3px dashed #5F7893;padding-bottom:1px;}
+.syn-qa{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 4px;}
+@media (max-width:900px){.syn-qa{grid-template-columns:1fr 1fr;}}
+.syn-qa .card{padding:14px 16px;font-size:14px;}
+.syn-qa b{display:block;font-size:13px;color:var(--teal-deep);margin-bottom:4px;letter-spacing:1px;}
+.syn-qa code{
+  font-family:ui-monospace,Menlo,Consolas,monospace;color:#1D4ED8;background:#EAF2FF;
+  border-radius:5px;padding:1px 6px;font-size:13px;display:inline-block;margin-bottom:6px;
+}
+
+/* ============================================================
+   属性演示卡片
+   ============================================================ */
+.pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media (max-width:900px){.pd-grid{grid-template-columns:1fr;}}
+.pd{
+  display:flex;gap:16px;align-items:stretch;background:#fff;
+  border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);
+}
+.pd-visual{
+  flex:1;min-width:0;background:#F7FAFC;border:1px dashed var(--line);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;padding:10px;min-height:76px;
+}
+.pd-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:6px;}
+.pd-info code{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:#0B5F55;
+  background:#EAF2FF;border-radius:6px;padding:3px 9px;align-self:flex-start;
+}
+.pd-info p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5;}
+/* 演示用到的具体视觉样式 */
+.d-color1{color:#DC2626;font-weight:600;}
+.d-color2{color:#2563EB;font-weight:600;}
+.d-color3{color:#2563EB;font-weight:600;}
+.d-fs1{font-size:14px;color:var(--ink-2);}
+.d-fs2{font-size:18px;color:var(--ink-2);}
+.d-fs3{font-size:24px;color:var(--ink-2);font-weight:600;}
+.d-serif{font-family:"Times New Roman","SimSun",serif;font-size:15px;color:var(--ink-2);}
+.d-sans{font-family:inherit;font-size:15px;color:var(--ink-2);}
+.d-normal{font-weight:normal;font-size:15px;color:var(--ink-2);}
+.d-bold{font-weight:bold;font-size:15px;color:var(--ink-2);}
+.d-lh1,.d-lh2{font-size:13px;color:var(--ink-2);margin:0;}
+.d-lh1{line-height:1.2;}
+.d-lh2{line-height:1.9;}
+.d-align{width:100%;font-size:13.5px;color:var(--ink-2);}
+.d-w1{width:110px;height:30px;background:#9CC3F5;border-radius:4px;}
+.d-w2{width:210px;height:30px;background:#9CC3F5;border-radius:4px;}
+.d-mh{width:150px;min-height:64px;background:#F3E8FF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#5A4A80;}
+.d-bg1{width:64px;height:30px;background-color:#EAF2FF;border-radius:4px;border:1px solid #D5EBE6;}
+.d-bg2{width:64px;height:30px;background-color:#FDE8D8;border-radius:4px;border:1px solid #F5D5B8;}
+.d-bg3{width:64px;height:30px;background-color:#EAF2FF;border-radius:4px;border:1px solid #CFDCEE;}
+.d-bd1{width:84px;height:34px;border:2px solid #2563EB;border-radius:4px;background:#fff;}
+.d-bd2{width:84px;height:34px;border:2px dashed #DC2626;border-radius:4px;background:#fff;}
+.d-bd3{width:84px;height:34px;border:5px solid #2563EB;border-radius:4px;background:#fff;}
+.d-br1{width:56px;height:40px;background:#2563EB;border-radius:0;}
+.d-br2{width:56px;height:40px;background:#2563EB;border-radius:10px;}
+.d-br3{width:44px;height:44px;background:#2563EB;border-radius:50%;}
+.d-mg{display:flex;flex-direction:column;align-items:stretch;width:100%;}
+.d-mg-a{background:#9CC3F5;border-radius:4px;color:#fff;font-size:12px;text-align:center;padding:3px 0;}
+.d-mg-gap{font-size:11px;color:var(--amber);text-align:center;line-height:1.1;padding:7px 0;}
+.d-mg-b{background:#BFDBFE;border-radius:4px;color:#24446F;font-size:12px;text-align:center;padding:3px 0;}
+.d-pd{background:#BFDBFE;border-radius:6px;padding:12px;}
+.d-pd span{display:block;background:#fff;border-radius:4px;font-size:12px;color:#24446F;padding:5px 10px;text-align:center;}
+
+/* ============================================================
+   盒模型
+   ============================================================ */
+.bm-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+@media (max-width:960px){.bm-wrap{grid-template-columns:1fr;}}
+.bm-diagram{
+  background:#F7EFD4;border:1px solid #E8D9A8;border-radius:12px;
+  padding:26px;box-shadow:var(--shadow);
+}
+.bm-border{background:#F2C94C;border:2px solid #D9A93C;border-radius:8px;padding:22px;}
+.bm-padding{background:#CBE8CE;border:2px solid #9ED4A4;border-radius:6px;padding:22px;}
+.bm-content{
+  background:#9CC3F5;border:2px solid #6FA3E8;border-radius:6px;
+  min-height:96px;display:flex;align-items:center;justify-content:center;
+  font-family:ui-monospace,Menlo,Consolas,monospace;color:#1D4ED8;font-weight:700;
+}
+.bm-tag{
+  position:relative;display:inline-block;font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:12.5px;font-weight:700;padding:1px 10px;border-radius:10px;margin-bottom:4px;
+}
+.bm-diagram>.bm-tag{background:#B48A2E;color:#FFF7E2;}
+.bm-border>.bm-tag{background:#B48A2E;color:#FFF7E2;display:table;}
+.bm-padding>.bm-tag{background:#3F7D4A;color:#EFFAF1;display:table;}
+.bm-content>.bm-tag{background:#2B5CA8;color:#EAF2FD;display:table;margin:0 auto;}
+.bm-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+.bm-legend span{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--ink-2);
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:4px 13px;}
+.bm-legend i{width:12px;height:12px;border-radius:3px;flex:none;}
+/* 盒模型互动 */
+.bp{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow);}
+.bp-stage{
+  background:#F7EFD4;border:1px dashed #D9BE7A;border-radius:10px;
+  padding:8px;display:flex;justify-content:center;margin-bottom:14px;overflow-x:auto;
+}
+.bp-box{
+  width:240px;background:#CBE8CE;border:3px solid #D9A93C;border-radius:6px;
+  padding:24px;transition:all .15s;
+}
+.bp-content{
+  background:#9CC3F5;border-radius:4px;color:#1D4ED8;text-align:center;
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;font-weight:700;padding:10px 4px;
+}
+.bp-ctrl label{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-2);margin:8px 0;}
+.bp-ctrl b{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--teal-deep);width:66px;flex:none;}
+.bp-ctrl input[type="range"]{flex:1;accent-color:var(--teal);}
+.bp-ctrl .bp-v{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--ink);width:64px;flex:none;}
+.bp-formula{
+  margin-top:12px;background:var(--navy);color:#93C5FD;border-radius:8px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;padding:10px 14px;text-align:center;
+}
+
+/* ============================================================
+   开发者工具示意图
+   ============================================================ */
+.dt-mock{
+  border:1px solid #2B4257;border-radius:12px;overflow:hidden;
+  box-shadow:var(--shadow);margin:18px 0;background:#1B2C3E;
+}
+.dt-bar{display:flex;align-items:center;gap:14px;background:#0F2033;padding:8px 14px;}
+.dt-dots{display:flex;gap:6px;}
+.dt-dots i{width:10px;height:10px;border-radius:50%;background:#33475D;}
+.dt-tab{
+  font-size:12px;color:#93C5FD;border-bottom:2px solid var(--teal);padding:2px 10px 6px;
+}
+.dt-tab2{font-size:12px;color:#7189A5;padding:2px 10px 6px;}
+.dt-body{display:grid;grid-template-columns:1fr 1.4fr;gap:1px;background:#22364C;}
+@media (max-width:860px){.dt-body{grid-template-columns:1fr;}}
+.dt-tree{background:#1B2C3E;padding:12px 14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.9;color:#9BAECC;}
+.dt-tree .cur{background:#2B4B33;color:#C9F0DC;border-radius:4px;padding:0 6px;}
+.dt-tree .sel-hl{color:#93C5FD;}
+.dt-styles{background:#1B2C3E;padding:12px 16px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.9;color:#B8CBE0;}
+.dt-styles .dt-r{color:#93C5FD;}
+.dt-styles .dt-p{color:#82B4F8;}
+.dt-styles .dt-v{color:#FCD34D;}
+.dt-styles .strike{color:#6C87A3;text-decoration:line-through;}
+.dt-styles .dt-mod{background:#3A4A2E;color:#C9F0DC;border-radius:3px;padding:0 4px;}
+.dt-note{background:#0F2033;color:#7189A5;font-size:12px;padding:8px 16px;}
+kbd{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;
+  background:#fff;border:1px solid #C9D7EA;border-bottom-width:2px;border-radius:5px;
+  padding:1px 7px;color:var(--ink);white-space:nowrap;
+}
+.steps{counter-reset:step;display:flex;flex-direction:column;gap:12px;margin:16px 0;}
+.step{
+  display:flex;gap:16px;background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;box-shadow:var(--shadow);
+}
+.step-num{
+  counter-increment:step;flex:none;width:34px;height:34px;border-radius:50%;
+  background:var(--navy);color:#93C5FD;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;
+}
+.step-num::before{content:counter(step);}
+.step h4{margin:0 0 6px;font-size:16px;color:var(--ink);}
+.step .obs{font-size:14.5px;color:var(--ink-2);}
+.step .err{font-size:13.5px;color:var(--bad);margin-top:6px;background:#FBEFEF;border-radius:6px;padding:4px 10px;display:inline-block;}
+.step .obs b{color:var(--teal-deep);}
+.step .err b{color:#8F2F2F;}
+
+/* ============================================================
+   实训 / 检测 / 清单
+   ============================================================ */
+.task-level{border-top:4px solid var(--teal);}
+.task-level.lv2{border-top-color:#2563EB;}
+.task-level.lv3{border-top-color:var(--amber);}
+.task-level h4{
+  margin:0 0 10px;display:flex;align-items:center;gap:10px;font-size:17px;
+}
+.task-level .lv-tag{
+  font-size:11.5px;border-radius:14px;padding:2px 12px;letter-spacing:1px;flex:none;
+}
+.task-level.lv1 .lv-tag{background:var(--teal-bg);color:var(--teal-deep);}
+.task-level.lv2 .lv-tag{background:#EAF2FF;color:#1D4ED8;}
+.task-level.lv3 .lv-tag{background:#FFF7ED;color:#C2410C;}
+.task-level ul{margin:0;padding-left:20px;color:var(--ink-2);font-size:15px;}
+.task-level li{margin:5px 0;}
+.checklist{list-style:none;padding:0;margin:10px 0;}
+.checklist li{margin:0 0 4px;}
+.checklist label{
+  display:flex;align-items:flex-start;gap:10px;cursor:pointer;
+  padding:9px 14px;border-radius:8px;transition:background .15s;font-size:15.5px;color:var(--ink-2);
+}
+.checklist label:hover{background:#F0F6F4;}
+.checklist input{width:17px;height:17px;margin-top:5px;accent-color:var(--teal);flex:none;}
+/* 测验 */
+.quiz{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 24px;box-shadow:var(--shadow);margin:16px 0;}
+.quiz .q-type{
+  display:inline-block;font-size:12px;letter-spacing:1px;color:#1D4ED8;
+  background:#EAF2FF;border-radius:14px;padding:2px 12px;margin-bottom:10px;font-weight:600;
+}
+.quiz .q-stem{font-size:16.5px;font-weight:600;color:var(--ink);margin-bottom:12px;}
+.quiz ol{margin:0 0 6px;padding-left:26px;color:var(--ink-2);}
+.quiz ol li{margin:5px 0;font-size:15.5px;}
+.q-btn{
+  border:1px solid var(--teal-deep);background:#fff;color:var(--teal-deep);
+  border-radius:8px;padding:7px 20px;font-size:14px;cursor:pointer;font-weight:600;transition:all .2s;margin-top:6px;
+}
+.q-btn:hover{background:var(--teal-bg);}
+.q-ans{
+  display:none;margin-top:14px;border-top:1px dashed var(--line);padding-top:14px;
+  background:#F7FAFC;border-radius:0 0 10px 10px;padding:14px 16px;
+}
+.q-ans.open{display:block;animation:fadeUp .25s ease;}
+.q-ans .qa-key{color:var(--ok);font-weight:700;}
+.q-ans p{margin:4px 0;font-size:15px;color:var(--ink-2);}
+/* 知识地图 */
+.kmap{
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:24px 26px;box-shadow:var(--shadow);
+}
+.kmap-root{
+  display:inline-block;background:var(--navy);color:#93C5FD;font-weight:700;
+  border-radius:8px;padding:6px 20px;font-size:16px;letter-spacing:2px;
+}
+.kmap-branch{list-style:none;margin:12px 0 0;padding:0 0 0 22px;border-left:2px solid #BFDBFE;}
+.kmap-branch li{
+  position:relative;margin:10px 0;font-size:15.5px;color:var(--ink-2);
+}
+.kmap-branch li::before{
+  content:"";position:absolute;left:-22px;top:12px;width:16px;height:2px;background:#BFDBFE;
+}
+.kmap-branch b{color:var(--ink);}
+.kmap-branch code{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:#0B5F55;
+  background:#EAF2FF;border-radius:5px;padding:1px 8px;
+}
+/* 排错流程 */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0;}
+.flow .f{
+  background:var(--navy);color:#EAF2FF;border-radius:8px;padding:7px 14px;
+  font-size:13.5px;font-weight:600;
+}
+.flow .f small{display:block;font-weight:400;color:#7189A5;font-size:11.5px;}
+.flow .fa{color:var(--teal-deep);font-weight:700;font-size:16px;}
+#reveal-all{
+  border:1px solid #7C5CBF;background:#fff;color:#6D28D9;border-radius:8px;
+  padding:6px 16px;font-size:13.5px;cursor:pointer;font-weight:600;
+}
+/* 演示案例的成品预览（复用学生代码规则） */
+.preview-shell{
+  background:#F8FAFC;border:1px dashed #C9D7EA;border-radius:12px;
+  padding:26px 0;display:flex;justify-content:center;
+}
+.course-card{
+  width:320px;background-color:#FFFFFF;padding:24px;
+  border:1px solid #DCE5F1;border-radius:12px;
+  font-family:inherit;
+}
+.course-card h2{color:#0B1324;font-size:22px;margin:0 0 10px;font-weight:700;}
+.course-intro{color:#5B6880;font-size:15px;line-height:1.7;margin:0 0 10px;}
+.tag{
+  background-color:#EAF2FF;color:#1D4ED8;font-size:13px;
+  padding:2px 10px;border-radius:999px;margin-right:8px;
+}
+.start-btn{
+  background-color:#2563EB;color:#FFFFFF;font-size:15px;
+  padding:8px 24px;border-radius:8px;text-decoration:none;display:inline-block;margin-top:16px;
+}
+/* 计时徽标等 */
+.tbadge{display:none;}
+
+/* ============================================================
+   底部翻页器
+   ============================================================ */
+.pager{
+  position:fixed;right:26px;bottom:24px;z-index:45;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(14,34,51,.92);border:1px solid #2B4257;border-radius:40px;
+  padding:8px 14px;backdrop-filter:blur(4px);box-shadow:0 6px 18px rgba(14,34,51,.35);
+}
+.pager button{
+  width:34px;height:34px;border-radius:50%;border:1px solid #33475D;background:transparent;
+  color:#CBD5E1;font-size:18px;cursor:pointer;line-height:1;transition:all .15s;
+}
+.pager button:hover:not(:disabled){border-color:var(--teal);color:#93C5FD;}
+.pager button:disabled{opacity:.3;cursor:default;}
+#pager-label{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:#9FC0D9;min-width:52px;text-align:center;}
+.key-hint{
+  position:fixed;left:calc(236px + 26px);bottom:26px;z-index:44;
+  font-size:12.5px;color:var(--ink-3);background:rgba(255,255,255,.85);
+  border:1px solid var(--line);border-radius:20px;padding:4px 14px;
+}
+@media (max-width:960px){.key-hint{display:none;}}
+
+/* ============================================================
+   响应式（窄屏 / 小投影）
+   ============================================================ */
+@media (max-width:960px){
+  .menu-btn{display:block;}
+  .progress-info{display:none;}
+  .sidebar{
+    transform:translateX(-100%);transition:transform .25s;top:61px;bottom:0;width:250px;
+  }
+  .sidebar.open{transform:none;box-shadow:12px 0 40px rgba(8,20,32,.4);}
+  .sidebar-mask{
+    display:block;position:fixed;inset:61px 0 0 0;background:rgba(10,22,36,.45);
+    z-index:39;opacity:0;pointer-events:none;transition:opacity .2s;
+  }
+  .sidebar-mask.show{opacity:1;pointer-events:auto;}
+  main{margin-left:0;padding:26px 20px 110px;}
+}
+@media (min-width:1500px){
+  body{font-size:18px;}
+  .codebox pre{font-size:15.5px;}
+}
+
+/* ============================================================
+   第一次方案主题覆盖：浅蓝灰画布 × 深墨蓝 × 规则蓝 × 薄荷绿
+   ============================================================ */
+body{background:var(--bg);color:var(--ink);}
+main{background:transparent;}
+.sec-kicker,.sec-kicker em,.q-type,.idea b,.kmap-branch b{color:var(--blue)!important;}
+.sec-body h3::before,.teach-body h3::before{background:var(--blue)!important;}
+.note{background:var(--blue-soft);border-color:#CFE0FF;border-left-color:var(--blue);color:#24446F;}
+.note b{color:#1D4ED8!important;}
+.warn{background:#FFF7ED;border-color:#FED7AA;border-left-color:var(--amber);color:#8A4314;}
+.warn b{color:#C2410C!important;}
+.idea{background:#EEF6FF;border-color:#CFE0FF;border-left-color:var(--blue);color:#294B78;}
+.idea b{color:#1D4ED8!important;}
+.q-btn{border-color:var(--blue);color:var(--blue);}
+.q-btn:hover{background:var(--blue-soft);}
+.q-ans .qa-key{color:var(--ok)!important;}
+.q-type{background:var(--blue-soft)!important;}
+.kmap-root{background:var(--ink);color:#93C5FD!important;}
+.kmap-branch{border-left-color:#BFDBFE;}
+.kmap-branch li::before{background:#BFDBFE;}
+.kmap-branch code{background:#ECFDF5;color:#047857;}
+.preview-shell{background:#F8FAFC;border-color:#C9D7EA;}
+.course-card h2{color:var(--ink)!important;}
+.course-intro{color:var(--ink-2)!important;}
+.tag{background:#EAF2FF!important;color:#1D4ED8!important;}
+.start-btn{background:var(--blue)!important;}
+.cmp-title.after{background:#ECFDF5!important;color:#047857!important;border-bottom-color:#A7F3D0!important;}
+.d-color2,.d-br1,.d-br2,.d-br3{color:var(--blue)!important;}
+.d-br1,.d-br2,.d-br3{background:var(--blue)!important;}
+.copy-btn:hover,.pager button:hover:not(:disabled){border-color:var(--blue)!important;color:#93C5FD!important;}
+.c-sel,.c-tag,.syn-sel,.dt-tree .sel-hl,.dt-styles .dt-r{color:#60A5FA!important;}
+.dt-tree,.codebox{background:var(--code-bg)!important;}
+.flow .f{background:var(--ink);}
+.flow .fa{color:var(--blue)!important;}
+/* 浅色头部与导航：保留第一次方案的蓝色强调 */
+.topbar{background:#FFFFFF;color:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(25,52,92,.06);}
+.brand-course{color:#6B7B93;}.brand-sep{color:#B4C2D5;}.brand-topic{color:var(--ink);}
+.progress-info{color:#6B7B93;}#progress-text{color:var(--ink);}#progress-topic{color:var(--blue);}
+.menu-btn{border-color:#C9D7EA;background:#F8FAFC;color:#385078;}
+.progress-track{background:#E8EEF6;}
+.sidebar{background:#FFFFFF;border-right:1px solid var(--line);box-shadow:4px 0 18px rgba(25,52,92,.04);}
+.sidebar::-webkit-scrollbar-thumb{background:#C9D7EA;}
+.nav-group{color:#8A98AB;}
+.nav-item{color:#5B6880;}
+.nav-item .nav-num{color:#9AA9BC;}
+.nav-item:hover{background:#F3F7FC;color:var(--ink);}
+.nav-item.active{background:#EAF2FF;color:var(--blue);border-left-color:var(--blue);}
+.nav-item.active .nav-num{color:var(--blue);}
+.edit-btn{border-color:#C9D7EA;background:#F8FAFC;color:#385078;}
+.edit-btn:hover,.edit-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+body.editing main::before{background:#FFFFFF;color:#385078;border-color:#C9D7EA;box-shadow:0 8px 24px rgba(25,52,92,.12);}
+.edit-tools{display:flex;align-items:center;gap:8px;margin-left:18px;white-space:nowrap;}
+.edit-btn{border:1px solid #385078;background:#17233A;color:#DCE9FF;border-radius:8px;padding:6px 11px;font-size:12px;cursor:pointer;transition:.2s;}
+.edit-btn:hover,.edit-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.edit-reset{display:none;}
+body.editing main{outline:2px dashed #93C5FD;outline-offset:8px;}
+body.editing main [contenteditable="true"]{outline:1px dashed rgba(37,99,235,.25);outline-offset:2px;}
+body.editing main::before{content:"编辑模式：点击正文文字直接修改，代码块和控件保持锁定";display:block;position:fixed;left:260px;bottom:22px;z-index:45;background:#17233A;color:#DCE9FF;border:1px solid #385078;border-radius:999px;padding:7px 14px;font-size:12px;box-shadow:0 8px 24px rgba(11,19,36,.18);}
+@media (max-width:960px){body.editing main::before{left:18px;right:18px;text-align:center;bottom:16px;}.edit-tools{margin-left:auto;}.brand-course,.brand-sep{display:none;}.brand-topic{font-size:15px;}.edit-btn{padding:5px 8px;font-size:11px;}}
+</style>
+</head>
+<body>
+
+<!-- ============ 顶部栏 ============ -->
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开章节目录">☰</button>
+  <div class="brand">
+    <span class="brand-course">前端开发实训</span>
+    <span class="brand-sep">/</span>
+    <span class="brand-topic">CSS 基础</span>
+  </div>
+  <div class="progress-info">
+    <span id="progress-text">第 1 / 15 节</span>
+    <span id="progress-topic">课程封面</span>
+  </div>
+  <div class="edit-tools" aria-label="文本编辑工具">
+    <button class="edit-btn" id="edit-toggle" type="button">编辑文本</button>
+    <button class="edit-btn edit-reset" id="edit-reset" type="button">恢复原文</button>
+  </div>
+</header>
+<div class="progress-track"><div id="progress-bar"></div></div>
+
+<!-- ============ 侧栏导航 ============ -->
+<aside class="sidebar" id="sidebar"><nav id="nav" aria-label="章节导航"></nav></aside>
+<div class="sidebar-mask" id="sidebar-mask"></div>
+
+<!-- ============ 主内容 ============ -->
+<main>
+
+<!-- ======== 第 1 节 课程封面 ======== -->
+<section class="cs active" data-nav="课程封面" id="sec-1">
+  <div class="card" style="padding:44px 48px;">
+    <div style="font-size:14px;letter-spacing:4px;color:var(--teal-deep);font-weight:700;">《前端开发实训》· 互动学习课件</div>
+    <h1 style="font-size:52px;margin:14px 0 6px;letter-spacing:3px;color:var(--ink);">CSS 基础</h1>
+    <p style="font-size:19px;color:var(--ink-2);margin:0 0 26px;">让网页从"能看"走向"好看、好用"——结构与样式分离的第一课</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px;">
+      <span style="background:#EAF2FF;color:var(--teal-deep);border-radius:20px;padding:6px 16px;font-size:14px;">适合人群：软件工程专业本科生</span>
+      <span style="background:#EAF2FF;color:#1D4ED8;border-radius:20px;padding:6px 16px;font-size:14px;">课时：45 分钟（1 课时）</span>
+      <span style="background:#FFF7ED;color:#C2410C;border-radius:20px;padding:6px 16px;font-size:14px;">先修：HTML 基础</span>
+      <span style="background:#F3E8FF;color:#6D28D9;border-radius:20px;padding:6px 16px;font-size:14px;">环境：VS Code + Chrome</span>
+    </div>
+    <h3 style="margin-top:0;">学习路线</h3>
+    <div class="tbl" style="font-size:14.5px;">
+      <table>
+        <tr><th style="width:140px;">先做什么</th><th>你会学到什么</th><th style="width:170px;">对应章节</th></tr>
+        <tr><td>看懂分工</td><td>HTML、CSS、JavaScript 各自负责什么</td><td>第 2 – 4 节</td></tr>
+        <tr><td>写出规则</td><td>语法、引入方式、选择器与常用属性</td><td>第 5 – 8 节</td></tr>
+        <tr><td>算清布局</td><td>盒模型、开发者工具与样式排错</td><td>第 9 – 10 节</td></tr>
+        <tr><td>检测巩固</td><td>通过综合案例、即时检测和排错清单巩固基础</td><td>第 11 – 14 节</td></tr>
+        <tr><td>继续迁移</td><td>观察 CSS 思维如何迁移到组件化 UI</td><td>第 15 节</td></tr>
+      </table>
+    </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:26px;flex-wrap:wrap;">
+      <button class="q-btn" id="cover-start" style="font-size:16px;padding:10px 32px;">开始本课 →</button>
+      <span style="font-size:13.5px;color:var(--ink-3);">使用键盘 ← → 可切换章节</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 第 2 节 学习目标 ======== -->
+<section class="cs" data-nav="学习目标" id="sec-2">
+  <div class="sec-head">
+    <div class="sec-kicker">第 2 节<span class="tbadge">建议 1 分钟</span></div>
+    <h2>学习目标</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">本节课结束时，你应当达到以下三类目标。其中“技能目标”可通过综合案例与即时检测进行检验。</p>
+    <div class="grid3">
+      <div class="card">
+        <div style="font-size:15px;font-weight:700;color:var(--teal-deep);letter-spacing:2px;margin-bottom:10px;">知识目标</div>
+        <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:14.5px;">
+          <li style="margin:6px 0;">理解 HTML 与 CSS 的分工</li>
+          <li style="margin:6px 0;">掌握"选择器 + 声明块"的 CSS 基本语法</li>
+          <li style="margin:6px 0;">理解行内、内部、外部三种引入方式的区别</li>
+          <li style="margin:6px 0;">理解 content、padding、border、margin 构成的盒模型</li>
+          <li style="margin:6px 0;">认识层叠、继承和优先级的基本现象</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div style="font-size:15px;font-weight:700;color:#1D4ED8;letter-spacing:2px;margin-bottom:10px;">技能目标</div>
+        <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:14.5px;">
+          <li style="margin:6px 0;">能够正确引入 CSS</li>
+          <li style="margin:6px 0;">能使用标签、类、ID 选择器选中页面元素</li>
+          <li style="margin:6px 0;">能设置文字、背景、边框、宽度和内外边距</li>
+          <li style="margin:6px 0;">能完成一个简单网页卡片的样式设计</li>
+          <li style="margin:6px 0;">能使用 Chrome 开发者工具检查样式是否生效</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div style="font-size:15px;font-weight:700;color:#6D28D9;letter-spacing:2px;margin-bottom:10px;">素养目标</div>
+        <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:14.5px;">
+          <li style="margin:6px 0;">形成"结构与样式分离"的工程意识</li>
+          <li style="margin:6px 0;">养成规范命名、规范缩进、及时注释、主动调试的习惯</li>
+          <li style="margin:6px 0;">理解软件开发中"规范、责任、协作、持续改进"的职业要求</li>
+          <li style="margin:6px 0;">尊重原创设计与数字内容版权，不直接照搬他人页面</li>
+          <li style="margin:6px 0;">认识样式设计思想的跨平台迁移价值：从 CSS 到鸿蒙 ArkUI（拓展）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 第 3 节 情境导入 ======== -->
+<section class="cs" data-nav="情境导入" id="sec-3">
+  <div class="sec-head">
+    <div class="sec-kicker">第 3 节<span class="tbadge">建议 2 分钟</span></div>
+    <h2>情境导入：同一份 HTML，两种命运</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">下面左右两栏使用的是<strong>同一份 HTML 代码</strong>。左边是只写 HTML 的效果，右边是加入 CSS 之后的效果。请先观察 20 秒。</p>
+    <div class="compare">
+      <div class="cmp-panel">
+        <div class="cmp-title before"><span class="dot"></span>只有 HTML（浏览器默认样式）</div>
+        <div class="cmp-stage">
+          <div class="ua-scope">
+            <h1>课程通知</h1>
+            <p>《前端开发实训》· 第 3 次课</p>
+            <ul>
+              <li>时间：周五 3–4 节</li>
+              <li>地点：实训楼 B302</li>
+              <li>主题：CSS 基础与页面美化</li>
+            </ul>
+            <a href="#">查看课程资料</a>
+          </div>
+        </div>
+      </div>
+      <div class="cmp-panel">
+        <div class="cmp-title after"><span class="dot"></span>HTML + CSS 之后</div>
+        <div class="cmp-stage">
+          <div class="demo-styled">
+            <h1>课程通知</h1>
+            <p>《前端开发实训》· 第 3 次课</p>
+            <ul>
+              <li>时间：周五 3–4 节</li>
+              <li>地点：实训楼 B302</li>
+              <li>主题：CSS 基础与页面美化</li>
+            </ul>
+            <a href="#">查看课程资料</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p><strong>请重点观察这些变化：</strong></p>
+    <div class="obs-chips">
+      <span>文字：大小、粗细、颜色</span><span>背景与边框</span><span>间距与留白</span><span>信息的层次感</span><span>整体阅读体验</span>
+    </div>
+    <div class="q-big">HTML 已经能够显示内容，为什么还需要 CSS？</div>
+    <p>左右两栏的信息<strong>一模一样</strong>，改变的只是"表现"。网页的构建由三种语言各司其职：</p>
+    <div class="layer3">
+      <div class="card">
+        <div class="lt">&lt;html&gt;</div>
+        <div class="lg">HTML — 内容与结构</div>
+        <div class="ls">标题、段落、列表……页面上"有什么"</div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--teal);">
+        <div class="lt">style.css</div>
+        <div class="lg">CSS — 样式与表现</div>
+        <div class="ls">颜色、字体、间距、布局……页面"长什么样"</div>
+      </div>
+      <div class="card">
+        <div class="lt">script.js</div>
+        <div class="lg">JavaScript — 行为与交互</div>
+        <div class="ls">点击、校验、动态效果……页面"会做什么"</div>
+      </div>
+    </div>
+    <div class="idea"><b>工程视角：</b>三种语言各司其职、边界清晰，正是软件工程中<b>模块化</b>与<b>团队协作</b>思想最早的体现——设计师调整配色不必惊动写结构的人，写结构的人改内容也不会弄丢样式。今天我们专门负责其中"表现"这一层。</div>
+  </div>
+</section>
+
+<!-- ======== 第 4 节 CSS 是什么 ======== -->
+<section class="cs" data-nav="CSS 是什么" id="sec-4">
+  <div class="sec-head">
+    <div class="sec-kicker">第 4 节<span class="tbadge">建议 2 分钟</span></div>
+    <h2>CSS 是什么</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">CSS，全称 <strong>Cascading Style Sheets（层叠样式表）</strong>，是一种专门描述网页"长什么样"的样式语言。浏览器读取 HTML 得到结构，再读取 CSS 规则，把样式"刷"到对应元素上。</p>
+    <div class="note"><b>一个类比：</b>HTML 是毛坯房和家具——墙、门、桌椅都在；CSS 是墙面刷漆、灯光布置和软装搭配。家具没换（内容没变），但住起来的感受完全不同。</div>
+    <h3>为什么要把样式从 HTML 里分离出来</h3>
+    <div class="grid3">
+      <div class="card"><b style="color:var(--teal-deep);">复用</b><p style="margin:8px 0 0;font-size:14.5px;color:var(--ink-2);">一套样式表可以同时服务成百上千个页面，全站风格统一。</p></div>
+      <div class="card"><b style="color:var(--teal-deep);">维护</b><p style="margin:8px 0 0;font-size:14.5px;color:var(--ink-2);">改一处、全站生效。换一次主题色，不必逐页修改。</p></div>
+      <div class="card"><b style="color:var(--teal-deep);">协作</b><p style="margin:8px 0 0;font-size:14.5px;color:var(--ink-2);">结构与样式可以并行开发、分工负责，互不阻塞。</p></div>
+    </div>
+    <p style="margin-top:18px;">至于名字里的"层叠（Cascading）"——多条规则可以同时作用在同一个元素上，叠加生效、冲突时有约定的取舍规则。这个现象我们在第 7 节末尾做简要体验，<strong>本节课不展开</strong>。</p>
+  </div>
+</section>
+
+<!-- ======== 第 5 节 CSS 基本语法 ======== -->
+<section class="cs" data-nav="基本语法" id="sec-5">
+  <div class="sec-head">
+    <div class="sec-kicker">第 5 节<span class="tbadge">建议 3 分钟</span></div>
+    <h2>CSS 基本语法</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">一条 CSS 规则由两部分组成：<strong>选择器</strong>与<strong>声明块</strong>。</p>
+    <div class="syntax-fig">
+      <div class="syn-line"><span class="syn-sel">选择器</span> {</div>
+      <div class="syn-line syn-indent"><span class="syn-prop">属性名</span>: <span class="syn-val">属性值</span><span class="syn-semi">;</span></div>
+      <div class="syn-line">}</div>
+    </div>
+    <div class="syn-qa">
+      <div class="card"><b>选择器 · 改谁？</b><code>p</code>表示页面上所有的 p 标签（也可以是类、ID 等，下一节详讲）。</div>
+      <div class="card"><b>属性名 · 改什么？</b><code>color</code>、<code>font-size</code>……描述"哪方面的样式"。</div>
+      <div class="card"><b>属性值 · 改成什么样？</b><code>blue</code>、<code>18px</code>……样式的具体取值。</div>
+      <div class="card"><b>分号 · 一条声明结束</b>最后一条声明的分号理论上可省，但<strong>建议每条都写</strong>——后面追加声明时不易出错。</div>
+    </div>
+    <h3>最简单的完整示例</h3>
+    <figure class="codebox" data-lang="css" data-label="示例：把所有段落改成蓝色、18 像素">
+<pre><code>p {
+  color: blue;
+  font-size: 18px;
+}</code></pre>
+    </figure>
+    <div class="pd" style="margin-top:14px;">
+      <div class="pd-visual"><p style="margin:0;color:blue;font-size:18px;">这段文字是普通的 &lt;p&gt; 段落，应用了上面的规则。</p></div>
+      <div class="pd-info"><code>p { color: blue; font-size: 18px; }</code><p>选择器 p 命中所有段落；color 与 font-size 两条声明分别设置颜色和字号。</p></div>
+    </div>
+    <h3>CSS 注释的写法</h3>
+    <figure class="codebox" data-lang="css" data-label="注释写法：/* 注释内容 */，不能嵌套">
+<pre><code>/* 这是单行注释：给谁改的、为什么改，写清楚 */
+p {
+  color: blue;
+}</code></pre>
+    </figure>
+    <p>注释写给自己和未来的同事看："这段规则是干什么的、为什么这么写"。及时的注释是职业习惯，不是负担。</p>
+    <div class="warn"><b>新手三大手误：</b>① 声明结尾<b>漏分号</b>；② 用了<b>中文标点</b>（：；"" 必须是英文半角）；③ 漏写<b>右大括号</b>，导致后面的规则全部失效。</div>
+  </div>
+</section>
+
+<!-- ======== 第 6 节 三种引入方式 ======== -->
+<section class="cs" data-nav="三种引入方式" id="sec-6">
+  <div class="sec-head">
+    <div class="sec-kicker">第 6 节<span class="tbadge">建议 3 分钟</span></div>
+    <h2>CSS 的三种引入方式</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">样式写在哪里？有三种方式，先看代码，再比较优劣。</p>
+    <h3>方式一：行内样式（写在标签的 style 属性里）</h3>
+    <figure class="codebox" data-lang="html" data-label="inline.html">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;行内样式示例&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- 样式直接写在标签上，只影响这一个元素 --&gt;
+  &lt;p style="color: #2563EB; font-size: 18px;"&gt;这段文字使用了行内样式。&lt;/p&gt;
+  &lt;p&gt;这段是普通段落，不受影响。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </figure>
+    <h3>方式二：内部样式（写在 head 的 style 标签里）</h3>
+    <figure class="codebox" data-lang="html" data-label="internal.html">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;内部样式示例&lt;/title&gt;
+  &lt;style&gt;
+    p {
+      color: #2563EB;
+      font-size: 18px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;这段文字使用了内部样式。&lt;/p&gt;
+  &lt;p&gt;这段也是 p 标签，同样生效。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </figure>
+    <h3>方式三：外部样式（单独的 .css 文件，用 link 引入）</h3>
+    <figure class="codebox" data-lang="html" data-label="index.html">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;外部样式示例&lt;/title&gt;
+  &lt;!-- 引入外部样式表：rel 和 href 都不能少 --&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;这段文字使用了外部样式。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </figure>
+    <figure class="codebox" data-lang="css" data-label="style.css（与 index.html 放同一文件夹）">
+<pre><code>/* 单独的样式文件：可以被多个页面共用 */
+p {
+  color: #2563EB;
+  font-size: 18px;
+}</code></pre>
+    </figure>
+    <h3>三种方式对比</h3>
+    <table class="tbl">
+      <tr><th style="width:90px;">方式</th><th>写法</th><th>适用场景</th><th>优点</th><th>局限</th><th style="width:110px;">推荐程度</th></tr>
+      <tr><td><b>行内样式</b></td><td style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;">style="..."</td><td>临时测试、极少量特殊样式</td><td>直观、优先级最高</td><td>结构与样式混在一起，无法复用，最难维护</td><td>★★☆☆☆ 谨慎使用</td></tr>
+      <tr><td><b>内部样式</b></td><td style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;">&lt;style&gt;...&lt;/style&gt;</td><td>单页练习、课堂演示</td><td>无需额外文件，便于演示</td><td>样式不能被其他页面复用</td><td>★★★☆☆ 练习可用</td></tr>
+      <tr><td><b>外部样式</b></td><td style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;">&lt;link rel="stylesheet"&gt;</td><td>真实项目（多页面）</td><td>结构与样式彻底分离，一处修改全站生效，便于团队协作</td><td>需要注意文件路径</td><td>★★★★★ 项目首选</td></tr>
+    </table>
+    <div class="note"><b>请记住这四句话：</b>① 行内样式只适合<b>临时测试</b>或极少量特殊样式；② 内部样式适合<b>单页练习和课堂演示</b>；③ 外部样式最符合真实项目<b>结构与样式分离</b>的工程要求；④ 本课课件与课堂练习用内部样式是为了方便，但你要清楚——<b>真实项目通常优先使用外部样式表</b>。</div>
+    <div class="idea"><b>工程视角：</b>外部样式表是"代码复用 + 工程规范 + 可维护性"的最小案例。一个团队共享同一份 style.css，风格自然统一——这就是规范带来的效率。</div>
+  </div>
+</section>
+
+<!-- ======== 第 7 节 常用选择器 ======== -->
+<section class="cs" data-nav="常用选择器" id="sec-7">
+  <div class="sec-head">
+    <div class="sec-kicker">第 7 节<span class="tbadge">建议 6 – 7 分钟</span></div>
+    <h2>常用选择器：给谁穿衣服</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">选择器回答的问题是——<strong>"这条规则要作用到哪个（些）元素上"</strong>。先掌握三种基础选择器（标签、类、ID），再认识复合选择器、伪类和伪元素。</p>
+    <div class="grid3">
+      <div class="card">
+        <h4 style="margin:0 0 10px;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--teal-deep);">p { }</h4>
+        <b style="font-size:15px;">标签选择器</b>
+        <figure class="codebox" data-lang="css" data-label="CSS 写法">
+<pre><code>p {
+  color: #5B6880;
+}</code></pre>
+        </figure>
+        <p style="font-size:13.5px;color:var(--ink-2);"><b>对应 HTML：</b>所有 <span class="code-inline">&lt;p&gt;</span> 标签</p>
+        <p style="font-size:13.5px;color:var(--ink-2);"><b>作用范围：</b>页面中<b>所有</b>同名标签，一把全改</p>
+        <div class="pd-visual" style="min-height:56px;margin:8px 0;">
+          <p style="margin:0;color:#5B6880;font-size:14px;">段落一被选中</p>
+          <p style="margin:0;color:#5B6880;font-size:14px;">段落二也被选中</p>
+        </div>
+        <p style="font-size:13.5px;color:var(--bad);margin:6px 0 0;"><b>常见错误：</b>只想改其中一段，却把全部段落都改了</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--teal);">
+        <h4 style="margin:0 0 10px;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--teal-deep);">.card { }</h4>
+        <b style="font-size:15px;">类选择器（重点）</b>
+        <figure class="codebox" data-lang="css" data-label="CSS 写法">
+<pre><code>.card {
+  background-color: #EAF2FF;
+}</code></pre>
+        </figure>
+        <p style="font-size:13.5px;color:var(--ink-2);"><b>对应 HTML：</b><span class="code-inline">&lt;div class="card"&gt;</span></p>
+        <p style="font-size:13.5px;color:var(--ink-2);"><b>作用范围：</b>所有 class 为 card 的元素，<b>可复用</b></p>
+        <div class="pd-visual" style="min-height:56px;margin:8px 0;gap:6px;">
+          <span style="background:#EAF2FF;border-radius:6px;padding:3px 12px;font-size:13px;color:#24446F;">卡片 A</span>
+          <span style="background:#EAF2FF;border-radius:6px;padding:3px 12px;font-size:13px;color:#24446F;">卡片 B</span>
+        </div>
+        <p style="font-size:13.5px;color:var(--bad);margin:6px 0 0;"><b>常见错误：</b>CSS 里漏写前面的点 <span class="code-inline">.</span></p>
+      </div>
+      <div class="card">
+        <h4 style="margin:0 0 10px;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--teal-deep);">#title { }</h4>
+        <b style="font-size:15px;">ID 选择器</b>
+        <figure class="codebox" data-lang="css" data-label="CSS 写法">
+<pre><code>#title {
+  color: #DC2626;
+}</code></pre>
+        </figure>
+        <p style="font-size:13.5px;color:var(--ink-2);"><b>对应 HTML：</b><span class="code-inline">&lt;h1 id="title"&gt;</span></p>
+        <p style="font-size:13.5px;color:var(--ink-2);"><b>作用范围：</b>唯一的那一个元素</p>
+        <div class="pd-visual" style="min-height:56px;margin:8px 0;">
+          <span style="color:#DC2626;font-weight:700;font-size:15px;">唯一的大标题</span>
+        </div>
+        <p style="font-size:13.5px;color:var(--bad);margin:6px 0 0;"><b>常见错误：</b>漏写 <span class="code-inline">#</span>；同一页面 id 重复</p>
+      </div>
+    </div>
+    <h3>class 与 id 的使用规则</h3>
+    <div class="note">
+      <b>三条铁律：</b><br>
+      ① 一个 <b>class 可以被多个元素复用</b>，是样式复用的主力；<br>
+      ② 一个 <b>id 在同一页面中应当唯一</b>，像身份证号；<br>
+      ③ 实际开发中，样式优先使用<b>语义清晰的 class</b>。
+    </div>
+    <h3>class 命名的职业习惯</h3>
+    <table class="tbl" style="font-size:14.5px;">
+      <tr><th style="width:50%">推荐（见名知义）</th><th>不推荐（含义不清）</th></tr>
+      <tr><td><span class="code-inline">.card-title</span>　<span class="code-inline">.course-intro</span>　<span class="code-inline">.start-btn</span></td><td><span class="code-inline">.a</span>　<span class="code-inline">.b1</span>　<span class="code-inline">.red1</span>　<span class="code-inline">.div2</span></td></tr>
+    </table>
+    <p>命名是写给同事和三个月后的自己看的——<strong>名字表达了用途，代码就自带一半文档</strong>。这是严谨，也是责任。</p>
+
+    <h3>复合选择器（交集）：条件叠加，同时满足</h3>
+    <p>把<b>标签名和类名连写</b>（中间没有空格），表示"两个条件都要满足"才被选中。</p>
+    <div class="grid2">
+      <figure class="codebox" data-lang="css" data-label="交集选择器：既是 p 标签、又有 intro 类">
+<pre><code>/* 选中同时满足两个条件的元素：
+   ① 是 p 标签  ② class 里有 intro */
+p.intro {
+  color: #2563EB;
+  font-weight: bold;
+}</code></pre>
+      </figure>
+      <figure class="codebox" data-lang="html" data-label="对应 HTML">
+<pre><code>&lt;p class="intro"&gt;标签 + 类都满足 → 选中&lt;/p&gt;
+&lt;p&gt;只有标签条件 → 不选&lt;/p&gt;
+&lt;div class="intro"&gt;只有类条件 → 不选&lt;/div&gt;</code></pre>
+      </figure>
+    </div>
+    <div class="pd">
+      <div class="pd-visual" style="display:block;">
+        <div class="sd-jj">
+          <p class="intro">我是 p.intro —— 被选中，绿色加粗</p>
+          <p>我是普通 p —— 没有类条件，不选</p>
+          <div class="intro">我是 div.intro —— 标签条件不符，不选</div>
+        </div>
+      </div>
+      <div class="pd-info"><code>p.intro</code><p>连写 = 且；空格分隔 = 后代（下一个知识点）。两种写法一字之差，含义完全不同。</p></div>
+    </div>
+
+    <h3>组合选择器：后代、子代与分组</h3>
+    <div class="grid2">
+      <div>
+        <figure class="codebox" data-lang="css" data-label="后代选择器（空格）与子代选择器（&gt;）">
+<pre><code>/* 后代选择器：.box 里所有层级的 p，含孙子级 */
+.box p {
+  color: #5B6880;
+}
+
+/* 子代选择器：只选 .box 的直接子级 p */
+.box > p {
+  font-weight: bold;
+}</code></pre>
+        </figure>
+      </div>
+      <div>
+        <figure class="codebox" data-lang="css" data-label="分组选择器（逗号）：共用一套样式">
+<pre><code>/* h1 和 h2 共用同一段样式 */
+h1, h2 {
+  font-family: "Microsoft YaHei";
+  color: #0B1324;
+}</code></pre>
+        </figure>
+        <p style="font-size:14px;color:var(--ink-2);margin-top:8px;">逗号 = "和"（并集）；空格 = "里面的"（后代）。<b>常见错误：</b>把逗号写成空格，或把后代写成交集。</p>
+      </div>
+    </div>
+    <div class="pd">
+      <div class="pd-visual" style="display:block;">
+        <div class="sd-tree">
+          <p>我是 .box 的直接子代 —— 后代 ✓ 子代 ✓（加粗+左边框）</p>
+          <div class="sd-nest">
+            <p>我是孙代 p（嵌套一层）—— 后代 ✓ 子代 ✗（不加粗）</p>
+          </div>
+          <p>我也是直接子代 —— 后代 ✓ 子代 ✓</p>
+        </div>
+      </div>
+      <div class="pd-info"><code>.box p</code>　<code>.box &gt; p</code><p>同一个页面里：后代选择器范围更大，子代选择器更精准。日常用后代选择器居多。</p></div>
+    </div>
+
+    <h3>伪类选择器：选中元素的"某种状态"</h3>
+    <p>以<b>一个冒号 :</b> 开头，描述元素所处的<b>状态或位置</b>——不是元素本身长什么样，而是"它此刻处于什么情况"。</p>
+    <div class="grid2">
+      <figure class="codebox" data-lang="css" data-label="最常用的伪类：:hover">
+<pre><code>/* 鼠标悬停时才生效 */
+.btn:hover {
+  background-color: #1D4ED8;
+  color: #FFFFFF;
+}
+
+/* 列表的第一个 / 最后一个孩子 */
+.list li:first-child { font-weight: bold; }
+.list li:last-child { color: gray; }</code></pre>
+      </figure>
+      <div>
+        <p style="font-size:14px;color:var(--ink-2);margin:0 0 6px;"><b>常用伪类速查：</b></p>
+        <table class="tbl" style="font-size:13.5px;margin-top:0;">
+          <tr><th>伪类</th><th>含义</th></tr>
+          <tr><td><span class="code-inline">:hover</span></td><td>鼠标悬停（按钮变色的秘密）</td></tr>
+          <tr><td><span class="code-inline">:first-child</span></td><td>是父元素的第一个孩子</td></tr>
+          <tr><td><span class="code-inline">:last-child</span></td><td>是父元素的最后一个孩子</td></tr>
+          <tr><td><span class="code-inline">:link</span></td><td>未访问过的链接</td></tr>
+          <tr><td><span class="code-inline">:visited</span></td><td>已访问过的链接</td></tr>
+        </table>
+      </div>
+    </div>
+    <p><strong>现场演示——把鼠标移到下面两处，亲眼看看"状态"被选中：</strong></p>
+    <div class="grid2">
+      <div class="sd-hover">把鼠标移到我身上 → :hover 生效</div>
+      <ul class="sd-fc">
+        <li>第一个 li —— :first-child（红）</li>
+        <li>中间的 li —— 普通样式</li>
+        <li>最后一个 li —— :last-child（蓝）</li>
+      </ul>
+    </div>
+    <div class="warn"><b>易错点：</b>① 伪类用<b>一个冒号</b>（<span class="code-inline">:hover</span>），写成两个也能用但不规范；② 冒号前后<b>不要加空格</b>（<span class="code-inline">.btn :hover</span> 会变成后代选择器，含义完全不同）；③ <span class="code-inline">:hover</span> 要跟在真实选择器后面（<span class="code-inline">.btn:hover</span>）。</div>
+
+    <h3>伪元素选择器：选中元素的"某个部分"</h3>
+    <p>以<b>两个冒号 ::</b> 开头，用于选中元素中<b>并不真实存在的部分</b>——比如文字的第一行，或在元素前后"无中生有"地插入内容。</p>
+    <div class="grid2">
+      <figure class="codebox" data-lang="css" data-label="常用伪元素：::before 与 ::after">
+<pre><code>/* 在元素内容的前面 / 后面插入内容 */
+.quote::before { content: "「 "; }
+.quote::after  { content: " 」"; }
+
+/* 只选中段落的第一行 */
+.article p::first-line {
+  font-weight: bold;
+}</code></pre>
+      </figure>
+      <div style="display:flex;flex-direction:column;gap:12px;justify-content:center;">
+        <p class="sd-pe">这一段开头和结尾的「」引号，是 ::before 和 ::after 用 content 生成的，HTML 里根本没有这两个字符。</p>
+        <p class="sd-fl">我是 ::first-line 的演示段落：我的第一行会被单独加粗变色。试着拖动浏览器窗口改变宽度——"第一行"的范围会跟着重排，因为它选中的是"位置"，不是固定的文字。后面的文字保持普通样式，用来形成对比。</p>
+      </div>
+    </div>
+    <div class="note"><b>伪类 vs 伪元素，一句话分清：</b>伪类选中"处于某状态的<b>整个元素</b>"（:hover）；伪元素选中"元素中<b>不存在的某个部分</b>"（::before 插入的内容、::first-line 第一行）。历史原因两者都允许一个冒号，但<b>规范写法</b>是伪类一个冒号、伪元素两个冒号。</div>
+
+    <h3>选择器家族总览</h3>
+    <table class="tbl" style="font-size:14.5px;">
+      <tr><th style="width:110px;">类别</th><th>写法示例</th><th>选中谁</th><th style="width:110px;">课堂要求</th></tr>
+      <tr><td><b>基础三件套</b></td><td><span class="code-inline">p</span>　<span class="code-inline">.card</span>　<span class="code-inline">#title</span></td><td>标签 / 类 / 唯一元素</td><td>必须掌握</td></tr>
+      <tr><td><b>复合（交集）</b></td><td><span class="code-inline">p.intro</span></td><td>同时满足标签和类</td><td>理解写法</td></tr>
+      <tr><td><b>组合（后代/子代/分组）</b></td><td><span class="code-inline">.card p</span>　<span class="code-inline">.card &gt; p</span>　<span class="code-inline">h1, h2</span></td><td>范围内查找 / 共用样式</td><td>会读会仿写</td></tr>
+      <tr><td><b>伪类</b></td><td><span class="code-inline">.btn:hover</span>　<span class="code-inline">li:first-child</span></td><td>某种状态下的元素</td><td>会用 :hover</td></tr>
+      <tr><td><b>伪元素</b></td><td><span class="code-inline">.quote::before</span>　<span class="code-inline">p::first-line</span></td><td>元素中不存在的部分</td><td>认识即可</td></tr>
+    </table>
+
+    <h3>综合案例：一块课程公告板，五类选择器各司其职</h3>
+    <p>先做个小侦探游戏：下面源码实现了<b>下方预览</b>中的效果，请在 HTML 部分搜索“置顶”两个字——你会发现<strong>根本找不到</strong>。它不在 HTML 里，而是 CSS 用伪元素“贴”上去的。整份代码可复制保存为 <span class="code-inline">board.html</span>，双击即可在浏览器运行。</p>
+    <figure class="codebox" data-lang="html" data-label="board.html · 完整可运行" data-preview="case7-frame">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;课程公告板&lt;/title&gt;
+  &lt;style&gt;
+    /* 页面整体：标签选择器 */
+    body {
+      background-color: #F8FAFC;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+    /* 公告板容器：类选择器 */
+    .board {
+      width: 420px;
+      background-color: #FFFFFF;
+      border: 1px solid #DCE5F1;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px auto;
+    }
+    /* 公告板里的标题：后代选择器 */
+    .board h2 {
+      color: #0B1324;
+      font-size: 20px;
+    }
+    /* 标题前的青色小竖条：伪元素（HTML 里没有这个符号） */
+    .board h2::before {
+      content: "▍";
+      color: #2563EB;
+      margin-right: 6px;
+    }
+    /* 简介段落：复合选择器（既是 p、又有 intro 类） */
+    p.intro {
+      color: #5B6880;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    /* 每条公告：后代选择器 */
+    .board li {
+      color: #5B6880;
+      font-size: 14px;
+      line-height: 2.2;
+      border-bottom: 1px dashed #DCE5F1;
+    }
+    /* 第一条公告：伪类（列表的第一个孩子） */
+    .board li:first-child {
+      color: #DC2626;
+      font-weight: bold;
+    }
+    /* 「置顶」小标记：伪类 + 伪元素联手生成 */
+    .board li:first-child::after {
+      content: " [置顶]";
+      font-size: 12px;
+      font-weight: normal;
+    }
+    /* 最后一条公告：伪类 */
+    .board li:last-child {
+      color: #9AA7B5;
+    }
+    /* 正文里的链接：复合选择器（既是 a、又有 link 类） */
+    a.link {
+      color: #2563EB;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    /* 鼠标悬停链接变色：伪类（在下方预览里试试） */
+    a.link:hover {
+      color: #1D4ED8;
+      text-decoration: underline;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="board"&gt;
+    &lt;h2&gt;课程公告&lt;/h2&gt;
+    &lt;p class="intro"&gt;页面里的全部装饰均由 CSS 生成，请对照源码观察。&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;第 3 周实训：完成"我的课程卡片"&lt;/li&gt;
+      &lt;li&gt;第 3 周实训提交截止：本周五 24:00&lt;/li&gt;
+      &lt;li&gt;答疑安排：每周四下午 14:00 – 16:00&lt;/li&gt;
+      &lt;li&gt;第 1 周摸底练习已结束&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p class="intro"&gt;完整资料请访问&lt;a class="link" href="#"&gt;课程主页&lt;/a&gt;。&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </figure>
+    <div class="preview-frame-wrap">
+      <div class="preview-frame-bar">实际效果预览 · 把鼠标移到「课程主页」链接上体验 :hover</div>
+      <iframe id="case7-frame" class="preview-frame" title="综合案例实时预览"></iframe>
+    </div>
+    <p><strong>效果与选择器对照表——每个视觉细节都能找到“负责人”：</strong></p>
+    <table class="tbl" style="font-size:14.5px;">
+      <tr><th style="width:36%">你看到的效果</th><th>是谁做的</th></tr>
+      <tr><td>标题前那段青色小竖条</td><td><span class="code-inline">.board h2::before</span> —— 伪元素“无中生有”插入的装饰符号</td></tr>
+      <tr><td>简介灰色小字 / 列表项深灰带虚线分隔</td><td><span class="code-inline">p.intro</span>（复合选择器）/ <span class="code-inline">.board li</span>（后代选择器）</td></tr>
+      <tr><td>第一条公告红色加粗</td><td><span class="code-inline">.board li:first-child</span> —— 伪类选中“第一个孩子”</td></tr>
+      <tr><td>第一条末尾的 [置顶] 标记</td><td><span class="code-inline">li:first-child::after</span> —— 伪类“找到人”、伪元素“贴标签”，联手完成</td></tr>
+      <tr><td>最后一条公告灰色</td><td><span class="code-inline">.board li:last-child</span>（伪类）</td></tr>
+      <tr><td>链接青色加粗、悬停变色加下划线</td><td><span class="code-inline">a.link</span>（复合）+ <span class="code-inline">a.link:hover</span>（伪类）</td></tr>
+    </table>
+    <div class="note"><b>开发中最常见的“组合拳”：</b>类选择器定位区块 → 后代选择器缩小范围 → 伪类处理状态（悬停 / 首尾）→ 伪元素添加装饰。本课实训不强制使用伪类和伪元素，但你要能<b>看懂</b>别人代码里的它们。</div>
+
+    <details class="fold">
+      <summary>拓展了解：为什么叫"层叠"？——优先级的最初印象</summary>
+      <div class="fold-body">
+        <p>当多条规则作用于同一元素时会"叠加、竞争"：一般<b>后写的覆盖先写的</b>，<b>更具体的选择器优先</b>（如 <span class="code-inline">.card p</span> 优先于 <span class="code-inline">p</span>，<span class="code-inline">p.intro</span> 又优先于 <span class="code-inline">.intro</span>），行内样式强于它们。现在只需记住现象：开发时尽量避免对同一元素反复声明同一属性。系统规则下节课讲。</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ======== 第 8 节 常用属性 ======== -->
+<section class="cs" data-nav="常用属性" id="sec-8">
+  <div class="sec-head">
+    <div class="sec-kicker">第 8 节<span class="tbadge">建议 2 分钟 · 精讲高频项，其余卡片自学</span></div>
+    <h2>常用 CSS 属性：代码 + 效果 + 一句话</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">属性不背定义，看效果说话。下面每个卡片：左边代码、中间效果、一句话说明。</p>
+    <h3>文字类属性</h3>
+    <div class="pd-grid">
+      <div class="pd"><div class="pd-visual"><span class="d-color1">红</span><span class="d-color2">青</span><span class="d-color3">蓝</span></div><div class="pd-info"><code>color: #DC2626;</code><p>文字颜色，可用颜色名或十六进制值。</p></div></div>
+      <div class="pd"><div class="pd-visual"><span class="d-fs1">14px</span><span class="d-fs2">18px</span><span class="d-fs3">24px</span></div><div class="pd-info"><code>font-size: 18px;</code><p>文字大小，别忘单位 px。</p></div></div>
+      <div class="pd"><div class="pd-visual"><span class="d-serif">衬线字体 Serif</span><span class="d-sans">无衬线 Sans</span></div><div class="pd-info"><code>font-family: "Microsoft YaHei";</code><p>字体族，多个候选用逗号隔开。</p></div></div>
+      <div class="pd"><div class="pd-visual"><span class="d-normal">常规</span><span class="d-bold">加粗</span></div><div class="pd-info"><code>font-weight: bold;</code><p>文字粗细，bold 为加粗。</p></div></div>
+      <div class="pd"><div class="pd-visual" style="display:block;"><p class="d-lh1">行高 1.2：文字挤在一起，阅读费力</p><p class="d-lh2">行高 1.9：行间留白舒适，中文正文建议 1.6 – 1.8</p></div><div class="pd-info"><code>line-height: 1.8;</code><p>行高，无单位倍数最常用。</p></div></div>
+      <div class="pd"><div class="pd-visual" style="display:block;"><p class="d-align" style="text-align:left;">左对齐 left</p><p class="d-align" style="text-align:center;">居中 center</p><p class="d-align" style="text-align:right;">右对齐 right</p></div><div class="pd-info"><code>text-align: center;</code><p>文字水平对齐方式。</p></div></div>
+    </div>
+    <h3>盒子类属性</h3>
+    <div class="pd-grid">
+      <div class="pd"><div class="pd-visual"><div class="d-w1"></div><div class="d-w2"></div></div><div class="pd-info"><code>width: 320px;</code><p>内容区宽度（盒模型一节详述）。</p></div></div>
+      <div class="pd"><div class="pd-visual"><div class="d-mh">文字很少，但盒子撑得住</div></div><div class="pd-info"><code>min-height: 64px;</code><p>最小高度：内容少也保持挺拔。</p></div></div>
+      <div class="pd"><div class="pd-visual"><div class="d-bg1"></div><div class="d-bg2"></div><div class="d-bg3"></div></div><div class="pd-info"><code>background-color: #EAF2FF;</code><p>背景色，配色的第一步。</p></div></div>
+      <div class="pd"><div class="pd-visual"><div class="d-bd1"></div><div class="d-bd2"></div><div class="d-bd3"></div></div><div class="pd-info"><code>border: 2px solid #2563EB;</code><p>边框三要素：宽度、样式、颜色。</p></div></div>
+      <div class="pd"><div class="pd-visual"><div class="d-br1"></div><div class="d-br2"></div><div class="d-br3"></div></div><div class="pd-info"><code>border-radius: 10px;</code><p>圆角；50% 可做圆。</p></div></div>
+      <div class="pd"><div class="pd-visual" style="display:block;"><div class="d-mg"><div class="d-mg-a">标题</div><div class="d-mg-gap">↑↓ 这段空隙由 margin 制造 ↓↑</div><div class="d-mg-b">卡片</div></div></div><div class="pd-info"><code>margin: 20px;</code><p>外边距：元素与其他元素之间的距离。</p></div></div>
+      <div class="pd"><div class="pd-visual"><div class="d-pd"><span>文字内容</span></div></div><div class="pd-info"><code>padding: 12px;</code><p>内边距：内容与边框之间的留白。</p></div></div>
+      <div class="pd"><div class="pd-visual"><a href="#" style="background:#2563EB;color:#fff;text-decoration:none;border-radius:6px;padding:6px 18px;font-size:13px;">开始学习</a></div><div class="pd-info"><code>text-decoration: none;</code><p>去掉链接下划线，a 标签做按钮时常用。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 第 9 节 盒模型 ======== -->
+<section class="cs" data-nav="盒模型" id="sec-9">
+  <div class="sec-head">
+    <div class="sec-kicker">第 9 节<span class="tbadge">建议 3 分钟</span></div>
+    <h2>盒模型：每个元素都是一个盒子</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">浏览器把每个元素看成一个矩形盒子，从内到外共四层：<strong>content → padding → border → margin</strong>。它是 CSS 布局的基石，也是排查"间距不对"的地图。</p>
+    <div class="bm-wrap">
+      <div>
+        <div class="bm-diagram">
+          <span class="bm-tag" style="display:table;margin-bottom:6px;">margin（外边距）</span>
+          <div class="bm-border">
+            <span class="bm-tag">border（边框）</span>
+            <div class="bm-padding">
+              <span class="bm-tag">padding（内边距）</span>
+              <div class="bm-content"><span class="bm-tag">content（内容）</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="bm-legend">
+          <span><i style="background:#F2C94C;"></i>border：盒子的边界</span>
+          <span><i style="background:#CBE8CE;"></i>padding：内部留白</span>
+          <span><i style="background:#9CC3F5;"></i>content：内容区</span>
+          <span><i style="background:#F7EFD4;"></i>margin：外部距离</span>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;">四层各自负责什么</h3>
+        <ul style="color:var(--ink-2);font-size:15.5px;padding-left:20px;">
+          <li style="margin:8px 0;"><b>padding</b>：内容与边框之间的<strong>内部空间</strong>——把内容从边框里"撑开"一点，别贴着框。</li>
+          <li style="margin:8px 0;"><b>margin</b>：元素与其他元素之间的<strong>外部距离</strong>——负责"我和别人保持多远"。</li>
+          <li style="margin:8px 0;"><b>border</b>：盒子的边界，有宽度、占空间。</li>
+          <li style="margin:8px 0;"><b>width</b> 默认描述的是 <strong>content 区域</strong>的宽度，不包含 padding 和 border。</li>
+        </ul>
+        <div class="note"><b>教室类比：</b>课桌桌面是 content；桌面上垫的桌布边距是 padding；桌子本身的边缘是 border；你这张桌子与前后桌之间留的走道是 margin。</div>
+      </div>
+    </div>
+    <h3>可观察盒模型的代码</h3>
+    <figure class="codebox" data-lang="css" data-label="box-demo.css">
+<pre><code>.box-demo {
+  /* 内容区宽度 */
+  width: 240px;
+  /* 内边距：内容与边框之间 */
+  padding: 24px;
+  /* 边框：盒子的边界 */
+  border: 3px solid #2563EB;
+  /* 外边距：与其他元素之间 */
+  margin: 32px;
+  background-color: #EAF2FF;
+}</code></pre>
+    </figure>
+    <p>写完后在 Chrome 开发者工具中选中该元素，<strong>Box Model 面板</strong>会用同样的四色图显示每层的数值——代码写的和浏览器算的，一一对账。</p>
+    <h3>动手感受：拖动滑块，观察盒子怎么变大</h3>
+    <div class="bp">
+      <div class="bp-stage"><div class="bp-box" id="bp-box"><div class="bp-content">content<br>宽度固定 240px</div></div></div>
+      <div class="bp-ctrl">
+        <label><b>padding</b><input type="range" id="bp-pad" min="0" max="48" value="24"><span class="bp-v" id="bp-pad-v">24 px</span></label>
+        <label><b>border</b><input type="range" id="bp-bor" min="0" max="12" value="3"><span class="bp-v" id="bp-bor-v">3 px</span></label>
+        <label><b>margin</b><input type="range" id="bp-mar" min="0" max="48" value="32"><span class="bp-v" id="bp-mar-v">32 px</span></label>
+        <div class="bp-formula" id="bp-formula">盒子在页面上占的总宽度 = 240 + 24×2 + 3×2 + 32×2 = 358 px</div>
+      </div>
+    </div>
+    <details class="fold">
+      <summary>拓展提示：box-sizing: border-box（学有余力再看，本课不要求）</summary>
+      <div class="fold-body">
+        <p>加上 <span class="code-inline">box-sizing: border-box;</span> 后，width 将<b>包含</b> padding 和 border，盒子实际宽度就等于 width 的值。真实项目中常用它简化计算，后续课程会正式讲。现在只需知道"有这个东西"。</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ======== 第 10 节 Chrome 开发者工具 ======== -->
+<section class="cs" data-nav="开发者工具" id="sec-10">
+  <div class="sec-head">
+    <div class="sec-kicker">第 10 节<span class="tbadge">建议 2 分钟</span></div>
+    <h2>Chrome 开发者工具：样式的一票否决权交给证据</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">样式没生效，猜是猜不出来的——用开发者工具直接看"浏览器最终用了哪条规则"。</p>
+    <h3>怎么打开</h3>
+    <p>Windows：<kbd>F12</kbd>　macOS：<kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>I</kbd>　或右键页面元素 → <strong>检查（Inspect）</strong></p>
+    <h3>四步看样式</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div><h4>打开 Elements 面板，选中元素</h4><p class="obs">点击左上角的箭头按钮（或 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>），再点页面上想检查的元素。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>右侧 Styles 面板查看规则</h4><p class="obs">能看到命中的选择器与每条声明；<b>被覆盖的属性会显示删除线</b>——这说明有别的规则赢了。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>Box Model 面板看四层数值</h4><p class="obs">content / padding / border / margin 一目了然，与你的代码逐层对照。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>临时修改：点颜色或数值直接改，回车生效</h4><p class="obs">改动<b>立即</b>反映在页面上，用来快速试配色和间距。</p><p class="err"><b>注意：</b>DevTools 里的修改只存在于本地，<b>刷新页面就会还原</b>！确认满意后必须写回 VS Code 的代码里。</p></div></div>
+    </div>
+    <h3>界面示意（以下为教学示意图）</h3>
+    <div class="dt-mock">
+      <div class="dt-bar">
+        <div class="dt-dots"><i></i><i></i><i></i></div>
+        <div class="dt-tab">Elements</div>
+        <div class="dt-tab2">Console</div>
+        <div class="dt-tab2">Network</div>
+      </div>
+      <div class="dt-body">
+        <div class="dt-tree">
+          &lt;html&gt;<br>
+          &nbsp;&nbsp;&lt;body&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="cur">&lt;div <span class="sel-hl">class="course-card"</span>&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="course-intro"&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;a class="start-btn"&gt;
+        </div>
+        <div class="dt-styles">
+          <span class="dt-r">.course-card</span> {<br>
+          &nbsp;&nbsp;<span class="dt-p">width</span>: <span class="dt-v">320px</span>;<br>
+          &nbsp;&nbsp;<span class="dt-p">padding</span>: <span class="dt-mod">32px</span>;　<span style="color:#5F7893;">← 刚才临时改的</span><br>
+          &nbsp;&nbsp;<span class="dt-p">border-radius</span>: <span class="dt-v">12px</span>;<br>
+          &nbsp;&nbsp;<span class="strike">background-color: #DC2626;</span>　<span style="color:#5F7893;">← 被覆盖</span><br>
+          &nbsp;&nbsp;<span class="dt-p">background-color</span>: <span class="dt-v">#FFFFFF</span>;<br>
+          }<br>
+          <span style="color:#5F7893;">盒子模型：margin 40 | border 1 | padding 32 | 320×高度</span>
+        </div>
+      </div>
+      <div class="dt-note">提示：Styles 面板中的修改是临时的，刷新即还原；确认后请写回代码。</div>
+    </div>
+    <div class="idea"><b>工程视角：</b>调试不是"碰运气"，是取证——先假设、再看证据、再改代码、再验证。主动排查、记录问题、规范修改，是工程师的基本修养。</div>
+  </div>
+</section>
+
+<!-- ======== 第 11 节 综合案例 ======== -->
+<section class="cs" data-nav="综合案例" id="sec-11">
+  <div class="sec-head">
+    <div class="sec-kicker">第 11 节<span class="tbadge">约 5 分钟 · 完整示范</span></div>
+    <h2>综合案例：课程介绍卡片</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">接下来 5 分钟，从零完成从零做出这张卡片。请重点看<strong>每一步页面发生了什么变化</strong>——马上就轮到你们动手。</p>
+    <div class="preview-shell"><div class="course-card">
+      <h2>前端开发实训</h2>
+      <p class="course-intro">本课程从 HTML、CSS 到 JavaScript，带你完成从"看得懂网页"到"写得出页面"的第一步。</p>
+      <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+      <a class="start-btn" href="#">开始学习</a>
+    </div></div>
+    <div class="steps">
+      <div class="step"><div class="step-num"></div><div><h4>先写无样式的 HTML</h4><p class="obs">在 VS Code 新建 demo.html，写出卡片的结构（标题、简介、标签、链接）。<b>观察：</b>默认样式——标题又黑又大、链接蓝色下划线、内容挤成一团。</p><p class="err"><b>易错：</b>文件没保存就去浏览器看（VS Code 标签页有圆点 = 未保存）。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>给卡片加 class，写出选择器</h4><p class="obs">div 加 class="course-card"，style 里写 <span class="code-inline">.course-card { }</span>。<b>观察：</b>F12 选中卡片，Styles 面板出现这条规则——"选择器命中了"。</p><p class="err"><b>易错：</b>漏写前面的点号。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>设置文字与背景</h4><p class="obs">给 h2 加 color 和 font-size；给卡片加 background-color。<b>观察：</b>标题变色、卡片从"透明"变成白色块，层次开始出现。</p><p class="err"><b>易错：</b>十六进制颜色值少写一位、漏分号。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>设置宽度、边框和圆角</h4><p class="obs">width: 320px; border: 1px solid; border-radius: 12px。<b>观察：</b>卡片收窄、出现边界和圆角——"卡片感"来了。</p><p class="err"><b>易错：</b>数值后漏写单位 px。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>设置 margin 和 padding</h4><p class="obs">卡片加 margin: 40px auto; padding: 24px。<b>观察：</b>卡片居中、四周留白，内容不再贴边——间距是"设计感"的一半。</p><p class="err"><b>易错：</b>内外边距写反（padding 撑大自己，margin 拉开别人）。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>打开开发者工具选中卡片</h4><p class="obs">F12 → 箭头按钮 → 点卡片。<b>观察：</b>Styles 里能看到我们写的每条规则；Box Model 显示四层数值。</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>临时修改颜色和间距</h4><p class="obs">在 Styles 里直接改背景色、把 padding 调到 32px。<b>观察：</b>页面实时变化；刷新后还原——临时的！</p></div></div>
+      <div class="step"><div class="step-num"></div><div><h4>把确认后的样式写回 VS Code</h4><p class="obs">满意的效果抄回代码，Ctrl+S 保存、刷新验证。<b>观察：</b>刷新后样式还在——因为这次写在代码里了。<b>口诀：调试用 DevTools，落地靠 VS Code。</b></p></div></div>
+    </div>
+    <details class="fold">
+      <summary>本例完整代码（可复制运行，含全部样式）</summary>
+      <div class="fold-body">
+        <figure class="codebox" data-lang="html" data-label="demo.html · 完整可运行">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;课程介绍卡片&lt;/title&gt;
+  &lt;style&gt;
+    /* 页面背景 */
+    body {
+      background-color: #F8FAFC;
+    }
+    /* 课程卡片 */
+    .course-card {
+      width: 320px;
+      background-color: #FFFFFF;
+      padding: 24px;
+      border: 1px solid #DCE5F1;
+      border-radius: 12px;
+      margin: 40px auto;
+    }
+    /* 课程名称 */
+    .course-card h2 {
+      color: #0B1324;
+      font-size: 22px;
+    }
+    /* 课程简介 */
+    .course-intro {
+      color: #5B6880;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    /* 课程标签 */
+    .tag {
+      background-color: #EAF2FF;
+      color: #1D4ED8;
+      font-size: 13px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-right: 8px;
+    }
+    /* 开始学习按钮 */
+    .start-btn {
+      background-color: #2563EB;
+      color: #FFFFFF;
+      font-size: 15px;
+      padding: 8px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 16px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="course-card"&gt;
+    &lt;h2&gt;前端开发实训&lt;/h2&gt;
+    &lt;p class="course-intro"&gt;本课程从 HTML、CSS 到 JavaScript，带你完成从"看得懂网页"到"写得出页面"的第一步。&lt;/p&gt;
+    &lt;span class="tag"&gt;HTML&lt;/span&gt;
+    &lt;span class="tag"&gt;CSS&lt;/span&gt;
+    &lt;span class="tag"&gt;JavaScript&lt;/span&gt;
+    &lt;a class="start-btn" href="#"&gt;开始学习&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </figure>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ======== 第 12 节 课堂互动与即时检测 ======== -->
+<section class="cs" data-nav="即时检测" id="sec-12">
+  <div class="sec-head">
+    <div class="sec-kicker">第 12 节<span class="tbadge">建议 2 分钟（42–45 分钟时段）</span></div>
+    <h2>课堂互动与即时检测</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">五道小题，先自己想，再看答案。答不上来的题，对应章节课后回看。</p>
+
+    <div class="quiz">
+      <span class="q-type">单选 · 第 1 题</span>
+      <p class="q-stem">在网页的三层分工中，CSS 主要负责的是（　）</p>
+      <ol type="A">
+        <li>页面的内容与结构</li>
+        <li>页面的样式与表现</li>
+        <li>页面的行为与交互</li>
+        <li>服务器的数据处理</li>
+      </ol>
+      <button class="q-btn" data-reveal="q1a">显示答案</button>
+      <div class="q-ans" id="q1a">
+        <p><span class="qa-key">答案：B</span></p>
+        <p><b>解析：</b>HTML 管内容与结构，CSS 管样式与表现，JavaScript 管行为与交互，各司其职。</p>
+      </div>
+    </div>
+
+    <div class="quiz">
+      <span class="q-type">单选 · 第 2 题</span>
+      <p class="q-stem">页面中多个卡片都写了 class="card"，想给它们统一设置样式，正确的 CSS 选择器是（　）</p>
+      <ol type="A">
+        <li><span class="code-inline">card { }</span></li>
+        <li><span class="code-inline">#card { }</span></li>
+        <li><span class="code-inline">.card { }</span></li>
+        <li><span class="code-inline">*card { }</span></li>
+      </ol>
+      <button class="q-btn" data-reveal="q2a">显示答案</button>
+      <div class="q-ans" id="q2a">
+        <p><span class="qa-key">答案：C</span></p>
+        <p><b>解析：</b>类选择器以点 <span class="code-inline">.</span> 开头；<span class="code-inline">#</span> 是 ID 选择器；不写符号就成了标签名。</p>
+      </div>
+    </div>
+
+    <div class="quiz">
+      <span class="q-type">判断 · 第 3 题</span>
+      <p class="q-stem">"同一个页面里，多个元素可以共用一个 class，但一个 id 一般只应出现一次。"（　）</p>
+      <button class="q-btn" data-reveal="q3a">显示答案</button>
+      <div class="q-ans" id="q3a">
+        <p><span class="qa-key">答案：正确</span></p>
+        <p><b>解析：</b>class 是"工种"可以很多人担任，id 是"身份证号"必须唯一。正因如此，样式复用优先用语义清晰的 class。</p>
+      </div>
+    </div>
+
+    <div class="quiz">
+      <span class="q-type">看效果猜属性 · 第 4 题</span>
+      <p class="q-stem">卡片与其上方的标题之间空隙明显变大，但卡片内部"文字到边框"的距离没有变化。应该调整的是（　）</p>
+      <div class="pd-visual" style="margin:10px 0;width:100%;">
+        <div class="d-mg" style="width:70%;margin:0 auto;">
+          <div class="d-mg-a">页面标题</div>
+          <div class="d-mg-gap">↑↓ 空隙变大 ↑↓</div>
+          <div class="d-mg-b">课程卡片</div>
+        </div>
+      </div>
+      <ol type="A">
+        <li>卡片的 padding</li>
+        <li>卡片的 margin</li>
+        <li>卡片的 border</li>
+        <li>卡片的 width</li>
+      </ol>
+      <button class="q-btn" data-reveal="q4a">显示答案</button>
+      <div class="q-ans" id="q4a">
+        <p><span class="qa-key">答案：B（margin）</span></p>
+        <p><b>解析：</b>空隙发生在"元素与其他元素之间"，属于外部距离，用 margin；padding 管的是"内容与边框之间"的内部留白。</p>
+      </div>
+    </div>
+
+    <div class="quiz">
+      <span class="q-type">代码纠错 · 第 5 题</span>
+      <p class="q-stem">同学说"我的页面完全没有样式"。请阅读下面两段代码，<strong>至少找出两处问题</strong>，并说说你的排查思路。</p>
+      <figure class="codebox" data-lang="html" data-label="index.html">
+<pre><code>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;link href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="card"&gt;课程卡片&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+      </figure>
+      <figure class="codebox" data-lang="css" data-label="style.css">
+<pre><code>card {
+  background-color #EAF2FF
+  color: #0B1324;
+}</code></pre>
+      </figure>
+      <button class="q-btn" data-reveal="q5a">显示答案</button>
+      <div class="q-ans" id="q5a">
+        <p><span class="qa-key">共三处问题：</span></p>
+        <p>① link 标签缺少 <span class="code-inline">rel="stylesheet"</span>，样式表没有被当作样式引入；</p>
+        <p>② CSS 选择器漏了点号，<span class="code-inline">card</span> 应为 <span class="code-inline">.card</span>；</p>
+        <p>③ 声明缺少冒号和分号，<span class="code-inline">background-color #EAF2FF</span> 应为 <span class="code-inline">background-color: #EAF2FF;</span>。</p>
+        <p><b>排查思路（背下来）：</b>先确认保存 → 再确认刷新 → 检查 CSS 是否正确引入 → 检查选择器是否选中元素（F12 的 Styles 面板）→ 检查属性是否被覆盖 / 语法是否有错。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 第 13 节 常见错误排查 ======== -->
+<section class="cs" data-nav="错误排查" id="sec-13">
+  <div class="sec-head">
+    <div class="sec-kicker">第 13 节<span class="tbadge">建议 1 分钟 · 快速过</span></div>
+    <h2>CSS 调试清单：十个高频翻车现场</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">样式不生效时，不要乱试——按流程走。</p>
+    <h3>六步排查流程</h3>
+    <div class="flow">
+      <div class="f">① 保存了吗<small>Ctrl + S</small></div><span class="fa">→</span>
+      <div class="f">② 刷新了吗<small>F5</small></div><span class="fa">→</span>
+      <div class="f">③ 引入对吗<small>link · 路径 · rel</small></div><span class="fa">→</span>
+      <div class="f">④ 选中了吗<small>Styles 有无规则</small></div><span class="fa">→</span>
+      <div class="f">⑤ 被覆盖吗<small>删除线样式</small></div><span class="fa">→</span>
+      <div class="f">⑥ DevTools 看终值<small>最终生效的样式</small></div>
+    </div>
+    <details class="fold"><summary>1. CSS 文件路径错误</summary><div class="fold-body"><p><b>典型表现：</b>页面完全没有样式，像是没写过 CSS。</p><p><b>可能原因：</b>href 写的路径与文件实际位置不符（如 CSS 在 css 子文件夹里）。</p><p><b>排查方式：</b>F12 → Network → 刷新，看 style.css 是否 404。</p><p><b>修复示例：</b><span class="code-inline">&lt;link rel="stylesheet" href="css/style.css"&gt;</span> 与目录结构对应。</p></div></details>
+    <details class="fold"><summary>2. link 标签缺少 rel="stylesheet"</summary><div class="fold-body"><p><b>典型表现：</b>文件明明引了，样式却全不生效。</p><p><b>可能原因：</b>只写了 href，浏览器不知道这是样式表。</p><p><b>排查方式：</b>直接看 link 标签，rel 与 href 缺一不可。</p><p><b>修复示例：</b><span class="code-inline">&lt;link rel="stylesheet" href="style.css"&gt;</span></p></div></details>
+    <details class="fold"><summary>3. 类选择器前漏写点号</summary><div class="fold-body"><p><b>典型表现：</b>写了规则但页面没变化。</p><p><b>可能原因：</b><span class="code-inline">card { }</span> 会被当成"叫 card 的标签"（不存在）。</p><p><b>排查方式：</b>F12 选中元素，Styles 面板空空如也 = 没有规则命中。</p><p><b>修复示例：</b><span class="code-inline">card { }</span> → <span class="code-inline">.card { }</span></p></div></details>
+    <details class="fold"><summary>4. ID 选择器前漏写 #</summary><div class="fold-body"><p><b>典型表现：</b>同上，规则写了对应元素却不变。</p><p><b>排查方式：</b>对照 HTML 里的写法：id 用 #，class 用 .。</p><p><b>修复示例：</b><span class="code-inline">title { }</span> → <span class="code-inline">#title { }</span></p></div></details>
+    <details class="fold"><summary>5. HTML 的 class 名与 CSS 不一致</summary><div class="fold-body"><p><b>典型表现：</b>有的元素生效、有的不生效。</p><p><b>可能原因：</b>大小写不同（.Card ≠ .card）或拼写不同（card-title / card_titel）。</p><p><b>排查方式：</b>F12 里看元素的实际 class，与 CSS 逐字对照。</p><p><b>修复示例：</b>统一命名，复制粘贴而不是手抄名字。</p></div></details>
+    <details class="fold"><summary>6. 属性名或属性值拼写错误</summary><div class="fold-body"><p><b>典型表现：</b>某一条声明不生效，其他正常。</p><p><b>可能原因：</b><span class="code-inline">backgroud-color</span>、<span class="code-inline">colr</span> 等手误。</p><p><b>排查方式：</b>Styles 面板里该属性不显示，或旁边出现黄色警告图标。</p><p><b>修复示例：</b>不确定拼写时查文档（MDN），别凭感觉。</p></div></details>
+    <details class="fold"><summary>7. 冒号、分号或大括号遗漏</summary><div class="fold-body"><p><b>典型表现：</b>从某一处开始"后面全乱了"。</p><p><b>可能原因：</b>上一行漏分号 / 漏右大括号 / 用了中文标点（：；｛｝）。</p><p><b>排查方式：</b>看"开始失效的那一行"的上一行——错误通常在那里。</p><p><b>修复示例：</b>补上英文半角标点；VS Code 中文输入法下注意切换。</p></div></details>
+    <details class="fold"><summary>8. margin 与 padding 混淆</summary><div class="fold-body"><p><b>典型表现：</b>想拉开两个卡片，结果卡片自己变胖了。</p><p><b>可能原因：</b>把外部距离写成了 padding。</p><p><b>排查方式：</b>F12 的 Box Model 面板看变化发生在哪一层。</p><p><b>修复示例：</b>元素之间的距离 → margin；内容到边框的距离 → padding。</p></div></details>
+    <details class="fold"><summary>9. 样式被其他规则覆盖</summary><div class="fold-body"><p><b>典型表现：</b>明明写了 color，页面却显示另一种颜色。</p><p><b>可能原因：</b>别处还有针对同一元素的规则，且优先级更高或写在后面。</p><p><b>排查方式：</b>Styles 面板里找到带删除线的那条——它输了。</p><p><b>修复示例：</b>合并重复声明，或删掉冲突规则（系统规则下节课讲）。</p></div></details>
+    <details class="fold"><summary>10. 修改后没保存或没刷新</summary><div class="fold-body"><p><b>典型表现：</b>"我明明改了！"</p><p><b>排查方式：</b>看 VS Code 标签页有没有圆点（未保存标记）；浏览器是否真的按了 F5。</p><p><b>修复示例：</b>养成"改完就 Ctrl+S，切浏览器先 F5"的肌肉记忆。</p></div></details>
+    <div class="idea"><b>工程视角：</b>把每一次踩坑记进自己的"错题本"（问题现象 → 原因 → 修复方法），期末它就是你的《前端排错手册》。主动排查、记录问题、规范修改——这是持续改进的职业方式。</div>
+  </div>
+</section>
+
+<!-- ======== 第 14 节 课堂总结 ======== -->
+<section class="cs" data-nav="课堂总结" id="sec-14">
+  <div class="sec-head">
+    <div class="sec-kicker">第 14 节<span class="tbadge">建议 1 分钟</span></div>
+    <h2>课堂总结：一图回顾</h2>
+  </div>
+  <div class="sec-body">
+    <div class="kmap">
+      <div class="kmap-root">CSS 基础</div>
+      <ul class="kmap-branch">
+        <li><b>CSS 的作用</b>——样式与表现，与 HTML 结构分离、各司其职</li>
+        <li><b>基本语法</b>——<code>选择器 { 属性: 值; }</code>，分号建议每条都写</li>
+        <li><b>三种引入方式</b>——行内（临时）· 内部（练习）· 外部（项目首选）</li>
+        <li><b>常用选择器</b>——标签 · 类 <code>.card</code> · ID <code>#title</code> · 复合 <code>p.intro</code> · 伪类 <code>:hover</code> · 伪元素 <code>::before</code></li>
+        <li><b>常用属性</b>——文字 · 背景 · 边框 · 间距（width / margin / padding / border）</li>
+        <li><b>盒模型</b>——content → padding → border → margin，width 默认指内容区</li>
+        <li><b>浏览器调试</b>——F12 查样式 · 临时改 · 满意后写回代码</li>
+        <li><b>跨平台迁移（拓展）</b>——同一套样式思想 → 鸿蒙 ArkUI 属性链，详见第 15 节</li>
+      </ul>
+    </div>
+    <h3>自查清单：今天我学会了吗</h3>
+    <ul class="checklist">
+      <li><label><input type="checkbox">我能说出 HTML 和 CSS 的分工</label></li>
+      <li><label><input type="checkbox">我能写出一条正确的 CSS 规则</label></li>
+      <li><label><input type="checkbox">我能使用标签、类和 ID 选择器</label></li>
+      <li><label><input type="checkbox">我能区分 margin 和 padding</label></li>
+      <li><label><input type="checkbox">我能为简单页面设置基础样式</label></li>
+      <li><label><input type="checkbox">我能使用开发者工具检查样式</label></li>
+      <li><label><input type="checkbox">我能按照规范命名和整理代码</label></li>
+    </ul>
+    <p style="font-size:14px;color:var(--ink-3);">没打勾的项，对应章节课后回看；下一课时将进入 CSS 布局基础。</p>
+  </div>
+</section>
+
+<!-- ======== 第 15 节 跨平台迁移：从 CSS 到鸿蒙 ArkUI ======== -->
+<section class="cs" data-nav="CSS→鸿蒙迁移" id="sec-15">
+  <div class="sec-head">
+    <div class="sec-kicker">第 15 节<span class="tbadge">拓展视野 · 可选阅读</span></div>
+    <h2>跨平台迁移：从 CSS 到鸿蒙 ArkUI</h2>
+  </div>
+  <div class="sec-body">
+    <p class="lead">这节课学的 CSS 语法属于 Web 平台，但<strong>样式设计的思想是跨平台通行的</strong>。国产操作系统鸿蒙（HarmonyOS）的应用开发框架 ArkUI，同样靠"属性控制外观、盒模型控制间距"来美化界面——把本课内容学到手，你已经掌握了 ArkUI 界面美化的一半。</p>
+
+    <h3>一、为什么值得了解</h3>
+    <ul style="color:var(--ink-2);font-size:15.5px;">
+      <li><b>国产生态崛起</b>：鸿蒙设备数量已达数亿级，"纯血鸿蒙"（HarmonyOS NEXT）应用开发岗位需求持续增长，信创产业需要大量前端功底扎实的工程师</li>
+      <li><b>能力半径</b>："学前端只能写网页"是误解——Web、小程序、鸿蒙应用共用同一套样式与布局思想，<strong>换个平台只是换套语法</strong></li>
+      <li><b>学习杠杆</b>：ArkTS 是 TypeScript 的超集，本课的 CSS 基础 + 后续的 JS/TS 课程，正好构成通往 ArkUI 的完整路径</li>
+    </ul>
+
+    <h3>二、三层迁移：什么不变、什么映射、什么变化</h3>
+    <table class="tbl" style="font-size:15px;">
+      <tr><th style="width:130px;">迁移层次</th><th>规律</th><th>例子</th></tr>
+      <tr>
+        <td><b>思想层 · 不变</b></td>
+        <td>结构与样式分离、盒模型、属性语义原样成立</td>
+        <td><span class="code-inline">padding / border / margin</span> 三兄弟在 ArkUI 中含义完全相同</td>
+      </tr>
+      <tr>
+        <td><b>属性层 · 可映射</b></td>
+        <td>命名从连字符改为驼峰，语义一一对应</td>
+        <td><span class="code-inline">font-size: 18px</span> → <span class="code-inline">.fontSize(18)</span></td>
+      </tr>
+      <tr>
+        <td><b>语法层 · 有变化</b></td>
+        <td>选择器消失，样式以属性链直接写在组件上</td>
+        <td><span class="code-inline">.card { … }</span> → <span class="code-inline">Column() { … }.width(340)</span></td>
+      </tr>
+    </table>
+
+    <h3>三、属性映射表：本课所学 → ArkUI 属性链</h3>
+    <table class="tbl" style="font-size:14.5px;">
+      <tr><th style="width:130px;">本课 CSS 属性</th><th>CSS 写法</th><th>ArkUI 属性链</th><th>一句话备注</th></tr>
+      <tr><td><span class="code-inline">color</span></td><td><span class="code-inline">color: #333</span></td><td><span class="code-inline">.fontColor('#333')</span></td><td>文字颜色，ArkUI 名字更明确</td></tr>
+      <tr><td><span class="code-inline">background-color</span></td><td><span class="code-inline">background-color: #fff</span></td><td><span class="code-inline">.backgroundColor('#fff')</span></td><td>连字符 → 驼峰</td></tr>
+      <tr><td><span class="code-inline">font-size</span></td><td><span class="code-inline">font-size: 18px</span></td><td><span class="code-inline">.fontSize(18)</span></td><td>数字不带单位（默认 vp）</td></tr>
+      <tr><td><span class="code-inline">font-family</span></td><td><span class="code-inline">font-family: "Microsoft YaHei"</span></td><td><span class="code-inline">.fontFamily('HarmonyOS Sans')</span></td><td>鸿蒙官方字体</td></tr>
+      <tr><td><span class="code-inline">font-weight</span></td><td><span class="code-inline">font-weight: bold</span></td><td><span class="code-inline">.fontWeight(FontWeight.Bold)</span></td><td>关键字变枚举值</td></tr>
+      <tr><td><span class="code-inline">line-height</span></td><td><span class="code-inline">line-height: 24px</span></td><td><span class="code-inline">.lineHeight(24)</span></td><td>直接对应</td></tr>
+      <tr><td><span class="code-inline">text-align</span></td><td><span class="code-inline">text-align: center</span></td><td><span class="code-inline">.textAlign(TextAlign.Center)</span></td><td>关键字变枚举值</td></tr>
+      <tr><td><span class="code-inline">width</span></td><td><span class="code-inline">width: 340px</span></td><td><span class="code-inline">.width(340)</span></td><td>直接对应</td></tr>
+      <tr><td><span class="code-inline">min-height</span></td><td><span class="code-inline">min-height: 100px</span></td><td><span class="code-inline">.constraintSize({ minHeight: 100 })</span></td><td>差异较大，了解即可</td></tr>
+      <tr><td><span class="code-inline">margin</span></td><td><span class="code-inline">margin: 20px</span></td><td><span class="code-inline">.margin(20)</span> / <span class="code-inline">.margin({ top: 16 })</span></td><td>四方向单设用对象</td></tr>
+      <tr><td><span class="code-inline">padding</span></td><td><span class="code-inline">padding: 24px</span></td><td><span class="code-inline">.padding(24)</span></td><td>盒模型相同</td></tr>
+      <tr><td><span class="code-inline">border</span></td><td><span class="code-inline">border: 1px solid #ddd</span></td><td><span class="code-inline">.border({ width: 1, color: '#ddd' })</span></td><td>复合属性变对象参数</td></tr>
+      <tr><td><span class="code-inline">border-radius</span></td><td><span class="code-inline">border-radius: 12px</span></td><td><span class="code-inline">.borderRadius(12)</span></td><td>直接对应</td></tr>
+    </table>
+    <div class="note"><b>发现规律了吗？</b>把 CSS 属性名里的连字符去掉、后面那个单词首字母大写（font-size → fontSize），再从"属性: 值"改成"(值)"挂在组件后面——13 个属性里有 10 个严格服从这条规律。<strong>语法是平台的外衣，语义才是技术的内核。</strong></div>
+
+    <h3>四、同一张课程卡片的跨平台实现</h3>
+    <p>左边是可在浏览器中直接运行的 HTML/CSS 版本，右边是需要复制到 DevEco Studio 中运行的 ArkTS 版本。两段代码用于对照属性语义和布局思路，不代表两个平台会产生像素级完全一致的画面。</p>
+    <div class="grid2">
+      <figure class="codebox" data-lang="html" data-label="card.html · 浏览器可运行" data-preview="harmony-frame">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;style&gt;
+    /* 卡片容器：盒模型四要素齐聚 */
+    .course-card {
+      box-sizing: border-box;
+      width: 340px;
+      padding: 24px;
+      background-color: #FFFFFF;
+      border: 1px solid #DCE5F1;
+      border-radius: 12px;
+      margin: 20px auto;
+    }
+    .course-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0B1324;
+    }
+    .course-desc {
+      font-size: 14px;
+      color: #5B6880;
+      line-height: 24px;
+      margin-top: 10px;
+    }
+    .start-btn {
+      display: inline-block;
+      font-size: 16px;
+      color: #FFFFFF;
+      background-color: #2563EB;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 24px;
+      margin-top: 16px;
+      text-decoration: none;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="course-card"&gt;
+    &lt;div class="course-title"&gt;前端开发实训&lt;/div&gt;
+    &lt;div class="course-desc"&gt;从结构到样式：写出你的第一个规范化网页。&lt;/div&gt;
+    &lt;a class="start-btn" href="#"&gt;开始学习&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </figure>
+      <figure class="codebox" data-lang="arkts" data-label="CourseCard.ets · 需在 DevEco Studio 运行">
+<pre><code>// 鸿蒙 ArkTS 版本 —— 开发工具：DevEco Studio
+@Entry
+@Component
+struct CourseCard {
+  build() {
+    // Column：纵向容器，相当于网页里的卡片 div
+    Column() {
+      Text('前端开发实训')
+        .fontSize(24)
+        .fontWeight(FontWeight.Bold)
+        .fontColor('#0B1324')
+
+      Text('从结构到样式：写出你的第一个规范化网页。')
+        .fontSize(14)
+        .fontColor('#5B6880')
+        .lineHeight(24)
+        .margin({ top: 10 })
+
+      Button('开始学习')
+        .fontSize(16)
+        .fontColor('#FFFFFF')
+        .backgroundColor('#2563EB')
+        .borderRadius(8)
+        .padding({
+          left: 24, right: 24,
+          top: 8, bottom: 8
+        })
+        .margin({ top: 16 })
+    }
+    .width(340)
+    .padding(24)
+    .backgroundColor('#FFFFFF')
+    .borderRadius(12)
+    .border({ width: 1, color: '#DCE5F1' })
+    .margin(20)
+  }
+}</code></pre>
+      </figure>
+    </div>
+    <div class="preview-frame-wrap">
+      <div class="preview-frame-bar">浏览器实际渲染 · 当前区域仅运行上方 HTML/CSS 代码</div>
+      <iframe id="harmony-frame" class="preview-frame" title="HTML 与 CSS 课程卡片实际渲染效果" style="height:360px;"></iframe>
+    </div>
+    <div class="note"><b>关于 ArkTS 预览：</b>本网页不能执行 ArkTS。请将右侧代码复制到 DevEco Studio 的 ArkUI 工程中查看真实效果。ArkUI 的按钮默认样式、字体度量和尺寸计算可能与浏览器不同，因此这里强调的是属性含义和布局思想的迁移，而不是像素级复刻。</div>
+    <p><strong>逐行对照要点：</strong></p>
+    <ul style="color:var(--ink-2);font-size:15px;">
+      <li>两端都有 <b>width / padding / border / margin</b> 等布局概念，但应按各自平台的尺寸规则理解</li>
+      <li>CSS 先用类选择器 <span class="code-inline">.course-card</span> 找到元素再穿衣服；ArkTS 的样式<b>直接长在组件身上</b>，不需要选择器</li>
+      <li>值的写法：CSS 写 <span class="code-inline">'18px'</span>（字符串、浏览器运行时解析）；ArkTS 写 <span class="code-inline">18</span>（强类型数字、编译期检查，写错直接报错）</li>
+    </ul>
+
+    <h3>五、关键差异清单（迁移时的思维切换点）</h3>
+    <table class="tbl" style="font-size:14.5px;">
+      <tr><th style="width:170px;">差异点</th><th>CSS（Web）</th><th>ArkUI（鸿蒙）</th></tr>
+      <tr><td><b>样式作用对象</b></td><td>选择器"找到"元素再穿衣服</td><td>样式以属性链直接写在组件上，选择器消失</td></tr>
+      <tr><td><b>命名习惯</b></td><td>连字符：font-size</td><td>驼峰：fontSize（呼应代码规范：入乡随俗）</td></tr>
+      <tr><td><b>值的类型</b></td><td>字符串 '18px'，浏览器宽容解析</td><td>强类型数字 18（vp），编译期查错</td></tr>
+      <tr><td><b>复合属性</b></td><td>border: 1px solid #ddd</td><td>对象参数 border({ width: 1, color: '#ddd' })</td></tr>
+      <tr><td><b>关键字取值</b></td><td>bold / center</td><td>枚举 FontWeight.Bold / TextAlign.Center</td></tr>
+    </table>
+
+    <details class="fold">
+      <summary>想继续深入？—— 鸿蒙学习路径建议</summary>
+      <div class="fold-body">
+        <ul style="color:var(--ink-2);font-size:15px;">
+          <li><b>第一步</b>：到华为开发者官网（developer.huawei.com）免费下载 DevEco Studio，新建 Empty Ability 工程跑通"Hello World"</li>
+          <li><b>第二步</b>：在预览器里把本节的 CourseCard.ets 敲一遍——每敲一个属性，对照左边想想它对应哪个 CSS 属性</li>
+          <li><b>第三步</b>：学有余力可尝试给你的课程卡片加背景色、圆角、间距微调，体验"属性链式编程"</li>
+          <li><b>提醒</b>：ArkTS 是 TypeScript 超集，包含类型系统——本学期后半段的 JS/TS 课程学扎实，迁移成本会更低</li>
+          <li><b>官方资源</b>：HarmonyOS 开发者官网的《ArkUI 开发指南》与 Codelabs 实战教程</li>
+        </ul>
+      </div>
+    </details>
+    <div class="note"><b>写在迁移之后：</b>鸿蒙生态从无到有、装机量数亿的历程，是国产基础软件自立自强的缩影。对软件工程专业的你而言，技术报国不是口号——它是今天写规范的每一行 CSS，也是明天迁移到国产平台的每一行 ArkTS。更要知道：<b>平台会更替，"结构与样式分离、盒模型、语义化命名"这些设计思想不会过时</b>——这才是你带得走的能力。</div>
+  </div>
+</section>
+
+
+</main>
+
+<!-- ============ 底部翻页器 ============ -->
+<div class="pager">
+  <button id="prev-btn" aria-label="上一节">←</button>
+  <span id="pager-label">1 / 15</span>
+  <button id="next-btn" aria-label="下一节">→</button>
+</div>
+<div class="key-hint">← → 方向键切换章节</div>
+
+<script>
+/* ============================================================
+   一、章节导航与切换
+   ============================================================ */
+(function(){
+  'use strict';
+  const mainEl = document.querySelector('main');
+  const EDIT_KEY = 'css-course-student-text-no-practice-v1';
+  try{
+    const savedMain = localStorage.getItem(EDIT_KEY);
+    if(savedMain) mainEl.innerHTML = savedMain;
+  }catch(err){}
+  // 获取全部章节
+  const sections = Array.prototype.slice.call(document.querySelectorAll('main .cs'));
+  const nav = document.getElementById('nav');
+  const sidebar = document.getElementById('sidebar');
+  const mask = document.getElementById('sidebar-mask');
+  const menuBtn = document.getElementById('menu-btn');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const pagerLabel = document.getElementById('pager-label');
+  const progressText = document.getElementById('progress-text');
+  const progressTopic = document.getElementById('progress-topic');
+  const progressBar = document.getElementById('progress-bar');
+  let cur = 0;
+
+  // 章节分组配置（from/to 为章节序号，从 1 开始）
+  const groups = [
+    {label:'开始', from:1, to:2},
+    {label:'情境导入', from:3, to:3},
+    {label:'核心新知', from:4, to:9},
+    {label:'工具与案例', from:10, to:11},
+    {label:'检测与总结', from:12, to:14},
+    {label:'跨平台迁移', from:15, to:15}
+  ];
+
+  // 生成侧栏导航
+  groups.forEach(function(g){
+    const gEl = document.createElement('div');
+    gEl.className = 'nav-group';
+    gEl.textContent = g.label;
+    nav.appendChild(gEl);
+    for(let i = g.from; i <= g.to; i++){
+      const sec = sections[i-1];
+      if(!sec) continue;
+      const btn = document.createElement('button');
+      btn.className = 'nav-item';
+      btn.type = 'button';
+      btn.innerHTML = '<span class="nav-num">' + String(i).padStart(2,'0') + '</span><span>' + sec.dataset.nav + '</span>';
+      btn.addEventListener('click', function(){ goTo(i-1); closeSidebar(); });
+      nav.appendChild(btn);
+    }
+  });
+  const navItems = Array.prototype.slice.call(nav.querySelectorAll('.nav-item'));
+
+  // 切换到指定章节
+  function goTo(idx){
+    if(idx < 0 || idx >= sections.length) return;
+    sections[cur].classList.remove('active');
+    cur = idx;
+    sections[cur].classList.add('active');
+    // 更新侧栏高亮
+    navItems.forEach(function(b, i){ b.classList.toggle('active', i === cur); });
+    // 更新进度信息
+    progressText.textContent = '第 ' + (cur+1) + ' / ' + sections.length + ' 节';
+    progressTopic.textContent = sections[cur].dataset.nav;
+    progressBar.style.width = ((cur+1) / sections.length * 100) + '%';
+    pagerLabel.textContent = (cur+1) + ' / ' + sections.length;
+    // 翻页按钮状态
+    prevBtn.disabled = (cur === 0);
+    nextBtn.disabled = (cur === sections.length - 1);
+    // 内容回顶部
+    window.scrollTo({top:0, behavior:'auto'});
+    // 当前导航项滚入可视区
+    if(navItems[cur]) navItems[cur].scrollIntoView({block:'nearest'});
+  }
+  window.goTo = goTo;
+
+  // 翻页按钮
+  prevBtn.addEventListener('click', function(){ goTo(cur-1); });
+  nextBtn.addEventListener('click', function(){ goTo(cur+1); });
+
+  // 封面"开始本课"
+  const coverStart = document.getElementById('cover-start');
+  if(coverStart) coverStart.addEventListener('click', function(){ goTo(1); });
+
+  // 键盘方向键切换章节
+  document.addEventListener('keydown', function(e){
+    const tag = (e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
+    if(e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); goTo(cur+1); }
+    else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); goTo(cur-1); }
+  });
+
+  // 移动端侧栏开关
+  function closeSidebar(){ sidebar.classList.remove('open'); mask.classList.remove('show'); }
+  menuBtn.addEventListener('click', function(){
+    sidebar.classList.toggle('open');
+    mask.classList.toggle('show');
+  });
+  mask.addEventListener('click', closeSidebar);
+
+  goTo(0);
+
+  // 文本编辑：正文可直接修改，代码和交互控件保持只读
+  const editToggle = document.getElementById('edit-toggle');
+  const editReset = document.getElementById('edit-reset');
+  let editTimer = null;
+  function lockInteractiveParts(){
+    mainEl.querySelectorAll('pre,code,button,input,textarea,select,iframe,summary,a').forEach(function(el){
+      el.setAttribute('contenteditable','false');
+    });
+  }
+  function setEditMode(on){
+    mainEl.setAttribute('contenteditable', on ? 'true' : 'false');
+    lockInteractiveParts();
+    document.body.classList.toggle('editing', on);
+    editToggle.classList.toggle('active', on);
+    editToggle.textContent = on ? '完成编辑' : '编辑文本';
+    editReset.style.display = on ? 'inline-block' : 'none';
+    if(on) mainEl.focus();
+  }
+  editToggle.addEventListener('click', function(){ setEditMode(!document.body.classList.contains('editing')); });
+  editReset.addEventListener('click', function(){
+    if(window.confirm('确定恢复所有原始文本吗？当前修改将被清除。')){
+      localStorage.removeItem(EDIT_KEY);
+      location.reload();
+    }
+  });
+  mainEl.addEventListener('input', function(){
+    if(!document.body.classList.contains('editing')) return;
+    clearTimeout(editTimer);
+    editTimer = setTimeout(function(){
+      try{ localStorage.setItem(EDIT_KEY, mainEl.innerHTML); }catch(err){}
+    }, 400);
+  });
+})();
+</script>
+
+<script>
+/* ============================================================
+   三、代码块语法高亮与复制按钮
+   ============================================================ */
+(function(){
+  'use strict';
+  // HTML 转义
+  function esc(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  // 单行 CSS 高亮（输入为已转义文本，不再二次转义）
+  function hlCSSLine(line){
+    // 纯注释行
+    if(/^\s*\/\*[\s\S]*\*\/\s*$/.test(line)){
+      return '<span class="c-com">' + line + '</span>';
+    }
+    // 声明行：属性: 值;
+    var m = line.match(/^(\s*)([-a-zA-Z]+)\s*:\s*([^;]*);?\s*$/);
+    if(m){
+      return m[1] + '<span class="c-prop">' + m[2] + '</span>: <span class="c-val">' + m[3].trim() + '</span>;';
+    }
+    // 选择器行：以 { 结尾
+    m = line.match(/^(\s*)(.+?)\s*\{\s*$/);
+    if(m){
+      return m[1] + '<span class="c-sel">' + m[2] + '</span> {';
+    }
+    return line;
+  }
+  // HTML 高亮（先属性后标签名，避免高亮结果被二次匹配）
+  function hlHTML(src){
+    return esc(src).replace(/&lt;[^&]*&gt;/g, function(tag){
+      if(/^&lt;!--/.test(tag)){ return '<span class="c-com">' + tag + '</span>'; }
+      if(/^&lt;!DOCTYPE/i.test(tag)){ return '<span class="c-doct">' + tag + '</span>'; }
+      var inner = tag;
+      // 属性名与属性值
+      inner = inner.replace(/([a-zA-Z-]+)=("[^"]*")/g, function(mm, a, v){
+        return '<span class="c-attr">' + a + '</span>=<span class="c-str">' + v + '</span>';
+      });
+      // 标签名
+      inner = inner.replace(/^(&lt;\/?)([a-zA-Z][a-zA-Z0-9-]*)/, function(mm, a, b){
+        return a + '<span class="c-tag">' + b + '</span>';
+      });
+      return inner;
+    });
+  }
+  // ArkTS 单行高亮（鸿蒙迁移示例代码：注释/字符串/属性链/组件名分色）
+  function hlArkTSLine(line){
+    // 拆分行内注释（本课件示例不含 URL 字符串，简单拆分即可）
+    var code = line, comment = '';
+    var ci = line.indexOf('//');
+    if(ci > -1){ code = line.slice(0, ci); comment = line.slice(ci); }
+    var out = esc(code);
+    // 字符串字面量
+    out = out.replace(/('[^']*')/g, '<span class="c-str">$1</span>');
+    // 装饰器 @Entry / @Component
+    out = out.replace(/(@[A-Za-z][A-Za-z0-9]*)/g, '<span class="c-doct">$1</span>');
+    // 属性链 .fontSize( —— 驼峰属性名（与 CSS 的 font-size 形成对照）
+    out = out.replace(/\.([a-zA-Z][a-zA-Z0-9]*)\(/g, '.<span class="c-sel">$1</span>(');
+    // 关键字与常用组件名
+    out = out.replace(/\b(struct|build|Column|Row|Text|Button|Image|FontWeight|TextAlign)\b/g, '<span class="c-tag">$1</span>');
+    if(comment){ out += '<span class="c-com">' + esc(comment) + '</span>'; }
+    return out;
+  }
+  // 主处理：HTML 块内的 CSS 行也顺带高亮
+  function highlight(codeEl, lang){
+    var src = codeEl.textContent;
+    var html;
+    if(lang === 'css'){
+      html = src.split('\n').map(hlCSSLine).join('\n');
+    }else if(lang === 'arkts'){
+      html = src.split('\n').map(hlArkTSLine).join('\n');
+    }else{
+      html = hlHTML(src);
+      // 对不含标签的行做 CSS 声明补充高亮
+      html = html.split('\n').map(function(line){
+        if(line.indexOf('&lt;') === -1 && line.indexOf('<span') === -1){
+          return hlCSSLine(line);
+        }
+        return line;
+      }).join('\n');
+    }
+    codeEl.innerHTML = html;
+  }
+
+  // 遍历所有代码块：加复制按钮并高亮
+  var boxes = document.querySelectorAll('.codebox');
+  Array.prototype.forEach.call(boxes, function(box){
+    var pre = box.querySelector('pre');
+    var code = pre ? pre.querySelector('code') : null;
+    if(!code) return;
+    // 若缺少头部栏则自动创建（含复制按钮）
+    var head = box.querySelector('.code-head');
+    if(!head){
+      head = document.createElement('div');
+      head.className = 'code-head';
+      box.insertBefore(head, box.firstChild);
+    }
+    var lang = box.dataset.lang || 'html';
+    var label = box.dataset.label || lang.toUpperCase();
+    // 头部信息与按钮
+    var labelEl = document.createElement('span');
+    labelEl.className = 'code-label';
+    labelEl.textContent = label;
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = '复制代码';
+    // 高亮在读取原始文本之后执行，保证复制到的是纯代码
+    var rawText = code.textContent;
+    btn.addEventListener('click', function(){
+      // 优先使用剪贴板 API，失败则回退到隐藏文本域
+      function done(){
+        btn.textContent = '已复制';
+        btn.classList.add('ok');
+        setTimeout(function(){ btn.textContent = '复制代码'; btn.classList.remove('ok'); }, 1600);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(rawText).then(done, function(){ fallbackCopy(); });
+      }else{
+        fallbackCopy();
+      }
+      function fallbackCopy(){
+        var ta = document.createElement('textarea');
+        ta.value = rawText;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try{ document.execCommand('copy'); done(); }catch(err){}
+        document.body.removeChild(ta);
+      }
+    });
+    head.textContent = '';
+    head.appendChild(labelEl);
+    head.appendChild(btn);
+    highlight(code, lang);
+    // 综合案例实时预览：将代码内容渲染到 data-preview 指向的 iframe（srcdoc 离线可用）
+    var frameId = box.dataset.preview;
+    if(frameId){
+      var frame = document.getElementById(frameId);
+      if(frame){ frame.srcdoc = rawText; }
+    }
+  });
+
+  /* ============================================================
+     四、即时检测：显示/隐藏答案
+     ============================================================ */
+  var qBtns = document.querySelectorAll('.q-btn[data-reveal]');
+  Array.prototype.forEach.call(qBtns, function(btn){
+    btn.addEventListener('click', function(){
+      var ans = document.getElementById(btn.dataset.reveal);
+      if(!ans) return;
+      var open = ans.classList.toggle('open');
+      btn.textContent = open ? '收起答案' : '显示答案';
+    });
+  });
+  // 一键展开全部答案
+  var revealAll = document.getElementById('reveal-all');
+  if(revealAll){
+    revealAll.addEventListener('click', function(){
+      var all = document.querySelectorAll('.q-ans');
+      var anyClosed = false;
+      Array.prototype.forEach.call(all, function(a){
+        if(!a.classList.contains('open')) anyClosed = true;
+      });
+      Array.prototype.forEach.call(all, function(a){
+        a.classList.toggle('open', anyClosed);
+      });
+      Array.prototype.forEach.call(qBtns, function(b){
+        b.textContent = anyClosed ? '收起答案' : '显示答案';
+      });
+      revealAll.textContent = anyClosed ? '一键收起全部答案' : '一键展开全部答案';
+    });
+  }
+
+  /* ============================================================
+     五、盒模型互动滑块
+     ============================================================ */
+  var box = document.getElementById('bp-box');
+  if(box){
+    var pad = document.getElementById('bp-pad');
+    var bor = document.getElementById('bp-bor');
+    var mar = document.getElementById('bp-mar');
+    var padV = document.getElementById('bp-pad-v');
+    var borV = document.getElementById('bp-bor-v');
+    var marV = document.getElementById('bp-mar-v');
+    var formula = document.getElementById('bp-formula');
+    var CONTENT_W = 240;
+    function updateBox(){
+      var p = parseInt(pad.value, 10);
+      var b = parseInt(bor.value, 10);
+      var m = parseInt(mar.value, 10);
+      box.style.padding = p + 'px';
+      box.style.borderWidth = b + 'px';
+      box.style.margin = m + 'px';
+      padV.textContent = p + ' px';
+      borV.textContent = b + ' px';
+      marV.textContent = m + ' px';
+      var total = CONTENT_W + p * 2 + b * 2 + m * 2;
+      formula.textContent = '盒子在页面上占的总宽度 = ' + CONTENT_W + ' + ' + p + '×2 + ' + b + '×2 + ' + m + '×2 = ' + total + ' px';
+    }
+    pad.addEventListener('input', updateBox);
+    bor.addEventListener('input', updateBox);
+    mar.addEventListener('input', updateBox);
+    updateBox();
+  }
+})();
+</script>
+</body>
+</html>
