@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的前端学习档案</title>
+    <meta name="description" content="王恩拓的前端学习档案，记录技能、学习路线与现代 CSS 布局实践。">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+
+    <!-- ===== 页头：身份信息 + 站内导航 ===== -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="identity">
+        <p class="eyebrow">LEARNING PORTFOLIO · 03</p>
+        <h1>我的前端学习档案</h1>
+        <p>软件工程 · 2025级 · 王恩拓</p>
+
+        </div>
+        <nav class="site-nav" aria-label="页面主要内容">
+            <a href="#about">关于我</a>
+            <a href="#stack">技能栈</a>
+            <a href="#roadmap">学习路线</a>
+            <a href="#feedback">留言反馈</a>
+        </nav>
+          </div>
+    </header>
+
+    <main id="main-content" class="page-layout" tabindex="-1">
+      <div class="content-column">
+
+        <!-- ===== 关于我 ===== -->
+        <section id="about" aria-labelledby="about-title">
+            <h2 id="about-title">关于我</h2>
+
+<p class="eyebrow">01 / ABOUT ME</p>
+
+            <p>
+                我叫王恩拓，是一名软件工程专业的大二学生。最近我开始接触前端开发，
+                目前能独立完成语义化 HTML 页面，正在了解 CSS 布局与 JavaScript 事件处理。
+                平时喜欢把学到的知识整理成笔记，也习惯用浏览器开发者工具反复检查自己的代码结构。
+            </p>
+            <p>
+                这份档案从第一份 HTML 结构作业出发，加入 Flexbox、Grid 和响应式布局，记录我的学习状态与下一步计划。
+            </p>
+        </section>
+
+        <!-- ===== 技能栈 ===== -->
+        <section id="stack" aria-labelledby="stack-title">
+            <h2 id="stack-title">技能栈</h2>
+
+            <p class="eyebrow">02 / SKILLS IN PROGRESS</p>
+            <p>从结构到布局，一步一步把页面做好。</p>
+            <ul class="skill-list">
+                <li><span class="skill-number">01</span><h3>HTML 页面结构</h3><p>文档骨架、语义化标签、表单可访问性。</p><span class="skill-status">基础已掌握</span></li>
+                <li><span class="skill-number">02</span><h3>CSS 基础样式</h3><p>选择器、颜色、字体、背景、边框与盒模型。</p><span class="skill-status">持续练习</span></li>
+                <li class="featured-skill"><span class="skill-number">03 / 本次重点</span><h3>CSS Flexbox 布局</h3><p>使用主轴与交叉轴组织页头和导航，通过 gap 设置间距，通过 flex-wrap 处理换行。</p><span class="skill-status">正在实践</span></li>
+                <li><span class="skill-number">04</span><h3>CSS Grid 布局</h3><p>双栏轨道、自适应技能卡片与项目跨列。</p><span class="skill-status">正在实践</span></li>
+                <li><span class="skill-number">05</span><h3>HarmonyOS ArkUI</h3><p>计划学习 Row、Column、Grid，迁移布局思维。</p><span class="skill-status">后续计划</span></li>
+                <li><span class="skill-number">06</span><h3>JavaScript 与工具</h3><p>计划学习事件与 DOM；继续使用 VS Code、Chrome DevTools 和 Git。</p><span class="skill-status">逐步探索</span></li>
+            </ul>
+
+            <dl>
+                <dt>HTML</dt>
+                <dd>能独立写出结构清晰、标签闭合规范的页面</dd>
+
+                <dt>CSS</dt>
+                <dd>通过基础样式、Flexbox 与 Grid 完成本次布局练习</dd>
+
+                <dt>JavaScript</dt>
+                <dd>进行简单了解，为下一步学习做准备</dd>
+            </dl>
+
+            <details>
+                <summary>展开查看学习方式</summary>
+                <p>
+                    主要靠课程实训 + MDN 文档 + 自己动手重写示例代码。
+                    每学一个标签或属性，都会在本地新建一个测试页验证效果。
+                </p>
+            </details>
+        </section>
+
+        <!-- ===== 学习路线 ===== -->
+        <section id="roadmap" aria-labelledby="roadmap-title">
+            <h2 id="roadmap-title">学习路线</h2>
+
+            <div class="table-container">
+            <table>
+                <caption>前端学习阶段安排</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">阶段</th>
+                        <th scope="col">主要内容</th>
+                        <th scope="col">状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">基础期</th>
+                        <td>HTML 语义化 + CSS 基础与现代布局</td>
+                        <td>进行中</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">进阶期</th>
+                        <td>JavaScript 交互 + DOM 操作</td>
+                        <td>未开始</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">实践期</th>
+                        <td>Vue 组件化小项目</td>
+                        <td>未开始</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <ol>
+                <li>先把 HTML 和 CSS 基础打牢，能还原静态页面。</li>
+                <li>再用 JavaScript 给页面加上真实交互。</li>
+                <li>最后用 Vue 把页面拆成可复用组件。</li>
+            </ol>
+        </section>
+
+        <!-- ===== 留言反馈表单 ===== -->
+        <section id="feedback" aria-labelledby="feedback-title">
+            <h2 id="feedback-title">留言反馈</h2>
+
+            <p id="form-help" class="muted">本表单用于本地实训演示，提交后仅在当前页面确认，不会发送到服务器。</p>
+            <form aria-describedby="form-help">
+              <div class="form-row">
+                <div>
+                    <label for="nickname">你的称呼</label>
+                    <input maxlength="40" autocomplete="nickname" id="nickname" name="nickname" type="text" required>
+                </div>
+
+                <div>
+                    <label for="focus">你更关注的方向</label>
+                    <select id="focus" name="focus">
+                        <option value="html-css">HTML / CSS 基础</option>
+                        <option value="javascript">JavaScript 交互</option>
+                        <option value="vue">Vue 组件化</option>
+                    </select>
+                </div>
+
+              </div>
+                <div class="form-field">
+                    <label for="suggestion">想对我说的话</label>
+                    <textarea maxlength="1000" id="suggestion" name="suggestion" rows="4"></textarea>
+                </div>
+
+                <button type="submit">发送留言</button>
+                            <p id="form-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+      </div>
+
+    <!-- ===== 侧栏补充 ===== -->
+    <aside class="profile-aside" aria-label="个人信息与学习提醒">
+          <div class="profile-card">
+            <figure>
+                <img src="./assets/profile.jpg" alt="前端学习者个人头像示意图">
+                <figcaption>学习记录 · 2026 秋</figcaption>
+            </figure>
+          <h2>王恩拓</h2><p class="muted">软件工程 · 2025 级 4 班</p><p class="student-id">学号 2512653</p>
+          </div>
+          <div class="reminder-card">
+        <h2>学习提醒</h2>
+        <p>结构清楚比样式好看更重要。</p>
+        <p>每次写完页面，都先用开发者工具检查一遍标签嵌套。</p>
+    <p class="aside-label">当前方向</p><p>CSS 现代布局 → JavaScript 交互</p>
+          </div>
+    </aside>
+    </main>
+
+    <!-- ===== 页脚 ===== -->
+    <footer class="site-footer">
+        <p>作者：王恩拓</p>
+        <p>课程：前端开发实训</p>
+        <p>更新于 <time datetime="2026-10-21">2026年10月21日</time></p>
+    </footer>
+
+</body>
+</html>
