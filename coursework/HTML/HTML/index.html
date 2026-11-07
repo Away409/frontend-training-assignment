@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="HTML 从入门到实践：通过可运行案例学习文档骨架、文字、图片、链接、列表与现代 HTML。"
+    />
+    <meta name="keywords" content="HTML, HTML5, 前端入门, 网页开发, HTML 教程" />
+    <title>HTML 从入门到实践｜零基础交互课</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到课程正文</a>
+    <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+
+    <header class="topbar" id="top">
+      <a class="logo" href="#top" aria-label="HTML 从入门到实践首页">
+        <span class="logo-bracket" aria-hidden="true">&lt;</span>
+        <span class="logo-type">HTML<small>从入门到实践</small></span>
+        <span class="logo-bracket" aria-hidden="true">/&gt;</span>
+      </a>
+      <nav class="top-nav" aria-label="快捷导航">
+        <a href="#skeleton">文档骨架</a>
+        <a href="#tags">常用标签</a>
+        <a href="#responsive">布局与适配</a>
+        <a href="#practice">实战练习</a>
+        <a class="nav-cta" href="#playground">打开练习台</a>
+      </nav>
+      <button class="menu-button" id="menu-button" type="button" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span><span class="sr-only">打开课程目录</span>
+      </button>
+    </header>
+
+    <nav class="mobile-nav" id="mobile-nav" aria-label="移动端课程目录" hidden>
+      <a href="#start">认识 HTML</a><a href="#skeleton">标准骨架</a><a href="#tags">常用标签</a>
+      <a href="#responsive">布局与适配</a><a href="#modern">现代 HTML</a><a href="#practice">综合实践</a><a href="#next">继续学习</a>
+    </nav>
+
+    <div class="page-shell">
+      <aside class="chapter-rail" aria-label="课程目录">
+        <p class="rail-label">LEARNING PATH</p>
+        <ol>
+          <li><a class="is-active" href="#start"><span>01</span><b>认识 HTML</b><small>概念与发展</small></a></li>
+          <li><a href="#skeleton"><span>02</span><b>标准骨架</b><small>网页固定模板</small></a></li>
+          <li><a href="#tags"><span>03</span><b>常用标签</b><small>文字、图片、链接</small></a></li>
+          <li><a href="#responsive"><span>04</span><b>布局与适配</b><small>响应式设备布局</small></a></li>
+          <li><a href="#modern"><span>05</span><b>现代 HTML</b><small>原生新能力</small></a></li>
+          <li><a href="#practice"><span>06</span><b>综合实践</b><small>制作个人名片</small></a></li>
+          <li><a href="#next"><span>07</span><b>继续学习</b><small>ArkUI 与工具</small></a></li>
+        </ol>
+        <div class="rail-tip">
+          <span aria-hidden="true">⌘</span>
+          <p><b>学习建议</b>每看完一个例子，就在右侧练习台改一次代码。</p>
+        </div>
+      </aside>
+
+      <main id="main-content">
+        <section class="hero" id="start" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span>零基础友好</span> · 7 个章节 · 边学边写</p>
+            <h1 id="hero-title">HTML，<br />给内容一个<em>清楚的结构。</em></h1>
+            <p class="hero-lead">你每天浏览的文章、图片、按钮和菜单，都从一对尖括号开始。这门课不要求编程基础：从第一行代码开始，亲手做出一个真正的网页。</p>
+            <div class="hero-actions">
+              <a class="primary-button" href="#skeleton">开始第 1 课 <span aria-hidden="true">→</span></a>
+              <button class="text-action" type="button" data-scroll-to="history">先看 2 分钟发展史</button>
+            </div>
+            <dl class="hero-facts">
+              <div><dt>HTML</dt><dd>负责结构与含义</dd></div>
+              <div><dt>CSS</dt><dd>负责外观与布局</dd></div>
+              <div><dt>JavaScript</dt><dd>负责行为与逻辑</dd></div>
+            </dl>
+          </div>
+
+          <div class="hero-lab" id="playground" aria-label="HTML 即时练习台">
+            <div class="browser-bar">
+              <div class="traffic-lights" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span>你的第一个网页.html</span>
+              <span class="live-state"><i></i> LIVE</span>
+            </div>
+            <div class="lab-tabs" role="tablist" aria-label="练习台视图">
+              <button id="editor-tab" type="button" role="tab" aria-selected="true" aria-controls="hero-editor-panel">HTML</button>
+              <button id="preview-tab" type="button" role="tab" aria-selected="false" aria-controls="hero-preview-panel">预览结果</button>
+              <button class="run-button" id="hero-run" type="button">运行代码 ▶</button>
+            </div>
+            <div id="hero-editor-panel" role="tabpanel" aria-labelledby="editor-tab">
+              <label class="sr-only" for="hero-code">编辑 HTML 代码</label>
+              <textarea id="hero-code" class="code-editor" spellcheck="false"><!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <title>我的第一个网页</title>
+  </head>
+  <body>
+    <h1>你好，HTML！</h1>
+    <p>这是我亲手写的第一个网页。</p>
+    <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML">继续学习</a>
+  </body>
+</html></textarea>
+            </div>
+            <div id="hero-preview-panel" role="tabpanel" aria-labelledby="preview-tab" hidden>
+              <iframe id="hero-preview" title="第一个网页的运行结果" sandbox="allow-scripts"></iframe>
+            </div>
+            <p class="lab-hint"><span aria-hidden="true">↳</span> 试着把“你好，HTML！”换成你的名字，然后运行。</p>
+          </div>
+        </section>
+
+        <section class="definition lesson-section" aria-labelledby="definition-title">
+          <header class="section-heading">
+            <p class="section-kicker">01 · 先搞懂</p>
+            <h2 id="definition-title">HTML 到底是什么？</h2>
+          </header>
+          <div class="definition-grid">
+            <article class="big-definition">
+              <span class="definition-mark" aria-hidden="true">&lt;h1&gt;</span>
+              <p><strong>HTML</strong> 的全称是 <mark>HyperText Markup Language</mark>，中文叫“超文本标记语言”。</p>
+              <p>它不是用来做计算和判断的编程语言，而是用一组标签告诉浏览器：这段是标题、那段是正文、这里放图片、那里可以跳转。</p>
+            </article>
+            <div class="tag-anatomy" aria-label="HTML 标签结构图解">
+              <p class="mini-label">拆开看一个标签</p>
+              <div class="anatomy-code">
+                <span class="tag-piece" data-tip="开始标签">&lt;p&gt;</span>
+                <span class="content-piece" data-tip="内容">今天开始学 HTML</span>
+                <span class="tag-piece" data-tip="结束标签">&lt;/p&gt;</span>
+              </div>
+              <div class="anatomy-notes"><span>告诉浏览器“段落开始”</span><span>真正显示给用户</span><span>告诉浏览器“段落结束”</span></div>
+            </div>
+          </div>
+          <div class="role-strip" aria-label="HTML、CSS 与 JavaScript 分工">
+            <div><code>&lt;HTML&gt;</code><p><b>房子的结构</b>墙、门、房间分别是什么</p></div>
+            <span>+</span>
+            <div><code>{ CSS }</code><p><b>房子的装修</b>颜色、尺寸、摆放方式</p></div>
+            <span>+</span>
+            <div><code>( JavaScript )</code><p><b>房子的设备</b>开灯、门铃、智能交互</p></div>
+          </div>
+        </section>
+
+        <section class="history lesson-section" id="history" aria-labelledby="history-title">
+          <header class="section-heading split-heading">
+            <div><p class="section-kicker">HTML VERSION LOG</p><h2 id="history-title">从简单文档，到现代应用平台</h2></div>
+            <p>HTML 并不是一次设计完成的。它随着网页需求不断生长；今天学习的是持续更新的 <b>HTML Living Standard</b>。</p>
+          </header>
+          <ol class="timeline">
+            <li><time datetime="1993">1993</time><div><b>HTML 1.0</b><p>最早版本，只能组织基本文字与链接。</p></div></li>
+            <li><time datetime="1995">1995</time><div><b>HTML 2.0</b><p>形成统一标准，表单、表格等能力逐渐成熟。</p></div></li>
+            <li><time datetime="1999">1999</time><div><b>HTML 4.01</b><p>与 CSS、脚本协作，网页开始承担复杂界面。</p></div></li>
+            <li><time datetime="2000">2000</time><div><b>XHTML 1.0</b><p>借用 XML 规则，强调严格闭合与规范语法。</p></div></li>
+            <li class="timeline-current"><time datetime="2014">2014 → NOW</time><div><b>HTML5 / Living Standard</b><p>加入视频、音频、绘图、语义标签与丰富原生交互，并持续更新。</p></div><span>当前主流</span></li>
+          </ol>
+          <aside class="note-card"><b>别等“HTML6”</b><p>现在的 HTML 采用“活标准”模式，小功能会持续进入规范和浏览器，而不再等待一个大版本统一发布。</p></aside>
+        </section>
+
+        <section class="skeleton lesson-section" id="skeleton" aria-labelledby="skeleton-title">
+          <header class="section-heading split-heading">
+            <div><p class="section-kicker">02 · DOCUMENT SKELETON</p><h2 id="skeleton-title">每个网页，都从同一副骨架开始</h2></div>
+            <p>把它保存为 <code>index.html</code>，双击文件，浏览器就能读取并显示。点击右侧解释，可以在代码中定位对应部分。</p>
+          </header>
+          <div class="skeleton-workbench">
+            <div class="code-window">
+              <div class="code-window-title"><span><i></i><i></i><i></i></span><b>index.html</b><button class="copy-button" type="button" data-copy-target="skeleton-code">复制代码</button></div>
+              <pre id="skeleton-code"><code><span data-code-part="doctype">&lt;!DOCTYPE html&gt;</span>
+<span data-code-part="html">&lt;html lang="zh-CN"&gt;</span>
+  <span data-code-part="head">&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport"
+      content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta name="description" content="页面简介"&gt;
+    &lt;title&gt;网页标题&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+  &lt;/head&gt;</span>
+  <span data-code-part="body">&lt;body&gt;
+    &lt;h1&gt;用户真正看到的内容&lt;/h1&gt;
+    &lt;p&gt;文字、图片、链接都写在这里。&lt;/p&gt;
+  &lt;/body&gt;</span>
+<span data-code-part="html">&lt;/html&gt;</span></code></pre>
+            </div>
+            <div class="skeleton-explain">
+              <button class="structure-card is-selected" type="button" data-highlight="doctype"><code>&lt;!DOCTYPE html&gt;</code><span><b>使用现代模式</b>告诉浏览器按 HTML5 规则解析，不是普通标签。</span></button>
+              <button class="structure-card" type="button" data-highlight="html"><code>&lt;html&gt;</code><span><b>网页的根盒子</b><code>lang="zh-CN"</code> 说明主要语言是简体中文。</span></button>
+              <button class="structure-card" type="button" data-highlight="head"><code>&lt;head&gt;</code><span><b>看不见的配置区</b>放编码、手机适配、搜索简介、标题和 CSS。</span></button>
+              <button class="structure-card" type="button" data-highlight="body"><code>&lt;body&gt;</code><span><b>真正的页面内容</b>用户能看到的文字、图片、链接与表格都在这里。</span></button>
+            </div>
+          </div>
+          <div class="head-checklist">
+            <p class="mini-label">HEAD 配置检查单</p>
+            <div><span>01</span><p><b>charset</b>防止中文乱码</p></div>
+            <div><span>02</span><p><b>viewport</b>保证手机适配</p></div>
+            <div><span>03</span><p><b>description</b>告诉搜索引擎页面内容</p></div>
+            <div><span>04</span><p><b>title</b>显示在浏览器标签栏</p></div>
+          </div>
+        </section>
+
+        <section class="tags lesson-section" id="tags" aria-labelledby="tags-title">
+          <header class="section-heading split-heading">
+            <div><p class="section-kicker">03 · CORE TAGS</p><h2 id="tags-title">常用标签，不靠背——看用途</h2></div>
+            <p>每张卡片都把“代码”和“浏览器结果”放在一起。先读代码，再预测右边会出现什么。</p>
+          </header>
+
+          <article class="tag-lesson heading-lesson">
+            <header><span class="lesson-index">3.1</span><div><h3>标题：h1 ～ h6</h3><p>标题表达内容层级，不是为了改变字号。</p></div><code>&lt;h1&gt;…&lt;/h1&gt;</code></header>
+            <div class="demo-split">
+              <pre><code>&lt;h1&gt;前端学习手册&lt;/h1&gt;
+&lt;h2&gt;第一章：认识 HTML&lt;/h2&gt;
+&lt;h3&gt;1.1 HTML 是什么&lt;/h3&gt;
+&lt;h3&gt;1.2 第一个网页&lt;/h3&gt;</code></pre>
+              <div class="demo-output heading-output"><span>前端学习手册</span><b>第一章：认识 HTML</b><strong>1.1 HTML 是什么</strong><strong>1.2 第一个网页</strong></div>
+            </div>
+            <p class="rule"><b>写作规则</b> 通常一个页面设置一个清晰的主标题 <code>h1</code>，后续标题按内容层级组织，避免因为想要某个字号而跳级。</p>
+          </article>
+
+          <div class="tag-grid">
+            <article class="tag-lesson">
+              <header><span class="lesson-index">3.2</span><div><h3>段落与换行</h3><p>p / br / pre</p></div></header>
+              <pre><code>&lt;p&gt;段落会独占一块区域。&lt;/p&gt;
+&lt;p&gt;上海市浦东新区&lt;br&gt;
+世纪大道 100 号&lt;/p&gt;
+&lt;pre&gt;空格  和换行
+都会被保留&lt;/pre&gt;</code></pre>
+              <div class="demo-output text-output"><p>段落会独占一块区域。</p><p>上海市浦东新区<br />世纪大道 100 号</p><pre>空格  和换行
+都会被保留</pre></div>
+              <p class="rule"><code>&lt;br&gt;</code> 只换行，不创建新段落；代码或字符画适合用 <code>&lt;pre&gt;</code>。</p>
+            </article>
+
+            <article class="tag-lesson">
+              <header><span class="lesson-index">3.3</span><div><h3>文字语义与编辑标记</h3><p>strong / em / b / i / u / del / mark</p></div></header>
+              <pre><code>&lt;strong&gt;重要：今天截止。&lt;/strong&gt;
+提交前&lt;em&gt;一定要&lt;/em&gt;检查。
+
+本节&lt;b&gt;关键词&lt;/b&gt;：语义化。
+术语 &lt;i lang="en"&gt;responsive design&lt;/i&gt;
+
+错字：&lt;u class="spelling"&gt;HTLM&lt;/u&gt;
+&lt;del datetime="2026-07-20"&gt;周三截止&lt;/del&gt;
+搜索到：学习 &lt;mark&gt;HTML&lt;/mark&gt; 标签</code></pre>
+              <div class="demo-output emphasis-output"><p><strong>重要：今天截止。</strong><br />提交前<em>一定要</em>检查。</p><p>本节<b>关键词</b>：语义化。<br />术语 <i lang="en">responsive design</i></p><p>错字：<u class="spelling">HTLM</u><br /><del datetime="2026-07-20">周三截止</del><br />搜索到：学习 <mark>HTML</mark> 标签</p></div>
+              <p class="rule"><b>判断原则</b>选择标签要看文字承担什么含义；如果只是想改变粗细、斜体、下划线或背景色，请使用 CSS。</p>
+            </article>
+          </div>
+
+          <section class="semantic-compare-panel" aria-labelledby="semantic-compare-title">
+            <header><div><span>SEMANTIC DECISION TABLE</span><h3 id="semantic-compare-title">看起来相似，表达的意思不同</h3></div><p>浏览器默认样式可以被 CSS 改写，标签携带的语义仍然保留。</p></header>
+            <div class="semantic-card-grid">
+              <article data-semantic="strong"><code>&lt;strong&gt;</code><b>重要、严重或紧急</b><p>表示内容的重要性，而不只是加粗。适合安全警告、必须完成的要求。</p><span>例：<strong>账号将在今天失效</strong></span></article>
+              <article data-semantic="em"><code>&lt;em&gt;</code><b>着重强调语气</b><p>改变一句话的重音，强调位置不同可能改变句意，可以嵌套增强强调程度。</p><span>例：你<em>必须</em>保存文件</span></article>
+              <article data-semantic="b"><code>&lt;b&gt;</code><b>吸引注意，但不增加重要性</b><p>适合摘要中的关键词、文章引导词等。若内容确实重要，应选择 <code>strong</code>。</p><span>例：<b>关键词：</b>HTML 语义</span></article>
+              <article data-semantic="i"><code>&lt;i&gt;</code><b>不同语态或习惯性斜体内容</b><p>适合术语、外语短语、思想活动、物种名等；着重语气应使用 <code>em</code>。</p><span>例：术语 <i lang="en">viewport</i></span></article>
+              <article data-semantic="u"><code>&lt;u&gt;</code><b>非文字性质的标注</b><p>适合标记拼写错误或中文专名等注记。不要只为下划线使用，也要避免与链接混淆。</p><span>例：<u class="spelling">HTLM</u> 拼写错误</span></article>
+              <article data-semantic="del"><code>&lt;del&gt;</code><b>内容已从文档中删除</b><p>用于价格、时间或文档修订；可用 <code>datetime</code> 记录删除时间。</p><span>例：<del>原价 ¥299</del>　现价 ¥199</span></article>
+              <article data-semantic="mark"><code>&lt;mark&gt;</code><b>与当前上下文相关</b><p>突出搜索结果、引用中需要关注的片段。它表示相关性，不等于重要性。</p><span>例：找到 3 个 <mark>HTML</mark> 结果</span></article>
+            </div>
+            <div class="semantic-quick-check"><b>快速选择</b><span>重要 / 紧急 → <code>strong</code></span><span>语气重音 → <code>em</code></span><span>引起注意 → <code>b</code></span><span>术语 / 异声 → <code>i</code></span><span>注记 → <code>u</code></span><span>已删除 → <code>del</code></span><span>当前相关 → <code>mark</code></span></div>
+            <p class="semantic-note"><b>关于下标和上标</b><code>sub</code> 与 <code>sup</code> 仍适用于 H<sub>2</sub>O、10m<sup>2</sup>、脚注编号等排版含义，不属于上述强调语义。</p>
+          </section>
+
+          <article class="tag-lesson container-lesson" id="containers">
+            <header><span class="lesson-index">3.4</span><div><h3>通用容器：div 与 span</h3><p>没有合适的语义标签时，用它们为内容分组或提供样式、脚本挂钩。</p></div><code>&lt;div&gt; &lt;span&gt;</code></header>
+            <div class="container-compare">
+              <section aria-labelledby="div-title">
+                <div class="container-code-label"><b id="div-title">div · 块级通用容器</b><span>默认从新的一行开始</span></div>
+                <pre><code>&lt;div class="course-card"&gt;
+  &lt;h3&gt;HTML 基础&lt;/h3&gt;
+  &lt;p&gt;学习网页结构。&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="course-card"&gt;
+  &lt;h3&gt;CSS 布局&lt;/h3&gt;
+  &lt;p&gt;学习页面排列。&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                <div class="container-output block-output"><div><b>HTML 基础</b><span>学习网页结构。</span></div><div><b>CSS 布局</b><span>学习页面排列。</span></div></div>
+              </section>
+              <section aria-labelledby="span-title">
+                <div class="container-code-label"><b id="span-title">span · 行内通用容器</b><span>包住一句话中的局部内容</span></div>
+                <pre><code>&lt;p&gt;
+  本周学习进度：
+  &lt;span class="progress"&gt;75%&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+  截止时间：
+  &lt;span class="deadline"&gt;周五 18:00&lt;/span&gt;
+&lt;/p&gt;</code></pre>
+                <div class="container-output inline-output"><p>本周学习进度：<span>75%</span></p><p>截止时间：<span>周五 18:00</span></p></div>
+              </section>
+            </div>
+            <div class="semantic-decision"><span aria-hidden="true">?</span><p><b>先问“这块内容是什么”</b>如果答案是导航、文章、主内容或按钮，请使用 <code>nav</code>、<code>article</code>、<code>main</code>、<code>button</code>；只有没有更合适的语义标签时，才选择 <code>div</code> 或 <code>span</code>。</p></div>
+
+            <section class="global-attributes" aria-labelledby="global-attributes-title">
+              <header><div><span>GLOBAL ATTRIBUTES</span><h4 id="global-attributes-title">常用全局属性：大多数元素都能使用</h4></div><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes" target="_blank" rel="noopener">查看 MDN 完整列表 ↗</a></header>
+              <div class="global-attribute-grid">
+                <article><code>id="notice"</code><b>页面内唯一标识</b><p>用于锚点、表单关联、CSS 选择和 JavaScript 定位；同一页面不要重复。</p></article>
+                <article><code>class="card urgent"</code><b>可重复的分类名称</b><p>一个元素可以有多个 class，多个元素也可以共享同一个 class。</p></article>
+                <article><code>title="补充说明"</code><b>附加提示</b><p>部分设备悬停时显示，但触屏和键盘体验不稳定，不能承载关键信息。</p></article>
+                <article><code>lang="zh-CN"</code><b>内容语言</b><p>帮助浏览器、翻译工具和读屏软件使用正确的发音与处理规则。</p></article>
+                <article><code>hidden</code><b>暂时不呈现</b><p>布尔属性；存在时元素通常不会显示，也不会进入常规无障碍树。</p></article>
+                <article><code>data-level="important"</code><b>保存自定义数据</b><p>使用 <code>data-*</code> 记录页面状态，JavaScript 可通过 <code>dataset</code> 读取。</p></article>
+              </div>
+            </section>
+
+            <div class="attribute-playground">
+              <div class="attribute-source">
+                <span>ATTRIBUTES IN ACTION</span>
+                <pre><code>&lt;div
+  id="course-notice"
+  class="notice"
+  data-level="important"
+  lang="zh-CN"
+&gt;
+  &lt;p&gt;&lt;span class="badge"&gt;重要&lt;/span&gt;
+    周五前完成综合实践。&lt;/p&gt;
+  &lt;p id="extra" hidden&gt;提交前运行 HTML Checker。&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                <p>CSS 可以根据 <code>data-level</code> 改变外观，JavaScript 可以切换 <code>hidden</code>。属性补充元素信息，但不会取代内容语义。</p>
+              </div>
+              <div class="attribute-preview">
+                <div class="attribute-demo-card" id="attribute-demo-card" data-level="important" lang="zh-CN">
+                  <span class="attribute-badge" id="attribute-badge">重要</span>
+                  <h4>综合实践提醒</h4><p>周五前完成个人学习名片。</p>
+                  <p class="attribute-extra" id="attribute-extra" hidden>提交前请运行 HTML Checker，并用手机模式检查布局。</p>
+                </div>
+                <div class="attribute-controls"><button id="toggle-attribute-level" type="button">切换 data-level</button><button id="toggle-hidden-content" type="button" aria-controls="attribute-extra" aria-expanded="false">显示 hidden 内容</button></div>
+                <output id="attribute-status" aria-live="polite">data-level="important" · 详细内容隐藏</output>
+              </div>
+            </div>
+          </article>
+
+          <div class="tag-grid syntax-foundation-grid">
+            <article class="tag-lesson path-lesson" id="file-paths">
+              <header><span class="lesson-index">3.5</span><div><h3>文件路径</h3><p>同级 / 下级 / 上级 / 根路径</p></div></header>
+              <pre><code>project/
+├── index.html
+├── contact.html
+├── assets/
+│   └── site.css
+├── images/
+│   └── lesson.svg
+└── pages/
+    └── about.html
+
+在 index.html 中：
+&lt;a href="contact.html"&gt;联系课程&lt;/a&gt;
+&lt;img src="images/lesson.svg" alt="课程结构示意图"&gt;
+&lt;a href="pages/about.html"&gt;关于课程&lt;/a&gt;
+
+在 pages/about.html 中：
+&lt;a href="../index.html"&gt;返回首页&lt;/a&gt;</code></pre>
+              <div class="demo-output path-output">
+                <div><span>同级文件</span><code>contact.html</code></div>
+                <div><span>进入下级目录</span><code>images/lesson.svg</code></div>
+                <div><span>返回上一级</span><code>../index.html</code></div>
+                <div><span>从站点根目录</span><code>/assets/site.css</code></div>
+              </div>
+              <p class="rule">相对路径从“当前 HTML 文件”所在目录计算，网页路径统一使用 <code>/</code>。以 <code>/</code> 开头表示当前网站的 origin 根路径；项目部署在子目录时可能需要调整。</p>
+            </article>
+
+            <article class="tag-lesson comment-lesson" id="html-comments">
+              <header><span class="lesson-index">3.6</span><div><h3>HTML 注释</h3><p>&lt;!-- 说明文字 --&gt;</p></div></header>
+              <pre><code>&lt;!-- 页面主导航 --&gt;
+&lt;nav&gt;
+  &lt;a href="/"&gt;课程首页&lt;/a&gt;
+  &lt;a href="/tags"&gt;常用标签&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;!-- TODO: 补充练习说明 --&gt;</code></pre>
+              <div class="demo-output comment-output">
+                <!-- 这条注释保留在 HTML 源码中，但不会显示在页面上。 -->
+                <span>页面实际显示</span>
+                <nav aria-label="HTML 注释示例"><a href="#top">课程首页</a><a href="#tags">常用标签</a></nav>
+                <div><code>&lt;!-- ... --&gt;</code><p>注释仍存在于源代码中，浏览器不把它绘制成页面内容。</p></div>
+              </div>
+              <p class="rule">注释适合解释结构和记录待办，但不能嵌套。用户可以查看网页源代码，因此不要在注释中保存密码、密钥或隐私信息。</p>
+            </article>
+
+            <article class="tag-lesson entity-lesson" id="character-entities">
+              <header><span class="lesson-index">3.7</span><div><h3>字符实体</h3><p>&amp;lt; / &amp;gt; / &amp;amp; / &amp;nbsp;</p></div></header>
+              <pre><code>&lt;p&gt;标签写作：&amp;lt;h1&amp;gt;&lt;/p&gt;
+&lt;p&gt;条件：A &amp;amp; B&lt;/p&gt;
+&lt;p title="他说 &amp;quot;你好&amp;quot;"&gt;
+  查看提示
+&lt;/p&gt;
+&lt;p&gt;HTML&amp;nbsp;基础&lt;/p&gt;</code></pre>
+              <div class="demo-output entity-output">
+                <div><code>&amp;lt;</code><span>→</span><b>&lt;</b><small>左尖括号</small></div>
+                <div><code>&amp;gt;</code><span>→</span><b>&gt;</b><small>右尖括号</small></div>
+                <div><code>&amp;amp;</code><span>→</span><b>&amp;</b><small>和号</small></div>
+                <div><code>&amp;quot;</code><span>→</span><b>"</b><small>双引号</small></div>
+                <div><code>&amp;nbsp;</code><span>→</span><b class="entity-space">空格</b><small>不换行空格</small></div>
+                <p>页面显示：<code>&lt;h1&gt;</code> 与 <strong>A &amp; B</strong></p>
+              </div>
+              <p class="rule">展示 HTML 源码时使用实体。文本中的 <code>&lt;</code> 必须转义；显示字面量 <code>&amp;</code> 时写作 <code>&amp;amp;</code>；<code>&gt;</code> 通常可直接写。属性值还要转义与定界符相同的引号。</p>
+            </article>
+          </div>
+
+          <article class="tag-lesson media-lesson">
+            <header><span class="lesson-index">3.8</span><div><h3>图片：img</h3><p>src 决定“去哪找”，alt 解释“这是什么”。</p></div><code>&lt;img&gt;</code></header>
+            <div class="media-demo">
+              <div class="image-frame"><img src="lab-diagram.svg" alt="HTML 源码经过浏览器解析形成页面结构的示意图" width="800" height="450" /><span>图片预览</span></div>
+              <div>
+                <pre><code>&lt;img
+  src="lab-diagram.svg"
+  alt="HTML 源码经过浏览器解析形成页面结构的示意图"
+  width="800"
+  height="450"
+  loading="lazy"
+&gt;</code></pre>
+                <dl class="attribute-list">
+                  <div><dt>src <b>必需</b></dt><dd>本地相对路径或网络地址</dd></div>
+                  <div><dt>alt <b>必需决策</b></dt><dd>内容图写替代描述；纯装饰图写空值 <code>alt=""</code></dd></div>
+                  <div><dt>width / height</dt><dd>预留尺寸，减少页面加载时跳动</dd></div>
+                  <div><dt>loading="lazy"</dt><dd>让视口外的图片延迟加载</dd></div>
+                </dl>
+              </div>
+            </div>
+          </article>
+
+          <article class="tag-lesson figure-lesson" id="figures">
+            <header><span class="lesson-index">3.9</span><div><h3>带说明的媒体：figure</h3><p>把图片、图表或代码示例与它的标题组织成一个完整单元。</p></div><code>&lt;figure&gt; &lt;figcaption&gt;</code></header>
+            <div class="figure-workbench">
+              <div class="figure-code">
+                <pre><code>&lt;figure&gt;
+  &lt;img
+    src="lab-diagram.svg"
+    alt="HTML 源码经过浏览器解析形成页面结构"
+    width="800"
+    height="450"
+  &gt;
+  &lt;figcaption&gt;
+    图 1：浏览器把 HTML 解析为页面结构
+  &lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+                <p><b>什么时候使用</b>内容相对独立，可作为一个整体引用或移动，且移动后不影响正文主线时使用 <code>figure</code>；可选的 <code>figcaption</code> 必须是它的第一个或最后一个子元素。</p>
+              </div>
+              <div class="figure-preview">
+                <figure class="lesson-figure">
+                  <img src="lab-diagram.svg" alt="HTML 源码经过令牌化和树构建，形成 head、main、footer 页面节点" width="800" height="450" loading="lazy" />
+                  <figcaption><b>图 1</b><span>浏览器把 HTML 源码解析为页面结构</span></figcaption>
+                </figure>
+                <p><code>alt</code> 替代图片内容；<code>figcaption</code> 为整个 figure 提供可见说明，两者职责不同。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="tag-lesson link-lesson">
+            <header><span class="lesson-index">3.10</span><div><h3>超链接：a</h3><p>一个标签，连接四种目的地。</p></div><code>&lt;a href="…"&gt;</code></header>
+            <div class="link-cases">
+              <div><span>网页</span><pre><code>&lt;a href="https://example.com"
+  target="_blank" rel="noopener"&gt;
+  打开示例网站
+&lt;/a&gt;</code></pre><a href="https://example.com" target="_blank" rel="noopener">打开示例网站 ↗</a></div>
+              <div><span>锚点</span><pre><code>&lt;a href="#practice"&gt;
+  跳到实战练习
+&lt;/a&gt;</code></pre><a href="#practice">跳到实战练习 ↓</a></div>
+              <div><span>下载</span><pre><code>&lt;a href="学习清单.pdf" download&gt;
+  下载清单
+&lt;/a&gt;</code></pre><span class="demo-link is-muted">下载清单 ⇩</span></div>
+              <div><span>邮件</span><pre><code>&lt;a href="mailto:hello@example.com"&gt;
+  给老师发邮件
+&lt;/a&gt;</code></pre><a href="mailto:hello@example.com">给老师发邮件 ✉</a></div>
+            </div>
+          </article>
+
+          <article class="tag-lesson list-lesson">
+            <header><span class="lesson-index">3.11</span><div><h3>三类列表</h3><p>并列、顺序、名词解释，各有自己的结构。</p></div><code>&lt;ul&gt; &lt;ol&gt; &lt;dl&gt;</code></header>
+            <div class="list-cases">
+              <div><span class="case-label">无序列表 · ul</span><pre><code>&lt;ul&gt;
+  &lt;li&gt;HTML&lt;/li&gt;
+  &lt;li&gt;CSS&lt;/li&gt;
+  &lt;li&gt;JavaScript&lt;/li&gt;
+&lt;/ul&gt;</code></pre><ul><li>HTML</li><li>CSS</li><li>JavaScript</li></ul></div>
+              <div><span class="case-label">有序列表 · ol</span><pre><code>&lt;ol start="3"&gt;
+  &lt;li&gt;保存文件&lt;/li&gt;
+  &lt;li&gt;浏览器打开&lt;/li&gt;
+&lt;/ol&gt;</code></pre><ol start="3"><li>保存文件</li><li>浏览器打开</li></ol></div>
+              <div><span class="case-label">定义列表 · dl</span><pre><code>&lt;dl&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;
+  &lt;dd&gt;描述网页结构&lt;/dd&gt;
+&lt;/dl&gt;</code></pre><dl><dt>HTML</dt><dd>描述网页结构</dd><dt>CSS</dt><dd>控制页面样式</dd></dl></div>
+            </div>
+          </article>
+
+          <div class="tag-grid semantic-content-grid">
+            <article class="tag-lesson quote-lesson" id="quotes">
+              <header><span class="lesson-index">3.12</span><div><h3>引用与来源</h3><p>blockquote / q / cite</p></div></header>
+              <pre><code>&lt;blockquote cite="/notes/semantic-html"&gt;
+  &lt;p&gt;语义标签说明内容是什么，
+    而 CSS 决定它看起来怎样。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;来源：《&lt;cite&gt;语义化 HTML&lt;/cite&gt;》&lt;/p&gt;
+
+&lt;p&gt;老师提醒：&lt;q&gt;先写结构，再写样式。&lt;/q&gt;&lt;/p&gt;</code></pre>
+              <div class="demo-output quote-output">
+                <blockquote cite="/notes/semantic-html"><p>语义标签说明内容是什么，而 CSS 决定它看起来怎样。</p></blockquote>
+                <p class="quote-source">来源：《<cite>语义化 HTML</cite>》</p>
+                <p>老师提醒：<q>先写结构，再写样式。</q></p>
+              </div>
+              <p class="rule"><code>blockquote</code> 表示来自其他来源的独立块引用，<code>q</code> 表示嵌在句子中的行内引用；<code>cite</code> 标记作品标题，不用于包住作者姓名。</p>
+            </article>
+
+            <article class="tag-lesson technical-text-lesson" id="code-text">
+              <header><span class="lesson-index">3.13</span><div><h3>代码与技术文本</h3><p>code / kbd / samp / var</p></div></header>
+              <pre><code>&lt;p&gt;运行 &lt;code&gt;npm run check&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;按 &lt;kbd&gt;⌘&lt;/kbd&gt; + &lt;kbd&gt;S&lt;/kbd&gt; 保存。&lt;/p&gt;
+&lt;p&gt;输出：&lt;samp&gt;内容检查通过&lt;/samp&gt;&lt;/p&gt;
+&lt;p&gt;设 &lt;var&gt;viewportWidth&lt;/var&gt; 为视口宽度。&lt;/p&gt;</code></pre>
+              <div class="demo-output technical-output">
+                <p>运行 <code>npm run check</code>。</p>
+                <p>按 <kbd>⌘</kbd> + <kbd>S</kbd> 保存。</p>
+                <p>输出：<samp>内容检查通过</samp></p>
+                <p>设 <var>viewportWidth</var> 为视口宽度。</p>
+                <pre><code>&lt;h1&gt;Hello&lt;/h1&gt;</code></pre>
+              </div>
+              <p class="rule">多行源码使用 <code>pre &gt; code</code> 保留缩进；键盘输入、程序输出和变量分别使用 <code>kbd</code>、<code>samp</code>、<code>var</code>。</p>
+            </article>
+
+            <article class="tag-lesson time-lesson" id="time-text">
+              <header><span class="lesson-index">3.14</span><div><h3>机器可读时间</h3><p>time / datetime</p></div></header>
+              <pre><code>&lt;time datetime="2026-08-15"&gt;
+  8 月 15 日
+&lt;/time&gt;
+
+&lt;time datetime="2026-08-15T09:00+08:00"&gt;
+  8 月 15 日上午 9:00
+&lt;/time&gt;
+
+&lt;time datetime="PT45M"&gt;45 分钟&lt;/time&gt;</code></pre>
+              <div class="demo-output time-output">
+                <div><span>课程日期</span><time datetime="2026-08-15">8 月 15 日</time><code>2026-08-15</code></div>
+                <div><span>直播开始</span><time datetime="2026-08-15T09:00+08:00">上午 9:00</time><code>+08:00</code></div>
+                <div><span>预计用时</span><time datetime="PT45M">45 分钟</time><code>PT45M</code></div>
+              </div>
+              <p class="rule">可见文字按读者习惯书写，<code>datetime</code> 使用标准格式表达日期、时区或时长，便于日历和搜索工具识别。</p>
+            </article>
+          </div>
+
+          <article class="tag-lesson table-lesson" id="tables">
+            <header><span class="lesson-index">3.15</span><div><h3>结构化数据：table</h3><p>表格用来表达行列之间存在关系的数据，不用于控制页面布局。</p></div><code>&lt;table&gt; &lt;th scope="…"&gt;</code></header>
+            <div class="table-workbench">
+              <div class="table-code">
+                <div class="table-panel-label"><span>HTML</span><b>一张语义完整的课程计划表</b></div>
+                <pre><code>&lt;table&gt;
+  &lt;caption&gt;2026 前端入门学习计划&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;周次&lt;/th&gt;
+      &lt;th scope="col"&gt;学习主题&lt;/th&gt;
+      &lt;th scope="col"&gt;实践任务&lt;/th&gt;
+      &lt;th scope="col"&gt;状态&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;第 1 周&lt;/th&gt;
+      &lt;td&gt;HTML 文档骨架&lt;/td&gt;
+      &lt;td&gt;制作个人介绍页&lt;/td&gt;
+      &lt;td&gt;已完成&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;第 2 周&lt;/th&gt;
+      &lt;td&gt;常用标签与表单&lt;/td&gt;
+      &lt;td&gt;完成学习名片&lt;/td&gt;
+      &lt;td&gt;进行中&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+              </div>
+              <div class="table-preview-panel">
+                <div class="table-panel-label"><span>OUTPUT</span><b>浏览器中的实际结果</b></div>
+                <div class="table-scroll" role="region" aria-labelledby="demo-table-caption" tabindex="0">
+                  <table class="course-plan-table">
+                    <caption id="demo-table-caption">2026 前端入门学习计划</caption>
+                    <thead><tr><th scope="col">周次</th><th scope="col">学习主题</th><th scope="col">实践任务</th><th scope="col">状态</th></tr></thead>
+                    <tbody>
+                      <tr><th scope="row">第 1 周</th><td>HTML 文档骨架</td><td>制作个人介绍页</td><td><span class="table-status is-done">已完成</span></td></tr>
+                      <tr><th scope="row">第 2 周</th><td>常用标签与表单</td><td>完成学习名片</td><td><span class="table-status is-doing">进行中</span></td></tr>
+                      <tr><th scope="row">第 3 周</th><td>响应式布局</td><td>适配手机屏幕</td><td><span class="table-status">未开始</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="scope-reader"><span>读屏关联示例</span><p><b>第 2 周</b> → <b>实践任务</b> → 完成学习名片</p><small><code>scope="row"</code> 与 <code>scope="col"</code> 帮助识别这两个标题。</small></div>
+              </div>
+            </div>
+
+            <section class="table-anatomy" aria-labelledby="table-anatomy-title">
+              <header><span>TABLE ANATOMY</span><h4 id="table-anatomy-title">每个标签只负责一种结构</h4></header>
+              <div>
+                <article><code>&lt;table&gt;</code><b>整个数据表</b><p>包住标题、表头和表体，是表格结构的根元素。</p></article>
+                <article><code>&lt;caption&gt;</code><b>表格标题</b><p>说明这张表描述什么；通常是 table 内的第一个子元素。</p></article>
+                <article><code>&lt;thead&gt;</code><b>表头行分组</b><p>组织列标题，打印长表格时浏览器可能重复显示表头。</p></article>
+                <article><code>&lt;tbody&gt;</code><b>主体数据分组</b><p>组织主要数据行，一张表可以按需要包含多个 tbody。</p></article>
+                <article><code>&lt;tr&gt;</code><b>一行单元格</b><p>每个 tr 内放置同一行的 th 或 td。</p></article>
+                <article><code>&lt;th&gt;</code><b>标题单元格</b><p>用 <code>scope</code> 声明它负责一列还是一行。</p></article>
+                <article><code>&lt;td&gt;</code><b>普通数据单元格</b><p>存放与行、列标题相对应的实际数据。</p></article>
+              </div>
+            </section>
+
+            <div class="scope-comparison">
+              <div><code>scope="col"</code><b>列标题</b><p>表头“实践任务”负责解释它下方这一列中的所有数据。</p><span aria-hidden="true">↓　↓　↓</span></div>
+              <div><code>scope="row"</code><b>行标题</b><p>第一列“第 2 周”负责解释它右侧这一行中的所有数据。</p><span aria-hidden="true">→　→　→</span></div>
+              <aside><b>简单表格优先使用 scope</b><p>复杂的多级表头可能需要 <code>id</code> 与 <code>headers</code> 建立关联；初学阶段先把单层行列标题写正确。</p></aside>
+            </div>
+            <p class="rule"><b>手机适配</b>不要为了窄屏删除重要列，也不要把 table 改成无语义的 div。可以给外层容器设置 <code>overflow-x: auto</code>，让用户横向浏览完整数据。</p>
+          </article>
+
+          <article class="tag-lesson form-lesson" id="forms">
+            <header><span class="lesson-index">3.16</span><div><h3>表单输入：form</h3><p>让页面接收用户输入，并用浏览器原生规则完成第一层校验。</p></div><code>&lt;form&gt; &lt;input&gt; &lt;select&gt;</code></header>
+            <div class="form-workbench">
+              <div class="form-code">
+                <pre><code>&lt;form&gt;
+  &lt;label for="student-name"&gt;姓名&lt;/label&gt;
+  &lt;input id="student-name" name="name"
+    type="text" required&gt;
+
+  &lt;label for="student-email"&gt;邮箱&lt;/label&gt;
+  &lt;input id="student-email" name="email"
+    type="email" autocomplete="email" required&gt;
+
+  &lt;label for="direction"&gt;学习方向&lt;/label&gt;
+  &lt;select id="direction" name="direction"&gt;
+    &lt;option&gt;Web 前端&lt;/option&gt;
+    &lt;option&gt;HarmonyOS&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;label&gt;
+    &lt;input type="checkbox" required&gt;
+    我同意学习约定
+  &lt;/label&gt;
+  &lt;button type="submit"&gt;加入学习&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                <p><b>关键规则</b><code>label</code> 的 <code>for</code> 要对应输入框的 <code>id</code>；提交给服务端的数据由 <code>name</code> 命名；<code>placeholder</code> 不能代替标签。</p>
+              </div>
+              <form class="form-demo" id="learning-form">
+                <div class="demo-form-heading"><span>LIVE FORM</span><h4>加入前端学习计划</h4><p>故意留空或输入错误邮箱，观察浏览器提示。</p></div>
+                <label for="demo-name">姓名 <span>必填</span></label>
+                <input id="demo-name" name="name" type="text" autocomplete="name" placeholder="例如：李明" required />
+                <label for="demo-email">邮箱 <span>必填 · email</span></label>
+                <input id="demo-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required />
+                <label for="demo-direction">学习方向</label>
+                <select id="demo-direction" name="direction"><option>Web 前端</option><option>HarmonyOS ArkUI</option><option>全栈开发</option></select>
+                <label class="checkbox-label"><input name="agreement" type="checkbox" required /> <span>我同意按计划完成每周练习</span></label>
+                <button class="primary-button" type="submit">加入学习</button>
+                <p class="form-feedback" id="form-feedback" aria-live="polite">等待填写</p>
+              </form>
+            </div>
+
+            <section class="registration-case" id="registration-case" aria-labelledby="registration-title">
+              <header><div><span>COMPLETE FORM CASE</span><h4 id="registration-title">实战：前端学习营报名表</h4></div><p>把相关控件分组，用原生属性描述输入要求，并观察浏览器最终会提交哪些字段。</p></header>
+              <div class="form-contract">
+                <div><code>action="/register"</code><b>提交到哪里</b><p>真实项目中由后端提供接收数据的地址。</p></div>
+                <div><code>method="post"</code><b>怎样发送数据</b><p>POST 通常用于创建报名记录；敏感数据仍需 HTTPS。</p></div>
+                <div><code>name="email"</code><b>字段叫什么</b><p>只有拥有 name 的成功控件才会进入提交数据。</p></div>
+                <div><code>required / minlength</code><b>输入需要满足什么</b><p>浏览器先做体验层校验，服务端仍必须再次校验。</p></div>
+              </div>
+              <div class="registration-workbench">
+                <section class="registration-code" aria-labelledby="registration-code-title">
+                  <div class="registration-panel-title"><span id="registration-code-title">报名表 HTML</span><button class="copy-button" type="button" data-copy-target="registration-code">复制代码</button></div>
+                  <pre id="registration-code"><code>&lt;form action="/register" method="post"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;基本信息&lt;/legend&gt;
+
+    &lt;label for="name"&gt;姓名&lt;/label&gt;
+    &lt;input id="name" name="name"
+      autocomplete="name" minlength="2" required&gt;
+
+    &lt;label for="email"&gt;邮箱&lt;/label&gt;
+    &lt;input id="email" name="email" type="email"
+      autocomplete="email" required&gt;
+
+    &lt;label for="direction"&gt;学习方向&lt;/label&gt;
+    &lt;select id="direction" name="direction" required&gt;
+      &lt;option value=""&gt;请选择&lt;/option&gt;
+      &lt;option value="web"&gt;Web 前端&lt;/option&gt;
+      &lt;option value="arkui"&gt;HarmonyOS ArkUI&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/fieldset&gt;
+
+  &lt;fieldset&gt;
+    &lt;legend&gt;学习安排&lt;/legend&gt;
+    &lt;p&gt;上课方式&lt;/p&gt;
+    &lt;label&gt;&lt;input type="radio" name="mode"
+      value="online" required&gt; 线上&lt;/label&gt;
+    &lt;label&gt;&lt;input type="radio" name="mode"
+      value="offline"&gt; 线下&lt;/label&gt;
+
+    &lt;p&gt;感兴趣的内容（可多选）&lt;/p&gt;
+    &lt;label&gt;&lt;input type="checkbox" name="skills"
+      value="html"&gt; HTML&lt;/label&gt;
+    &lt;label&gt;&lt;input type="checkbox" name="skills"
+      value="css"&gt; CSS&lt;/label&gt;
+
+    &lt;label for="start-date"&gt;开始日期&lt;/label&gt;
+    &lt;input id="start-date" name="startDate" type="date"&gt;
+  &lt;/fieldset&gt;
+
+  &lt;label for="goal"&gt;学习目标&lt;/label&gt;
+  &lt;textarea id="goal" name="goal" rows="4"
+    minlength="10" maxlength="200" required&gt;&lt;/textarea&gt;
+
+  &lt;label&gt;&lt;input type="checkbox" name="agreement"
+    required&gt; 我同意报名约定&lt;/label&gt;
+
+  &lt;button type="submit"&gt;提交报名&lt;/button&gt;
+  &lt;button type="reset"&gt;清空表单&lt;/button&gt;
+  &lt;button type="button"&gt;保存草稿&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                </section>
+
+                <section class="registration-preview" aria-labelledby="registration-preview-title">
+                  <div class="registration-panel-title"><span id="registration-preview-title">可操作报名表</span><small><i></i>原生校验已开启</small></div>
+                  <form id="registration-form">
+                    <fieldset>
+                      <legend><span>01</span>基本信息</legend>
+                      <div class="registration-fields">
+                        <label for="reg-name">姓名 <em>必填</em></label><input id="reg-name" name="name" autocomplete="name" minlength="2" placeholder="至少 2 个字符" required />
+                        <label for="reg-email">邮箱 <em>必填</em></label><input id="reg-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required />
+                        <label for="reg-direction">学习方向 <em>必填</em></label><select id="reg-direction" name="direction" required><option value="">请选择</option><option value="web">Web 前端</option><option value="arkui">HarmonyOS ArkUI</option><option value="fullstack">全栈开发</option></select>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend><span>02</span>学习安排</legend>
+                      <div class="registration-group"><p>上课方式 <em>必填</em></p><label><input type="radio" name="mode" value="online" required /> 线上直播</label><label><input type="radio" name="mode" value="offline" /> 线下课堂</label></div>
+                      <div class="registration-group"><p>感兴趣的内容 <small>可多选</small></p><label><input type="checkbox" name="skills" value="html" /> HTML</label><label><input type="checkbox" name="skills" value="css" /> CSS</label><label><input type="checkbox" name="skills" value="arkui" /> ArkUI</label></div>
+                      <div class="registration-fields"><label for="reg-date">计划开始日期</label><input id="reg-date" name="startDate" type="date" /></div>
+                    </fieldset>
+                    <fieldset>
+                      <legend><span>03</span>目标与确认</legend>
+                      <div class="registration-fields"><label for="reg-goal">学习目标 <em>10～200 字</em></label><textarea id="reg-goal" name="goal" rows="4" minlength="10" maxlength="200" placeholder="例如：希望独立完成一个响应式个人网站" required></textarea></div>
+                      <label class="registration-agreement"><input name="agreement" type="checkbox" value="accepted" required /> <span>我已阅读并同意报名约定</span></label>
+                    </fieldset>
+                    <div class="registration-actions"><button class="primary-button" type="submit">提交报名</button><button type="reset">清空表单</button><button id="save-registration-draft" type="button">保存草稿</button></div>
+                    <p class="registration-feedback" id="registration-feedback" aria-live="polite">填写后提交，查看 FormData 结果。</p>
+                  </form>
+                </section>
+              </div>
+              <div class="payload-viewer">
+                <div><span>FORM DATA</span><h5>浏览器准备发送的数据</h5><p>复选框使用相同的 <code>name="skills"</code>，因此需要用 <code>getAll()</code> 读取多个值。</p></div>
+                <pre id="registration-payload" aria-live="polite"><code>{
+  "状态": "等待有效提交"
+}</code></pre>
+              </div>
+              <div class="button-type-guide"><div><code>type="submit"</code><b>提交并触发校验</b><p>表单内 button 的默认类型通常也是 submit，建议始终明确写出。</p></div><div><code>type="reset"</code><b>恢复初始值</b><p>会立即清除用户输入，真实产品中应谨慎使用并避免误触。</p></div><div><code>type="button"</code><b>普通自定义操作</b><p>本身不会提交表单，适合保存草稿、打开提示等 JavaScript 行为。</p></div></div>
+            </section>
+          </article>
+        </section>
+
+        <section class="layout lesson-section" id="responsive" aria-labelledby="responsive-title">
+          <header class="section-heading split-heading">
+            <div><p class="section-kicker">04 · LAYOUT &amp; DEVICES</p><h2 id="responsive-title">布局与设备适配</h2></div>
+            <p>同一份内容需要在手机、平板和桌面端保持清晰可用。HTML 提供设备视口基础，CSS 负责弹性排列与断点变化。</p>
+          </header>
+          <article class="tag-lesson responsive-lesson">
+            <header><span class="lesson-index">4.1</span><div><h3>响应式布局：一份页面适配多种屏幕</h3><p>先建立 viewport，再用弹性尺寸和媒体查询改变内容排列。</p></div><code>@media (max-width: 600px)</code></header>
+            <div class="responsive-workbench">
+              <div class="responsive-code">
+                <div class="code-label">HTML · 先允许页面按设备宽度显示</div>
+                <pre><code>&lt;meta name="viewport"
+  content="width=device-width, initial-scale=1.0"&gt;
+
+&lt;section class="course-list"&gt;
+  &lt;article&gt;HTML 基础&lt;/article&gt;
+  &lt;article&gt;CSS 布局&lt;/article&gt;
+  &lt;article&gt;ArkUI 迁移&lt;/article&gt;
+&lt;/section&gt;</code></pre>
+                <div class="code-label">CSS · 默认三列，小屏改为一列</div>
+                <pre><code>.course-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .course-list {
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+              </div>
+              <div class="responsive-preview-area">
+                <div class="device-toolbar" role="group" aria-label="切换响应式预览宽度">
+                  <button class="is-selected" type="button" data-device="desktop" aria-pressed="true">桌面</button>
+                  <button type="button" data-device="tablet" aria-pressed="false">平板</button>
+                  <button type="button" data-device="mobile" aria-pressed="false">手机</button>
+                </div>
+                <div class="device-stage">
+                  <div class="responsive-device is-desktop" id="responsive-device">
+                    <div class="device-browser"><i></i><i></i><i></i><span>localhost / courses</span></div>
+                    <div class="mini-site"><header><b>CODE PATH</b><span>课程　练习　关于</span></header><h4>选择下一节课</h4><div class="mini-course-grid"><article><i>01</i><b>HTML 基础</b><span>8 个知识点</span></article><article><i>02</i><b>CSS 布局</b><span>6 个知识点</span></article><article><i>03</i><b>ArkUI 迁移</b><span>5 个知识点</span></article></div></div>
+                  </div>
+                </div>
+                <p class="viewport-status">当前容器：<output id="viewport-output">桌面 · 720px</output></p>
+              </div>
+            </div>
+            <div class="responsive-rules"><div><b>流式尺寸</b><span>优先用 <code>%</code>、<code>fr</code>、<code>minmax()</code>，避免固定死宽度。</span></div><div><b>内容断点</b><span>内容开始拥挤时再设断点，不只按某款手机型号设置。</span></div><div><b>移动端优先</b><span>先保证窄屏核心内容，再用媒体查询增强宽屏布局。</span></div></div>
+          </article>
+        </section>
+
+        <section class="modern lesson-section" id="modern" aria-labelledby="modern-title">
+          <header class="section-heading split-heading inverted">
+            <div><p class="section-kicker">05 · MODERN HTML</p><h2 id="modern-title">现在的 HTML，能做得更多</h2></div>
+            <p>优先使用浏览器自带的语义和交互，通常比从零用 JavaScript 模拟更稳定、更容易被辅助技术理解。</p>
+          </header>
+          <div class="modern-grid">
+            <article class="semantic-map">
+              <div class="feature-heading"><span>01</span><h3>语义化页面结构</h3></div>
+              <div class="page-map" aria-label="语义化网页结构示意">
+                <span>&lt;header&gt;</span><span>&lt;nav&gt;</span><div><span>&lt;main&gt;</span><span>&lt;aside&gt;</span></div><span>&lt;footer&gt;</span>
+              </div>
+              <p>用 <code>header</code>、<code>nav</code>、<code>main</code>、<code>article</code> 等标签说明内容角色，比一片 <code>div</code> 更易维护。</p>
+            </article>
+            <article>
+              <div class="feature-heading"><span>02</span><h3>原生折叠 details</h3></div>
+              <pre><code>&lt;details&gt;
+  &lt;summary&gt;查看参考答案&lt;/summary&gt;
+  &lt;p&gt;答案就在这里。&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+              <details class="native-details"><summary>查看参考答案</summary><p>无需 JavaScript，也支持键盘操作。</p></details>
+            </article>
+            <article>
+              <div class="feature-heading"><span>03</span><h3>原生弹窗 dialog</h3></div>
+              <pre><code>&lt;dialog id="tip"&gt;…&lt;/dialog&gt;
+&lt;button onclick="tip.showModal()"&gt;
+  打开提示
+&lt;/button&gt;</code></pre>
+              <button class="outline-button" id="open-dialog" type="button">体验原生弹窗</button>
+            </article>
+            <article>
+              <div class="feature-heading"><span>04</span><h3>Popover 提示层</h3></div>
+              <pre><code>&lt;button popovertarget="html-tip"&gt;
+  查看提示
+&lt;/button&gt;
+&lt;div id="html-tip" popover&gt;…&lt;/div&gt;</code></pre>
+              <button class="outline-button" type="button" popovertarget="html-tip">查看 Popover</button>
+              <div class="tip-popover" id="html-tip" popover>Popover 会由浏览器管理显示层级、外部点击关闭与 Esc 键关闭。</div>
+            </article>
+            <article>
+              <div class="feature-heading"><span>05</span><h3>响应式图片 picture</h3></div>
+              <pre><code>&lt;picture&gt;
+  &lt;source media="(max-width: 600px)"
+    srcset="cover-mobile.webp"&gt;
+  &lt;img src="cover.webp" alt="课程封面"&gt;
+&lt;/picture&gt;</code></pre>
+              <p>按屏幕宽度或格式能力选择更合适的图片，节省流量并保持清晰。</p>
+            </article>
+            <article>
+              <div class="feature-heading"><span>06</span><h3>音视频与绘图</h3></div>
+              <pre><code>&lt;video controls poster="cover.jpg"&gt;
+  &lt;source src="lesson.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+&lt;canvas aria-label="数据图表"&gt;&lt;/canvas&gt;</code></pre>
+              <p><code>audio</code> / <code>video</code> 提供原生媒体播放，<code>canvas</code> 与 <code>svg</code> 负责图形表达。</p>
+            </article>
+          </div>
+          <section class="compatibility-lab" aria-labelledby="compatibility-title">
+            <header><div><p class="section-kicker">COMPATIBILITY WORKFLOW</p><h3 id="compatibility-title">新标签能不能用？按三步判断</h3></div><a href="https://caniuse.com/" target="_blank" rel="noopener">打开 Can I Use ↗</a></header>
+            <div class="compatibility-steps">
+              <article><span>1</span><div><b>查支持范围</b><p>在 MDN 的 “Browser compatibility” 或 Can I Use 查看目标浏览器，不凭印象决定。</p></div></article>
+              <article><span>2</span><div><b>保留基础体验</b><p>先写所有浏览器都能工作的内容，再为支持新能力的浏览器增加交互。</p></div></article>
+              <article><span>3</span><div><b>真实环境验证</b><p>至少覆盖 Chrome、Safari、Firefox、Edge 与实际手机；键盘操作也要测试。</p></div></article>
+            </div>
+            <div class="support-table" role="table" aria-label="现代 HTML 能力兼容策略">
+              <div class="support-row support-head" role="row"><span role="columnheader">能力</span><span role="columnheader">使用判断</span><span role="columnheader">兼容策略</span></div>
+              <div class="support-row" role="row"><code role="cell">details / summary</code><span role="cell"><i class="support-dot is-stable"></i>基础能力成熟</span><span role="cell">内容本身始终写进 HTML</span></div>
+              <div class="support-row" role="row"><code role="cell">dialog</code><span role="cell"><i class="support-dot is-stable"></i>现代浏览器可用</span><span role="cell">旧环境提供普通页面或 JS 后备</span></div>
+              <div class="support-row" role="row"><code role="cell">popover</code><span role="cell"><i class="support-dot is-check"></i>使用前核对目标版本</span><span role="cell">不支持时让按钮展开普通区块</span></div>
+              <div class="support-row" role="row"><code role="cell">loading="lazy"</code><span role="cell"><i class="support-dot is-stable"></i>可渐进增强</span><span role="cell">不支持时图片仍会正常加载</span></div>
+            </div>
+            <div class="feature-detection">
+              <pre><code>// 不猜浏览器名称，直接检查能力
+if ("showPopover" in HTMLElement.prototype) {
+  // 使用原生 Popover
+} else {
+  // 展示普通的提示区块
+}</code></pre>
+              <p><b>渐进增强</b>：基础内容先可读、基础操作先可用；浏览器支持时，再叠加 Popover 等新能力。这样“兼容”不是所有浏览器一模一样，而是所有用户都能完成任务。</p>
+            </div>
+          </section>
+          <dialog class="course-dialog" id="course-dialog" aria-labelledby="dialog-title">
+            <button class="dialog-close" id="close-dialog" type="button" aria-label="关闭弹窗">×</button>
+            <span class="dialog-icon" aria-hidden="true">&lt;/&gt;</span>
+            <h3 id="dialog-title">这是原生 &lt;dialog&gt;</h3>
+            <p>浏览器自动处理焦点、顶层显示和背景遮罩。按 Esc 或点击关闭即可返回课程。</p>
+            <button class="primary-button" id="dialog-got-it" type="button">知道了</button>
+          </dialog>
+        </section>
+
+        <section class="practice lesson-section" id="practice" aria-labelledby="practice-title">
+          <header class="section-heading split-heading">
+            <div><p class="section-kicker">06 · HANDS-ON PROJECT</p><h2 id="practice-title">综合实战：做一张个人学习名片</h2></div>
+            <p>起始代码故意留下 6 个问题。按“预测结果 → 运行检查 → 阅读反馈 → 修改代码”的循环逐个解决。</p>
+          </header>
+          <div class="project-brief">
+            <div><span class="brief-number">PROJECT 01 · DEBUG &amp; BUILD</span><h3>修好这张个人学习名片</h3><p>先不要看答案。阅读黄色任务单，在编辑器中找到并修复对应结构。</p></div>
+            <div class="project-progress" aria-labelledby="project-progress-title"><div><span id="project-progress-title">核心任务进度</span><strong id="project-progress-count">0 / 6</strong></div><div class="project-progress-track" aria-hidden="true"><i id="project-progress-bar"></i></div></div>
+            <ul class="project-checklist" id="project-checklist">
+              <li data-check="main"><i></i><span><b>页面主体</b>使用语义化 main</span></li>
+              <li data-check="h1"><i></i><span><b>标题层级</b>有且只有一个 h1</span></li>
+              <li data-check="img"><i></i><span><b>图片替代</b>img 有有效 alt</span></li>
+              <li data-check="list"><i></i><span><b>技能清单</b>至少 3 个 li</span></li>
+              <li data-check="link"><i></i><span><b>学习链接</b>a 有有效 href</span></li>
+              <li data-check="viewport"><i></i><span><b>手机适配</b>配置 viewport</span></li>
+            </ul>
+          </div>
+          <div class="project-lab">
+            <section class="project-editor" aria-labelledby="project-code-title">
+              <div class="project-panel-bar"><span id="project-code-title">index.html <i>· 6 个待修复点</i></span><button type="button" id="reset-project">恢复起始代码</button></div>
+              <label class="sr-only" for="project-code">个人学习名片 HTML</label>
+              <textarea id="project-code" spellcheck="false"><!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>我的学习名片</title>
+</head>
+<body>
+  <div class="profile">
+    <h2>你好，我是小明</h2>
+    <img src="lab-diagram.svg" width="320">
+    <p>正在学习前端开发。</p>
+    <h2>我的技能</h2>
+    <ul>
+      <li>HTML 页面结构</li>
+      <li>语义化标签</li>
+    </ul>
+    <a>我的学习资料</a>
+  </div>
+</body>
+</html></textarea>
+              <div class="project-hint" id="project-hint" hidden><span>提示</span><p id="project-hint-copy"></p></div>
+              <div class="project-actions"><button class="primary-button" id="run-project" type="button">运行并检查</button><button class="hint-button" id="show-project-hint" type="button">给我一个提示</button><span id="project-status" aria-live="polite">先观察代码，再运行检查</span></div>
+            </section>
+            <section class="project-preview" aria-labelledby="project-preview-title">
+              <div class="project-panel-bar"><span id="project-preview-title">浏览器预览</span><div class="project-device-switch" role="group" aria-label="切换项目预览宽度"><button class="is-selected" type="button" data-project-device="desktop" aria-pressed="true">桌面</button><button type="button" data-project-device="mobile" aria-pressed="false">手机</button></div></div>
+              <div class="project-frame-stage"><div class="project-frame-shell is-desktop" id="project-frame-shell"><div class="project-address"><i></i><span>local / index.html</span></div><iframe id="project-frame" title="个人学习名片运行结果" sandbox="allow-scripts"></iframe></div></div>
+            </section>
+          </div>
+          <div class="project-result" id="project-result" hidden>
+            <div class="result-badge" aria-hidden="true">✓</div><div><span>CORE COMPLETE</span><h3>核心结构全部通过</h3><p>你已经完成了一次真实的 HTML 调试循环。现在可以继续把这张名片升级为响应式、可填写的小页面。</p></div>
+          </div>
+          <section class="stretch-challenges" id="stretch-challenges" aria-labelledby="stretch-title" hidden>
+            <header><div><span>完成核心任务后继续</span><h3 id="stretch-title">三个进阶挑战</h3></div><p>这些挑战不提供自动答案，尝试用前面章节的案例独立完成。</p></header>
+            <div>
+              <article><span>CHALLENGE A</span><h4>加入联系表单</h4><p>添加姓名、邮箱输入框和提交按钮。每个输入框都要有可见的 <code>label</code>。</p><small>会用到：form · label · input · button</small></article>
+              <article><span>CHALLENGE B</span><h4>适配手机屏幕</h4><p>在 <code>head</code> 中加入 <code>style</code>，让图片最大宽度不超过容器，并在窄屏减小内边距。</p><small>会用到：max-width · @media</small></article>
+              <article><span>CHALLENGE C</span><h4>提交结构验证</h4><p>复制完成代码到 Nu HTML Checker，读懂提示并修复所有 error。</p><a href="https://validator.w3.org/nu/#textarea" target="_blank" rel="noopener">打开 HTML Checker ↗</a></article>
+            </div>
+          </section>
+          <details class="project-solution">
+            <summary>实在卡住了？查看分步参考，不直接给完整答案</summary>
+            <ol><li><code>&lt;div class="profile"&gt;</code> 只表达通用容器，本页主体应换成 <code>&lt;main class="profile"&gt;</code>。</li><li>页面主标题用 <code>h1</code>；“我的技能”继续使用 <code>h2</code>。</li><li>为图片补充描述用途的 <code>alt</code>，再添加第三个 <code>li</code>。</li><li>为链接补充真实 <code>href</code>，并在 <code>head</code> 中加入 viewport 元数据。</li></ol>
+          </details>
+        </section>
+
+        <section class="next lesson-section" id="next" aria-labelledby="next-title">
+          <header class="section-heading split-heading">
+            <div><p class="section-kicker">07 · WHERE NEXT?</p><h2 id="next-title">学完 HTML，下一站去哪？</h2></div>
+            <p>HTML 训练的是“把界面拆成有含义的结构”。这种能力不仅用于网页，也可以迁移到 App 开发。</p>
+          </header>
+          <div class="transfer-board">
+            <div class="transfer-title"><span>WEB</span><b>同一种界面思维</b><span>ARKUI</span></div>
+            <div class="transfer-row"><code>&lt;div&gt; / &lt;section&gt;</code><span>容器与分组 <i>→</i></span><code>Column / Row</code></div>
+            <div class="transfer-row"><code>&lt;h1&gt; / &lt;p&gt;</code><span>文字层级 <i>→</i></span><code>Text</code></div>
+            <div class="transfer-row"><code>&lt;img&gt;</code><span>图片资源 <i>→</i></span><code>Image</code></div>
+            <div class="transfer-row"><code>&lt;ul&gt; + &lt;li&gt;</code><span>重复列表 <i>→</i></span><code>List + ListItem</code></div>
+            <div class="transfer-row"><code>&lt;input&gt; / &lt;button&gt;</code><span>输入与操作 <i>→</i></span><code>TextInput / Button</code></div>
+          </div>
+          <div class="migration-example">
+            <header><div><span>ONE CARD · TWO PLATFORMS</span><h3>把同一张学习名片迁移到 ArkUI</h3></div><p>迁移的是“界面结构和数据关系”，不是把 HTML 标签直接粘贴进 ArkTS。</p></header>
+            <div class="migration-code-grid">
+              <section aria-labelledby="web-code-title"><div class="migration-label"><b id="web-code-title">Web · HTML</b><span>声明式标签</span></div><pre><code>&lt;article class="profile"&gt;
+  &lt;img src="avatar.png" alt="小明头像"&gt;
+  &lt;h2&gt;小明的学习卡&lt;/h2&gt;
+  &lt;p&gt;正在学习 HTML 与 ArkUI&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;页面结构&lt;/li&gt;
+    &lt;li&gt;响应式布局&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;button type="button"&gt;关注学习&lt;/button&gt;
+&lt;/article&gt;</code></pre></section>
+              <div class="migration-arrow" aria-hidden="true">→</div>
+              <section aria-labelledby="arkui-code-title"><div class="migration-label"><b id="arkui-code-title">HarmonyOS · ArkTS</b><span>声明式组件</span></div><pre><code>@Entry
+@Component
+struct ProfileCard {
+  build() {
+    Column({ space: 12 }) {
+      Image($r('app.media.avatar'))
+        .width(96).height(96)
+      Text('小明的学习卡').fontSize(24)
+      Text('正在学习 HTML 与 ArkUI')
+      List() {
+        ListItem() { Text('页面结构') }
+        ListItem() { Text('响应式布局') }
+      }
+      Button('关注学习').onClick(() =&gt; {
+        // 更新状态或跳转页面
+      })
+    }.padding(24).width('100%')
+  }
+}</code></pre></section>
+            </div>
+            <ol class="migration-steps">
+              <li><span>01</span><div><b>先画结构树</b><p>HTML 的父子嵌套对应 ArkUI 的组件嵌套，先识别 Column、Row、List 等容器。</p></div></li>
+              <li><span>02</span><div><b>再迁移样式</b><p>CSS 不会直接生效，要把尺寸、间距和颜色改写为 ArkUI 属性方法。</p></div></li>
+              <li><span>03</span><div><b>最后重写交互</b><p>链接、表单提交和 DOM 脚本需要改成 ArkTS 事件、状态管理与页面路由。</p></div></li>
+            </ol>
+            <p class="migration-note"><b>重要区别</b> ArkUI 没有浏览器 DOM，也不会解析你的 HTML/CSS。语义拆分和组件树思维可以迁移，代码本身需要用 ArkTS 重写。</p>
+          </div>
+
+          <section class="reference-section" aria-labelledby="reference-title">
+            <header><div><p class="section-kicker">REFERENCE DESK</p><h3 id="reference-title">遇到问题，按这个顺序查</h3></div><p>优先查规范和权威文档，再使用验证与兼容性工具定位问题。</p></header>
+            <div class="reference-grid">
+              <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML" target="_blank" rel="noopener"><span>学习参考</span><b>MDN · HTML</b><p>中文标签说明、属性用法、示例与浏览器兼容表。</p><i>打开 ↗</i></a>
+              <a href="https://html.spec.whatwg.org/" target="_blank" rel="noopener"><span>标准原文</span><b>HTML Living Standard</b><p>HTML 当前规范，是判断语法与行为的最终依据。</p><i>打开 ↗</i></a>
+              <a href="https://validator.w3.org/nu/" target="_blank" rel="noopener"><span>结构验证</span><b>Nu HTML Checker</b><p>上传文件、输入网址或粘贴源码，检查嵌套、属性和文档结构。</p><i>检查 HTML ↗</i></a>
+              <a href="https://caniuse.com/" target="_blank" rel="noopener"><span>兼容查询</span><b>Can I Use</b><p>查看 HTML、CSS、JavaScript 特性在各浏览器版本中的支持率。</p><i>查询兼容性 ↗</i></a>
+              <a href="https://developer.chrome.com/docs/lighthouse/overview/" target="_blank" rel="noopener"><span>综合审计</span><b>Lighthouse</b><p>检查性能、无障碍、最佳实践和 SEO，并给出修复建议。</p><i>阅读指南 ↗</i></a>
+              <a href="https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkui-overview" target="_blank" rel="noopener"><span>跨端迁移</span><b>HarmonyOS ArkUI</b><p>学习 ArkTS 声明式 UI、组件、布局、状态与交互。</p><i>查看官方文档 ↗</i></a>
+            </div>
+          </section>
+
+          <div class="validation-flow">
+            <span>写完页面</span><i>→</i><span>HTML Checker 查结构</span><i>→</i><span>浏览器开发者工具调试</span><i>→</i><span>Can I Use 查兼容</span><i>→</i><span>真机与键盘测试</span>
+          </div>
+
+          <section class="editor-toolkit" id="vscode-tools" aria-labelledby="vscode-title">
+            <header class="editor-toolkit-heading">
+              <div><p class="section-kicker">VS CODE SPEED KIT</p><h3 id="vscode-title">把重复输入，交给编辑器</h3></div>
+              <p>效率不是安装很多扩展，而是建立一条稳定路径：快速生成结构、及时格式化、即时预览，再用工具验证。</p>
+            </header>
+
+            <div class="coding-loop" aria-label="VS Code 高效编码流程">
+              <div><span>01</span><b>Emmet 建骨架</b><small>缩写 + Tab</small></div><i>→</i>
+              <div><span>02</span><b>语义化补内容</b><small>先结构，后样式</small></div><i>→</i>
+              <div><span>03</span><b>保存即格式化</b><small>统一缩进</small></div><i>→</i>
+              <div><span>04</span><b>Live Server 预览</b><small>修改后刷新</small></div><i>→</i>
+              <div><span>05</span><b>Checker 验证</b><small>修复 error</small></div>
+            </div>
+
+            <div class="emmet-lab" aria-labelledby="emmet-title">
+              <div class="emmet-console">
+                <div class="editor-titlebar"><span><i></i><i></i><i></i></span><b>Emmet Playground</b><small>VS Code 内置，无需安装扩展</small></div>
+                <div class="emmet-input-area">
+                  <label for="emmet-input"><span>01</span> 输入 HTML 缩写</label>
+                  <div><input id="emmet-input" type="text" value="ul.skill-list&gt;li.item*3" spellcheck="false" /><kbd>Tab</kbd><button id="expand-emmet" type="button">模拟展开</button></div>
+                  <div class="emmet-presets" aria-label="Emmet 示例缩写">
+                    <button class="is-selected" type="button" data-emmet="ul.skill-list>li.item*3">列表 × 3</button>
+                    <button type="button" data-emmet="nav>a*3">导航链接</button>
+                    <button type="button" data-emmet="form>label+input:email+button">邮箱表单</button>
+                    <button type="button" data-emmet="!">完整骨架</button>
+                  </div>
+                </div>
+                <div class="emmet-output-heading"><span>02 · 展开结果</span><button class="copy-button" type="button" data-copy-target="emmet-output">复制结果</button></div>
+                <pre id="emmet-output" aria-live="polite"><code>&lt;ul class="skill-list"&gt;
+  &lt;li class="item"&gt;&lt;/li&gt;
+  &lt;li class="item"&gt;&lt;/li&gt;
+  &lt;li class="item"&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+              </div>
+              <aside class="emmet-cheatsheet">
+                <span>SYNTAX MAP</span><h4>四个符号覆盖大多数场景</h4>
+                <dl><div><dt><code>&gt;</code></dt><dd>创建子元素<br /><small><code>ul&gt;li</code></small></dd></div><div><dt><code>+</code></dt><dd>创建同级元素<br /><small><code>h2+p</code></small></dd></div><div><dt><code>*</code></dt><dd>重复指定次数<br /><small><code>li*3</code></small></dd></div><div><dt><code>.</code></dt><dd>添加 class<br /><small><code>main.card</code></small></dd></div></dl>
+                <p><b>使用方式</b>在 HTML 文件中输入缩写，按 <kbd>Tab</kbd>。如果没有展开，确认右下角语言模式是 <code>HTML</code>。</p>
+              </aside>
+            </div>
+
+            <div class="shortcut-section">
+              <header><div><span>KEYBOARD FIRST</span><h4>每天都会用到的快捷键</h4></div><div class="os-switch" role="group" aria-label="选择快捷键系统"><button class="is-selected" type="button" data-shortcut-os="mac" aria-pressed="true">macOS</button><button type="button" data-shortcut-os="windows" aria-pressed="false">Windows / Linux</button></div></header>
+              <div class="shortcut-grid">
+                <div><span>命令面板</span><kbd data-mac="⇧ ⌘ P" data-windows="Ctrl Shift P">⇧ ⌘ P</kbd><small>搜索所有命令</small></div>
+                <div><span>快速打开文件</span><kbd data-mac="⌘ P" data-windows="Ctrl P">⌘ P</kbd><small>不再用鼠标找文件</small></div>
+                <div><span>格式化文档</span><kbd data-mac="⇧ ⌥ F" data-windows="Shift Alt F">⇧ ⌥ F</kbd><small>统一缩进与换行</small></div>
+                <div><span>切换注释</span><kbd data-mac="⌘ /" data-windows="Ctrl /">⌘ /</kbd><small>快速注释当前行</small></div>
+                <div><span>重命名符号</span><kbd data-mac="F2" data-windows="F2">F2</kbd><small>统一修改成对标签</small></div>
+                <div><span>向下复制一行</span><kbd data-mac="⇧ ⌥ ↓" data-windows="Shift Alt ↓">⇧ ⌥ ↓</kbd><small>快速复制相似结构</small></div>
+              </div>
+            </div>
+
+            <div class="vscode-setup">
+              <section class="extension-stack" aria-labelledby="extensions-title">
+                <header><span>MINIMAL EXTENSIONS</span><h4 id="extensions-title">只装真正需要的三个扩展</h4></header>
+                <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank" rel="noopener"><b>Live Server</b><p>启动本地服务器，保存后自动刷新页面。</p><i>预览</i></a>
+                <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode" target="_blank" rel="noopener"><b>Prettier</b><p>自动统一缩进、换行和属性排版。</p><i>格式</i></a>
+                <a href="https://marketplace.visualstudio.com/items?itemName=HTMLHint.vscode-htmlhint" target="_blank" rel="noopener"><b>HTMLHint</b><p>在编辑器中提前提示常见 HTML 问题。</p><i>检查</i></a>
+                <p class="extension-note"><b>不需要安装：</b>Emmet、标签自动闭合、标签联动编辑已经内置在 VS Code 中。</p>
+              </section>
+              <section class="settings-panel" aria-labelledby="settings-title">
+                <div class="settings-heading"><div><span>WORKSPACE SETTINGS</span><h4 id="settings-title">保存到 <code>.vscode/settings.json</code></h4></div><button class="copy-button" type="button" data-copy-target="vscode-settings">复制配置</button></div>
+                <pre id="vscode-settings"><code>{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.linkedEditing": true,
+  "editor.wordWrap": "on",
+  "emmet.triggerExpansionOnTab": true,
+  "files.autoSave": "afterDelay"
+}</code></pre>
+                <p><b>项目级配置</b>只影响当前项目，适合团队共享。若不希望自动保存，删除最后一行即可。</p>
+              </section>
+            </div>
+
+            <details class="snippet-guide">
+              <summary><span>进阶效率</span><b>把常用课程卡片做成用户代码片段</b><small>输入 <code>hcard</code> 即可生成结构</small></summary>
+              <div><div><p>打开命令面板，运行 <b>“Snippets: Configure Snippets”</b>，选择 <code>html.json</code>，加入右侧配置。<code>$1</code>、<code>$2</code> 是按 Tab 依次跳转的光标位置。</p></div><pre><code>"HTML course card": {
+  "prefix": "hcard",
+  "body": [
+    "&lt;article class=\"course-card\"&gt;",
+    "  &lt;h2&gt;$1&lt;/h2&gt;",
+    "  &lt;p&gt;$2&lt;/p&gt;",
+    "  &lt;a href=\"$3\"&gt;查看课程&lt;/a&gt;",
+    "&lt;/article&gt;"
+  ],
+  "description": "插入课程卡片"
+}</code></pre></div>
+            </details>
+          </section>
+          <div class="summary-card">
+            <div><p class="section-kicker">COURSE COMPLETE</p><h2>你已经能读懂，也能写出一个网页。</h2></div>
+            <ol>
+              <li><span>1</span>HTML 用标签描述内容的结构与含义</li>
+              <li><span>2</span>每个页面都有 doctype、html、head、body 骨架</li>
+              <li><span>3</span>根据内容用途选择标题、文本、图片、链接和列表</li>
+              <li><span>4</span>优先使用语义清晰、浏览器原生支持的现代标签</li>
+            </ol>
+            <a class="primary-button" href="#playground">回到练习台，再写一遍 <span aria-hidden="true">↑</span></a>
+          </div>
+        </section>
+
+        <footer class="site-footer">
+          <div class="logo footer-logo"><span class="logo-bracket">&lt;</span><span class="logo-type">HTML<small>从入门到实践</small></span><span class="logo-bracket">/&gt;</span></div>
+          <p>结构写对了，样式和交互才有可靠的落脚点。</p>
+          <div><a href="https://html.spec.whatwg.org/" target="_blank" rel="noopener">HTML Living Standard ↗</a><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML" target="_blank" rel="noopener">MDN HTML 指南 ↗</a></div>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
