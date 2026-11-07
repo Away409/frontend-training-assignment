@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>任务清单 · Todo</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <main class="board">
+    <header>
+      <p class="eyebrow">TODO / 任务管理</p>
+      <h1>任务清单</h1>
+      <p class="subtitle">记下要做的事，完成一项就勾掉一项。</p>
+    </header>
+
+    <form id="todo-form">
+      <label for="title">新任务</label>
+      <div class="entry">
+        <input id="title" type="text" placeholder="例如：复习 JavaScript 数组方法" aria-describedby="input-error">
+        <button class="add" type="submit">添加</button>
+      </div>
+      <p id="input-error" class="error" role="alert"></p>
+    </form>
+    <p id="storage-error" class="error" role="alert" hidden></p>
+
+    <section aria-label="任务列表">
+      <div class="toolbar">
+        <div id="filters" class="filters" role="group" aria-label="筛选任务">
+          <button type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button type="button" data-filter="active" aria-pressed="false">未完成</button>
+          <button type="button" data-filter="done" aria-pressed="false">已完成</button>
+        </div>
+        <p id="remaining" aria-live="polite"></p>
+      </div>
+      <ul id="tasks"></ul>
+      <p id="empty" class="empty" aria-live="polite"></p>
+    </section>
+  </main>
+</body>
+</html>
+
